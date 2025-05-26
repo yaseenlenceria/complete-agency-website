@@ -132,35 +132,13 @@ class FAQComponent {
     }
 
     render(container, category = 'general') {
-        if (!container) return;
+        if (!container) {
+            console.error('FAQ container not found');
+            return;
+        }
 
-        const faqs = this.getFAQs(category);
-
-        container.innerHTML = `
-            <section class="faq-component">
-                <div class="container">
-                    <div class="section-header">
-                        <h2>Frequently Asked Questions</h2>
-                        <p>Get answers to common questions about our SEO services</p>
-                    </div>
-                    <div class="faq-list">
-                        ${faqs.map((faq, index) => `
-                            <div class="faq-item">
-                                <button class="faq-question" onclick="toggleFAQ(${index}); console.log('FAQ clicked:', '${faq.question.replace(/'/g, "\\'")}');">
-                                    <span>${faq.question}</span>
-                                    <i class="fas fa-chevron-down"></i>
-                                </button>
-                                <div class="faq-answer" id="faq-${index}" style="max-height: 0px; overflow: hidden;">
-                                    <div class="faq-content">
-                                        <p>${faq.answer}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            </section>
-        `;
+        container.innerHTML = this.generateHTML(category);
+        this.initializeFAQEvents();
     }
 
     generateFAQSchema() {

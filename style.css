@@ -117,7 +117,7 @@ section .container {
     width: 80%;
 }
 
-/* Dropdown Menu */
+/* Mega Menu */
 .dropdown {
     position: relative;
 }
@@ -125,20 +125,22 @@ section .container {
 .dropdown-menu {
     position: absolute;
     top: 100%;
-    left: -20px;
+    left: -50px;
     background: white;
-    min-width: 320px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    border-radius: 12px;
+    min-width: 900px;
+    max-width: 1200px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-15px);
+    transform: translateY(-20px);
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     z-index: 1000;
-    max-height: 500px;
-    overflow-y: auto;
     border: 1px solid #e5e7eb;
-    padding: 8px 0;
+    padding: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
 }
 
 .dropdown:hover .dropdown-menu {
@@ -147,64 +149,106 @@ section .container {
     transform: translateY(0);
 }
 
-.dropdown-menu li {
-    margin: 0;
+.mega-menu-column {
+    display: flex;
+    flex-direction: column;
 }
 
-.dropdown-menu a {
-    display: block;
-    padding: 12px 24px;
+.mega-menu-column h4 {
+    color: #1f2937;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.mega-menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mega-menu-links a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
     color: #4b5563;
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
     transition: all 0.3s ease;
+    border-radius: 8px;
     border-left: 3px solid transparent;
 }
 
-.dropdown-menu a:hover {
+.mega-menu-links a:hover {
     background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(29, 78, 216, 0.05));
     color: #2563eb;
     border-left: 3px solid #2563eb;
     transform: translateX(4px);
 }
 
-.dropdown-menu h4 {
-    color: #1f2937;
-    font-size: 0.75rem;
+.mega-menu-links a i {
+    color: #3b82f6;
+    width: 16px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.mega-menu-featured {
+    background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+    border: 1px solid #e2e8f0;
+}
+
+.mega-menu-featured h5 {
+    color: #1e293b;
+    font-size: 0.9rem;
     font-weight: 700;
-    margin: 15px 24px 8px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    opacity: 0.8;
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.dropdown-menu hr {
-    border: none;
-    border-top: 1px solid #f3f4f6;
-    margin: 8px 16px;
+.mega-menu-featured h5 i {
+    color: #f59e0b;
 }
 
-.dropdown-menu::-webkit-scrollbar {
-    width: 4px;
+.mega-menu-featured p {
+    color: #64748b;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
 }
 
-.dropdown-menu::-webkit-scrollbar-track {
-    background: #f1f5f9;
-    border-radius: 2px;
+.mega-menu-featured a {
+    background: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
 }
 
-.dropdown-menu::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 2px;
-}
-
-.dropdown-menu::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+.mega-menu-featured a:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
 }
 
 .hamburger {
