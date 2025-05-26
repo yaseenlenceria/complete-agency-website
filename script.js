@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
-            if (targetId === '#' || targetId === '' || targetId === '#!' || targetId.length <= 1) {
+            if (!targetId || targetId === '#' || targetId === '' || targetId === '#!' || targetId.length <= 1) {
                 e.preventDefault();
                 return;
             }
@@ -149,6 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             } catch (error) {
                 console.log('Invalid selector:', targetId);
+                e.preventDefault();
             }
         });
     });
@@ -399,122 +400,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Add CSS for animations
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
+// Add CSS for animations if not already added
+if (!document.querySelector('#dynamic-animations')) {
+    const style = document.createElement('style');
+    style.id = 'dynamic-animations';
+    style.textContent = `
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        to {
-            opacity: 1;
-            transform: translateY(0);
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
         }
-    }
-
-    @keyframes slideInLeft {
-        from {
-            opacity: 0;
-            transform: translateX(-30px);
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
         }
-        to {
-            opacity: 1;
-            transform: translateX(0);
+        .animate-in { animation: slideInUp 0.8s ease-out forwards; }
+        .navbar { transition: transform 0.3s ease; }
+        .nav-menu.active { transform: translateX(0) !important; }
+        @media (max-width: 768px) {
+            .nav-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
         }
-    }
-
-    @keyframes slideInRight {
-        from {
-            opacity: 0;
-            transform: translateX(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes pulse {
-        0%, 100% {
-            transform: scale(1);
-        }
-        50% {
-            transform: scale(1.05);
-        }
-    }
-
-    @keyframes glow {
-        0%, 100% {
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-        }
-        50% {
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
-        }
-    }
-
-    @keyframes float {
-        0%, 100% {
-            transform: translateY(0px);
-        }
-        50% {
-            transform: translateY(-20px);
-        }
-    }
-
-    .animate-in {
-        animation: slideInUp 0.8s ease-out forwards;
-    }
-
-    .service-card:nth-child(1) { animation-delay: 0.1s; }
-    .service-card:nth-child(2) { animation-delay: 0.2s; }
-    .service-card:nth-child(3) { animation-delay: 0.3s; }
-
-    .why-choose-item:nth-child(odd) {
-        animation: slideInLeft 0.8s ease-out;
-    }
-
-    .why-choose-item:nth-child(even) {
-        animation: slideInRight 0.8s ease-out;
-    }
-
-    .industry-card:hover .industry-icon {
-        animation: pulse 0.6s ease-in-out;
-    }
-
-    .btn-primary:hover {
-        animation: glow 0.3s ease-in-out;
-    }
-
-    .hero::after {
-        animation: float 20s linear infinite;
-    }
-
-    .loaded .service-card,
-    .loaded .why-choose-item,
-    .loaded .industry-card {
-        transition: all 0.3s ease;
-    }
-
-    .navbar {
-        transition: transform 0.3s ease;
-    }
-
-    .hero-image img,
-    .floating-card {
-        opacity: 0;
-        transition: opacity 0.5s ease;
-    }
-
-    .nav-menu.active {
-        transform: translateX(0) !important;
-    }
-
-    @media (max-width: 768px) {
-        .nav-menu {
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-        }
-    }
-`;
-document.head.appendChild(style);
+    `;
+    document.head.appendChild(style);
+}

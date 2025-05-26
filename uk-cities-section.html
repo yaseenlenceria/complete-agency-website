@@ -1,0 +1,107 @@
+
+<!-- UK Cities Section Component -->
+<section class="uk-cities-showcase">
+    <div class="container">
+        <div class="section-header">
+            <h2>SEO Services Available Nationwide</h2>
+            <p>Serving businesses across all major UK cities with proven SEO strategies</p>
+        </div>
+        <div class="cities-showcase-grid">
+            <div class="showcase-region">
+                <h3>England Major Cities</h3>
+                <div class="city-tags">
+                    <span class="city-tag major">London</span>
+                    <span class="city-tag major">Manchester</span>
+                    <span class="city-tag major">Birmingham</span>
+                    <span class="city-tag">Leeds</span>
+                    <span class="city-tag">Liverpool</span>
+                    <span class="city-tag">Sheffield</span>
+                    <span class="city-tag">Bristol</span>
+                    <span class="city-tag">Newcastle</span>
+                    <span class="city-tag">Nottingham</span>
+                    <span class="city-tag">Leicester</span>
+                </div>
+            </div>
+            <div class="showcase-region">
+                <h3>Scotland & Wales</h3>
+                <div class="city-tags">
+                    <span class="city-tag major">Edinburgh</span>
+                    <span class="city-tag major">Glasgow</span>
+                    <span class="city-tag major">Cardiff</span>
+                    <span class="city-tag">Aberdeen</span>
+                    <span class="city-tag">Dundee</span>
+                    <span class="city-tag">Swansea</span>
+                    <span class="city-tag">Newport</span>
+                </div>
+            </div>
+            <div class="showcase-region">
+                <h3>Northern Ireland</h3>
+                <div class="city-tags">
+                    <span class="city-tag major">Belfast</span>
+                    <span class="city-tag">Londonderry</span>
+                    <span class="city-tag">Lisburn</span>
+                    <span class="city-tag">Newry</span>
+                </div>
+            </div>
+        </div>
+        <div class="cities-cta">
+            <a href="cities-pages.html" class="btn-primary">View All UK Locations</a>
+        </div>
+    </div>
+</section>
+
+<style>
+.uk-cities-showcase {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+}
+
+.cities-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.showcase-region h3 {
+    font-size: 20px;
+    color: #1e293b;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3b82f6;
+}
+
+.city-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.city-tag {
+    background: white;
+    color: #475569;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.city-tag.major {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+}
+
+.city-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cities-cta {
+    text-align: center;
+    margin-top: 40px;
+}
+</style>

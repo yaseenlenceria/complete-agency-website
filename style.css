@@ -685,10 +685,65 @@ section .container {
     font-size: 0.95rem;
 }
 
+/* UK Cities Showcase */
+.uk-cities-showcase {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+}
+
+.cities-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.showcase-region h3 {
+    font-size: 20px;
+    color: #1e293b;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #3b82f6;
+}
+
+.city-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.city-tag {
+    background: white;
+    color: #475569;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.city-tag.major {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+}
+
+.city-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cities-cta {
+    text-align: center;
+    margin-top: 40px;
+}
+
 /* Industries Section */
 .industries-section {
     padding: 80px 0;
-    background: #f8fafc;
+    background: white;
 }
 
 .industries-grid {
@@ -879,11 +934,11 @@ section .container {
     .container {
         padding: 0 30px;
     }
-    
+
     section .container {
         padding: 0 30px;
     }
-    
+
     .hero-content {
         padding: 0 30px;
     }
@@ -913,15 +968,15 @@ section .container {
     .container {
         padding: 0 20px;
     }
-    
+
     section {
         padding: 60px 0;
     }
-    
+
     section .container {
         padding: 0 20px;
     }
-    
+
     .hero-content {
         padding: 0 20px;
     }
