@@ -1,6 +1,6 @@
 // Enhanced Navigation and Website Functionality
 document.addEventListener('DOMContentLoaded', function() {
-    
+
     // Navigation functionality
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
@@ -67,13 +67,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (navbar) {
         window.addEventListener('scroll', function() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
+
             if (scrollTop > 100) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
-            
+
             lastScrollTop = scrollTop;
         });
     }
@@ -85,14 +85,14 @@ document.addEventListener('DOMContentLoaded', function() {
             new LiveStatsComponent('live-stats');
         }
     }
-    
+
     if (typeof CurrentlyWorkingComponent !== 'undefined') {
         const currentlyWorkingContainer = document.getElementById('currently-working');
         if (currentlyWorkingContainer) {
             new CurrentlyWorkingComponent('currently-working');
         }
     }
-    
+
     if (typeof PerformanceGraphComponent !== 'undefined') {
         const performanceGraphContainer = document.getElementById('performance-graph');
         if (performanceGraphContainer) {
@@ -230,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add loaded class after page loads
     window.addEventListener('load', function() {
         document.body.classList.add('loaded');
-        
+
         // Fade in hero images
         const heroImages = document.querySelectorAll('.hero-image img, .floating-card');
         heroImages.forEach(img => {
@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             }, { threshold: 0.5 });
-            
+
             graphObserver.observe(graphSection);
         }
     }
@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const duration = 2000;
                     const step = target / (duration / 16);
                     let current = 0;
-                    
+
                     const timer = setInterval(() => {
                         current += step;
                         if (current >= target) {
@@ -320,12 +320,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         entry.target.textContent = Math.floor(current) + (entry.target.textContent.includes('%') ? '%' : '+');
                     }, 16);
-                    
+
                     observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.5 });
-        
+
         observer.observe(stat);
     });
 
@@ -334,18 +334,18 @@ document.addEventListener('DOMContentLoaded', function() {
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
         const answer = item.querySelector('.faq-answer');
-        
+
         if (question && answer) {
             question.addEventListener('click', () => {
                 const isActive = item.classList.contains('active');
-                
+
                 // Close all other items
                 faqItems.forEach(otherItem => {
                     otherItem.classList.remove('active');
                     const otherAnswer = otherItem.querySelector('.faq-answer');
                     if (otherAnswer) otherAnswer.classList.remove('active');
                 });
-                
+
                 // Toggle current item
                 if (!isActive) {
                     item.classList.add('active');
@@ -361,18 +361,18 @@ document.addEventListener('DOMContentLoaded', function() {
         let currentSlide = 0;
         const slides = testimonialCarousel.querySelectorAll('.testimonial-slide');
         const totalSlides = slides.length;
-        
+
         function showSlide(index) {
             slides.forEach((slide, i) => {
                 slide.style.display = i === index ? 'block' : 'none';
             });
         }
-        
+
         function nextSlide() {
             currentSlide = (currentSlide + 1) % totalSlides;
             showSlide(currentSlide);
         }
-        
+
         if (totalSlides > 1) {
             showSlide(0);
             setInterval(nextSlide, 5000); // Auto-advance every 5 seconds
@@ -384,7 +384,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Contact page specific code
         const serviceSelect = document.querySelector('select[name="service"]');
         const budgetField = document.querySelector('input[name="budget"]');
-        
+
         if (serviceSelect && budgetField) {
             serviceSelect.addEventListener('change', function() {
                 if (this.value === 'enterprise-seo') {
