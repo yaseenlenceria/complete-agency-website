@@ -103,7 +103,7 @@ function initializeScrollAnimations() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('in-view');
-                
+
                 // Animate counters when they come into view
                 if (entry.target.classList.contains('stat-item')) {
                     animateCounter(entry.target.querySelector('.stat-number'));
@@ -135,7 +135,7 @@ function initializeScrollAnimations() {
         } else {
             el.classList.add('scroll-animate-right');
         }
-        
+
         scrollObserver.observe(el);
     });
 
@@ -158,7 +158,7 @@ function initializeCounterAnimations() {
 
 function animateCounter(element) {
     if (!element || element.dataset.animated) return;
-    
+
     const target = parseInt(element.dataset.count || element.textContent);
     if (isNaN(target)) return;
 
@@ -174,7 +174,7 @@ function animateCounter(element) {
             current = target;
             clearInterval(timer);
         }
-        
+
         // Add suffix for percentage or plus sign
         const value = Math.floor(current);
         if (element.dataset.count === '94') {
@@ -192,7 +192,7 @@ function animateCounter(element) {
 function initializeImageLoading() {
     // Lazy loading for images
     const images = document.querySelectorAll('img[loading="lazy"]');
-    
+
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -333,24 +333,24 @@ function handleContactForm(event) {
 
 function handleFormSubmit(event) {
     event.preventDefault();
-    
+
     // Get form data
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    
+
     // Show success message
     const submitBtn = event.target.querySelector('.form-submit-btn');
     const originalText = submitBtn.innerHTML;
-    
+
     submitBtn.innerHTML = '<i class="fas fa-check"></i> <span>Message Sent Successfully!</span>';
     submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-    
+
     // Reset form after 3 seconds
     setTimeout(() => {
         event.target.reset();
         submitBtn.innerHTML = originalText;
         submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-        
+
         // Show thank you alert
         alert('Thank you for your interest! Our team will contact you within 24 hours with your free SEO audit and strategy recommendations.');
     }, 2000);
@@ -425,12 +425,12 @@ function initializeReviews() {
 function initializeFAQComponent() {
     if (typeof FAQComponent !== 'undefined') {
         let faqContainer = document.getElementById('faq-section');
-        
+
         // If FAQ section doesn't exist, create it
         if (!faqContainer) {
             faqContainer = document.createElement('div');
             faqContainer.id = 'faq-section';
-            
+
             // Insert before footer
             const footer = document.querySelector('.footer');
             if (footer && footer.parentNode) {
@@ -440,14 +440,14 @@ function initializeFAQComponent() {
                 document.body.appendChild(faqContainer);
             }
         }
-        
+
         if (faqContainer) {
             try {
                 const faq = new FAQComponent();
                 // Determine category based on page
                 let category = 'general';
                 const pathname = window.location.pathname.toLowerCase();
-                
+
                 if (pathname.includes('construction') || 
                     pathname.includes('roofing') || 
                     pathname.includes('plumber') ||
@@ -463,7 +463,7 @@ function initializeFAQComponent() {
                           pathname.includes('website')) {
                     category = 'technical';
                 }
-                
+
                 faq.init(category);
             } catch (error) {
                 console.error('Error initializing FAQ component:', error);
@@ -476,10 +476,10 @@ function initializeFAQComponent() {
 function initializeSEOEnhancements() {
     // Add structured data for pages
     addPageStructuredData();
-    
+
     // Initialize FAQ functionality
     initializeFAQSEO();
-    
+
     // Add schema markup for services
     addServiceSchema();
 }
@@ -488,7 +488,7 @@ function addPageStructuredData() {
     const pageType = document.body.getAttribute('data-page-type') || 'WebPage';
     const pageTitle = document.title;
     const pageDescription = document.querySelector('meta[name="description"]')?.content || '';
-    
+
     const structuredData = {
         "@context": "http://schema.org",
         "@type": pageType,
@@ -511,7 +511,7 @@ function addPageStructuredData() {
             }
         }
     };
-    
+
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.textContent = JSON.stringify(structuredData);
@@ -541,7 +541,7 @@ function addServiceSchema() {
             "areaServed": "United Kingdom",
             "serviceType": "SEO Services"
         };
-        
+
         const script = document.createElement('script');
         script.type = 'application/ld+json';
         script.textContent = JSON.stringify(serviceSchema);
@@ -617,8 +617,123 @@ function initializeGlobalNavigation() {
     if (existingNav && !existingNav.classList.contains('global-nav-initialized')) {
         existingNav.outerHTML = getGlobalNavigation();
         existingNav.classList.add('global-nav-initialized');
-        
+
         // Reinitialize navigation functionality
         initializeNavigation();
     }
+}
+
+// FAQ Toggle Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize FAQ functionality
+    initializeFAQ();
+
+    // Initialize scroll animations
+    initializeScrollAnimations();
+
+    // Initialize navbar scroll effect
+    initializeNavbar();
+
+    // Initialize mobile menu
+    initializeMobileMenu();
+});
+
+function initializeFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+
+        if (question && answer) {
+            question.addEventListener('click', function() {
+                const isActive = item.classList.contains('active');
+
+                // Close all other FAQ items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                        const otherAnswer = otherItem.querySelector('.faq-answer');
+                        if (otherAnswer) {
+                            otherAnswer.style.maxHeight = '0';
+                        }
+                    }
+                });
+
+                // Toggle current item
+                if (isActive) {
+                    item.classList.remove('active');
+                    answer.style.maxHeight = '0';
+                } else {
+                    item.classList.add('active');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+
+                console.log('FAQ clicked:', question.textContent.trim());
+            });
+        }
+    });
+}
+
+function initializeScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe all cards and sections
+    const elementsToAnimate = document.querySelectorAll('.service-card, .why-choose-item, .industry-card, .section-header');
+    elementsToAnimate.forEach(element => {
+        observer.observe(element);
+    });
+}
+
+function initializeNavbar() {
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    }
+}
+
+function initializeMobileMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            document.body.classList.toggle('nav-open');
+        });
+    }
+
+    // Handle dropdown menus on mobile
+    dropdowns.forEach(dropdown => {
+        const dropdownLink = dropdown.querySelector('a');
+        if (dropdownLink) {
+            dropdownLink.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                }
+            });
+        }
+    });
 }
