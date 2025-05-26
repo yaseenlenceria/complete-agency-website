@@ -102,7 +102,7 @@ function initializeScrollAnimations() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('in-view');
-
+                
                 // Animate counters when they come into view
                 if (entry.target.classList.contains('stat-item')) {
                     animateCounter(entry.target.querySelector('.stat-number'));
@@ -134,7 +134,7 @@ function initializeScrollAnimations() {
         } else {
             el.classList.add('scroll-animate-right');
         }
-
+        
         scrollObserver.observe(el);
     });
 
@@ -157,7 +157,7 @@ function initializeCounterAnimations() {
 
 function animateCounter(element) {
     if (!element || element.dataset.animated) return;
-
+    
     const target = parseInt(element.dataset.count || element.textContent);
     if (isNaN(target)) return;
 
@@ -173,7 +173,7 @@ function animateCounter(element) {
             current = target;
             clearInterval(timer);
         }
-
+        
         // Add suffix for percentage or plus sign
         const value = Math.floor(current);
         if (element.dataset.count === '94') {
@@ -191,7 +191,7 @@ function animateCounter(element) {
 function initializeImageLoading() {
     // Lazy loading for images
     const images = document.querySelectorAll('img[loading="lazy"]');
-
+    
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -332,24 +332,24 @@ function handleContactForm(event) {
 
 function handleFormSubmit(event) {
     event.preventDefault();
-
+    
     // Get form data
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-
+    
     // Show success message
     const submitBtn = event.target.querySelector('.form-submit-btn');
     const originalText = submitBtn.innerHTML;
-
+    
     submitBtn.innerHTML = '<i class="fas fa-check"></i> <span>Message Sent Successfully!</span>';
     submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-
+    
     // Reset form after 3 seconds
     setTimeout(() => {
         event.target.reset();
         submitBtn.innerHTML = originalText;
         submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-
+        
         // Show thank you alert
         alert('Thank you for your interest! Our team will contact you within 24 hours with your free SEO audit and strategy recommendations.');
     }, 2000);
@@ -424,10 +424,10 @@ function initializeReviews() {
 function initializeSEOEnhancements() {
     // Add structured data for pages
     addPageStructuredData();
-
+    
     // Initialize FAQ functionality
     initializeFAQSEO();
-
+    
     // Add schema markup for services
     addServiceSchema();
 }
@@ -436,7 +436,7 @@ function addPageStructuredData() {
     const pageType = document.body.getAttribute('data-page-type') || 'WebPage';
     const pageTitle = document.title;
     const pageDescription = document.querySelector('meta[name="description"]')?.content || '';
-
+    
     const structuredData = {
         "@context": "http://schema.org",
         "@type": pageType,
@@ -459,7 +459,7 @@ function addPageStructuredData() {
             }
         }
     };
-
+    
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.textContent = JSON.stringify(structuredData);
@@ -472,7 +472,7 @@ function initializeFAQSEO() {
         question.addEventListener('click', function() {
             const answer = this.nextElementSibling;
             const isActive = answer.classList.contains('active');
-
+            
             // Close all other answers
             document.querySelectorAll('.faq-answer').forEach(ans => {
                 ans.classList.remove('active');
@@ -480,7 +480,7 @@ function initializeFAQSEO() {
             document.querySelectorAll('.faq-question').forEach(q => {
                 q.classList.remove('active');
             });
-
+            
             // Toggle current answer
             if (!isActive) {
                 answer.classList.add('active');
@@ -508,7 +508,7 @@ function addServiceSchema() {
             "areaServed": "United Kingdom",
             "serviceType": "SEO Services"
         };
-
+        
         const script = document.createElement('script');
         script.type = 'application/ld+json';
         script.textContent = JSON.stringify(serviceSchema);
@@ -584,104 +584,8 @@ function initializeGlobalNavigation() {
     if (existingNav && !existingNav.classList.contains('global-nav-initialized')) {
         existingNav.outerHTML = getGlobalNavigation();
         existingNav.classList.add('global-nav-initialized');
-
+        
         // Reinitialize navigation functionality
         initializeNavigation();
     }
 }
-document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Reviews
-            if (typeof ReviewsComponent !== 'undefined') {
-                const reviews = new ReviewsComponent();
-                reviews.init();
-            }
-
-            // Initialize FAQ with dynamic content
-            if (typeof FAQComponent !== 'undefined') {
-                const faq = new FAQComponent();
-
-                // Determine page context for appropriate FAQ category
-                const currentPage = window.location.pathname;
-                let category = 'general';
-                let pageTitle = 'Our SEO Services';
-
-                if (currentPage.includes('construction')) {
-                    category = 'industry';
-                    pageTitle = 'Construction SEO Services';
-                } else if (currentPage.includes('roofing') || currentPage.includes('roofer')) {
-                    category = 'industry';
-                    pageTitle = 'Roofing SEO Services';
-                } else if (currentPage.includes('law-firm')) {
-                    category = 'industry';
-                    pageTitle = 'Law Firm SEO Services';
-                } else if (currentPage.includes('technical') || currentPage.includes('website-development')) {
-                    category = 'technical';
-                    pageTitle = 'Technical SEO & Web Development';
-                } else if (currentPage.includes('cities') || currentPage.includes('local')) {
-                    category = 'local';
-                    pageTitle = 'Local SEO Services';
-                }
-
-                faq.init(category, pageTitle);
-            }
-
-            // Initialize other components
-            if (typeof UKRankingCharts !== 'undefined') {
-                const charts = new UKRankingCharts();
-                charts.init();
-            }
-
-            // Ensure consistent navigation across all pages
-            initializeNavigation();
-
-            // Initialize FAQ functionality
-            initializeFAQSEO();
-        });
-
-        // Navigation consistency function
-        function initializeNavigation() {
-            const navbar = document.querySelector('.navbar');
-            if (navbar) {
-                // Add scroll effect
-                window.addEventListener('scroll', function() {
-                    if (window.scrollY > 50) {
-                        navbar.classList.add('scrolled');
-                    } else {
-                        navbar.classList.remove('scrolled');
-                    }
-                });
-
-                // Mobile menu functionality
-                const hamburger = document.querySelector('.hamburger');
-                const navMenu = document.querySelector('.nav-menu');
-
-                if (hamburger && navMenu) {
-                    hamburger.addEventListener('click', function() {
-                        hamburger.classList.toggle('active');
-                        navMenu.classList.toggle('active');
-                        document.body.classList.toggle('nav-open');
-                    });
-
-                    // Close menu when clicking on links
-                    const navLinks = document.querySelectorAll('.nav-menu a');
-                    navLinks.forEach(link => {
-                        link.addEventListener('click', function() {
-                            hamburger.classList.remove('active');
-                            navMenu.classList.remove('active');
-                            document.body.classList.remove('nav-open');
-                        });
-                    });
-                }
-
-                // Dropdown functionality
-                const dropdowns = document.querySelectorAll('.dropdown');
-                dropdowns.forEach(dropdown => {
-                    dropdown.addEventListener('click', function(e) {
-                        if (window.innerWidth <= 768) {
-                            e.preventDefault();
-                            this.classList.toggle('active');
-                        }
-                    });
-                });
-            }
-        }
