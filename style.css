@@ -1982,15 +1982,15 @@ section .container {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-    
+
     .values-hero-image img {
         height: 200px;
     }
-    
+
     .value-image {
         height: 120px;
     }
-    
+
     .value-card i {
         margin: 140px 0 1rem 0;
         font-size: 1.5rem;
@@ -2467,3 +2467,101 @@ document.head.appendChild(style);
     }
 }
 /* End styles for dynamic content for each city  */
+/* FAQ Section */
+.faq-section {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    margin-top: 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.faq-container {
+    margin-top: 30px;
+}
+
+.faq-item {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+.faq-item.active {
+    border-color: #3b82f6;
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+}
+
+.faq-question {
+    color: #1e293b;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    background: #f8fafc;
+    transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+    background: #e2e8f0;
+}
+
+.faq-item.active .faq-question {
+    background: #3b82f6;
+    color: white;
+}
+
+.faq-icon {
+    font-size: 1.2rem;
+    color: #3b82f6;
+    transition: all 0.3s ease;
+}
+
+.faq-item.active .faq-icon {
+    color: white;
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    color: #64748b;
+    line-height: 1.6;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.faq-answer.active {
+    max-height: 300px;
+    padding: 25px;
+}
+
+.faq-cta {
+    background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.faq-cta h3 {
+    color: #1e293b;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.faq-cta p {
+    color: #64748b;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+}
