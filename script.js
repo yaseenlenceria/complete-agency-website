@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
-            if (href && href !== '#') {
+            if (href && href !== '#' && href.length > 1) {
                 e.preventDefault();
                 const target = document.querySelector(href);
                 if (target) {
@@ -55,33 +55,55 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Form validation and submission
-    const contactForm = document.querySelector('#contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+    const contactForms = document.querySelectorAll('form');
+    contactForms.forEach(form => {
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
 
-            // Get form data
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
+                // Get form data
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData);
 
-            // Basic validation
-            if (!data.name || !data.email || !data.message) {
-                alert('Please fill in all required fields.');
-                return;
-            }
+                // Basic validation
+                const nameField = this.querySelector('[name="name"]') || this.querySelector('#name');
+                const emailField = this.querySelector('[name="email"]') || this.querySelector('#email');
+                const messageField = this.querySelector('[name="message"]') || this.querySelector('#message');
 
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(data.email)) {
-                alert('Please enter a valid email address.');
-                return;
-            }
+                if (nameField && !nameField.value.trim()) {
+                    alert('Please enter your name.');
+                    nameField.focus();
+                    return;
+                }
 
-            // Show success message
-            alert('Thank you for your message! We will get back to you soon.');
-            this.reset();
-        });
-    }
+                if (emailField && !emailField.value.trim()) {
+                    alert('Please enter your email address.');
+                    emailField.focus();
+                    return;
+                }
+
+                // Email validation
+                if (emailField && emailField.value.trim()) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(emailField.value.trim())) {
+                        alert('Please enter a valid email address.');
+                        emailField.focus();
+                        return;
+                    }
+                }
+
+                if (messageField && !messageField.value.trim()) {
+                    alert('Please enter your message.');
+                    messageField.focus();
+                    return;
+                }
+
+                // Show success message
+                alert('Thank you for your message! We will get back to you soon.');
+                this.reset();
+            });
+        }
+    });
 
     // Animate elements on scroll
     const observerOptions = {
