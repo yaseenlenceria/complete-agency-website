@@ -307,7 +307,7 @@ body {
 
 /* Problem/Solution Section */
 .problem-solution {
-    padding: 80px 20px;
+    padding: 50px 20px;
     background: white;
 }
 
@@ -389,7 +389,7 @@ body {
 
 /* Services Section */
 .services-section {
-    padding: 100px 20px;
+    padding: 60px 20px;
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
     position: relative;
     overflow: hidden;
@@ -666,7 +666,7 @@ body {
 
 /* Why Choose Us Section */
 .why-choose-section {
-    padding: 60px 20px;
+    padding: 40px 20px;
     background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
     position: relative;
 }
@@ -828,7 +828,7 @@ body {
 
 /* Industries Section */
 .industries-section {
-    padding: 80px 20px;
+    padding: 50px 20px;
     background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
     position: relative;
 }
