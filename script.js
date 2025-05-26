@@ -135,23 +135,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Mobile menu improvements
     const dropdowns = document.querySelectorAll('.dropdown');
-    if (dropdowns.length > 0) {
+    if (dropdowns && dropdowns.length > 0) {
         dropdowns.forEach(dropdown => {
-            const dropdownMenu = dropdown.querySelector('.dropdown-menu');
-            const dropdownLink = dropdown.querySelector('a');
-            if (dropdownMenu && dropdownLink) {
-                dropdownLink.addEventListener('click', function(e) {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        const isVisible = dropdownMenu.style.display === 'block';
-                        // Close all other dropdowns
-                        document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                            menu.style.display = 'none';
-                        });
-                        // Toggle current dropdown
-                        dropdownMenu.style.display = isVisible ? 'none' : 'block';
-                    }
-                });
+            if (dropdown) {
+                const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+                const dropdownLink = dropdown.querySelector('a');
+                if (dropdownMenu && dropdownLink) {
+                    dropdownLink.addEventListener('click', function(e) {
+                        if (window.innerWidth <= 768) {
+                            e.preventDefault();
+                            const isVisible = dropdownMenu.style.display === 'block';
+                            // Close all other dropdowns
+                            const allMenus = document.querySelectorAll('.dropdown-menu');
+                            if (allMenus) {
+                                allMenus.forEach(menu => {
+                                    if (menu) menu.style.display = 'none';
+                                });
+                            }
+                            // Toggle current dropdown
+                            dropdownMenu.style.display = isVisible ? 'none' : 'block';
+                        }
+                    });
+                }
             }
         });
     }
