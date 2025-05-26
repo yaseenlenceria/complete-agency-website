@@ -1,29 +1,21 @@
-// Wait for DOM to be fully loaded
+// Navigation Toggle
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
 
     if (hamburger && navMenu) {
-        hamburger.addEventListener('click', () => {
+        hamburger.addEventListener('click', function() {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-menu a').forEach((link) => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            });
-        });
     }
 
-    // Smooth scrolling for anchor links - Fix for invalid selector
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+    // Smooth scrolling for anchor links
+    const links = document.querySelectorAll('a[href^="#"]');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
-            if (href && href !== '#' && href.length > 1) {
+            if (href && href !== '#') {
                 e.preventDefault();
                 const target = document.querySelector(href);
                 if (target) {
@@ -40,53 +32,113 @@ document.addEventListener('DOMContentLoaded', function() {
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
+
+            // Show success message
+            const formData = new FormData(this);
+            const button = this.querySelector('button[type="submit"]');
+            const originalText = button.textContent;
+
+            button.textContent = 'Sending...';
+            button.disabled = true;
+
+            // Simulate form submission
+            setTimeout(() => {
+                button.textContent = 'Message Sent!';
+                button.style.backgroundColor = '#10b981';
+
+                // Reset form
+                this.reset();
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                    button.style.backgroundColor = '';
+                }, 3000);
+            }, 1500);
         });
     }
 
-    // Add animation to stats when they come into view
-    const observerCallback = (entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const statNumbers = entry.target.querySelectorAll('.stat h3, .stat-item h3');
-                statNumbers.forEach(stat => {
-                    const finalValue = stat.textContent;
-                    stat.textContent = '0';
-                    animateNumber(stat, finalValue);
-                });
-            }
-        });
+    // Animate elements on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver(observerCallback, { threshold: 0.5 });
-
-    const statsContainers = document.querySelectorAll('.stats, .results-stats');
-    statsContainers.forEach(container => observer.observe(container));
-
-    function animateNumber(element, finalValue) {
-        const isPercentage = finalValue.includes('%');
-        const isMultiplier = finalValue.includes('x');
-        const isPlusSign = finalValue.includes('+');
-        const numericValue = parseFloat(finalValue.replace(/[%x+]/g, ''));
-
-        let currentValue = 0;
-        const increment = numericValue / 50;
-
-        const timer = setInterval(() => {
-            currentValue += increment;
-            if (currentValue >= numericValue) {
-                currentValue = numericValue;
-                clearInterval(timer);
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
             }
+        });
+    }, observerOptions);
 
-            let displayValue = Math.floor(currentValue);
-            if (isPercentage) displayValue += '%';
-            if (isMultiplier) displayValue += 'x';
-            if (isPlusSign) displayValue += '+';
+    // Observe elements for animation
+    const animateElements = document.querySelectorAll('.service-card, .benefit-card, .step, .award-item, .industry-item');
+    animateElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
 
-            element.textContent = displayValue;
-        }, 20);
+    // Performance graph animation
+    const graphBars = document.querySelectorAll('.bar');
+    if (graphBars.length > 0) {
+        const heights = [120, 180, 240, 300, 350, 400];
+        graphBars.forEach((bar, index) => {
+            setTimeout(() => {
+                bar.style.height = heights[index] + 'px';
+            }, index * 200);
+        });
     }
+
+    // Statistics counter animation
+    const statNumbers = document.querySelectorAll('.stat h3, .stat-item h3');
+    statNumbers.forEach(stat => {
+        const target = parseInt(stat.textContent.replace(/[^\d]/g, ''));
+        const suffix = stat.textContent.replace(/\d/g, '');
+
+        if (target && target > 0) {
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                stat.textContent = Math.floor(current) + suffix;
+            }, 30);
+        }
+    });
+
+    // Mobile menu improvements
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+        const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+        if (dropdownMenu) {
+            dropdown.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+                }
+            });
+        }
+    });
+
+    // Add loading states for better UX
+    const allImages = document.querySelectorAll('img');
+    allImages.forEach(img => {
+        img.addEventListener('load', function() {
+            this.style.opacity = '1';
+        });
+
+        if (!img.complete) {
+            img.style.opacity = '0';
+            img.style.transition = 'opacity 0.3s ease';
+        }
+    });
 });
 
 // Navbar background change on scroll
@@ -100,71 +152,6 @@ window.addEventListener('scroll', () => {
         navbar.style.boxShadow = 'none';
     }
 });
-
-// Contact form handling
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Get form data
-    const formData = new FormData(this);
-    const name = this.querySelector('input[type="text"]').value;
-    const email = this.querySelector('input[type="email"]').value;
-    const phone = this.querySelector('input[type="tel"]').value;
-    const service = this.querySelector('select').value;
-    const message = this.querySelector('textarea').value;
-
-    // Simple validation
-    if (!name || !email || !service) {
-        alert('Please fill in all required fields.');
-        return;
-    }
-
-    // Simulate form submission
-    const submitBtn = this.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-
-    submitBtn.textContent = 'Sending...';
-    submitBtn.disabled = true;
-
-    setTimeout(() => {
-        alert('Thank you for your inquiry! We will contact you within 24 hours.');
-        this.reset();
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    }, 2000);
-});
-}
-
-// Animate elements on scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const elementObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// Observe elements for animation
-document.addEventListener('DOMContentLoaded', () => {
-    const animateElements = document.querySelectorAll('.step, .service-card, .industry-item, .stat');
-
-    animateElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        elementObserver.observe(el);
-    });
-});
-
-
 
 // Add mobile menu styles dynamically
 const style = document.createElement('style');
