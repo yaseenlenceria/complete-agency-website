@@ -1456,8 +1456,13 @@ section .container {
     .industries-grid,
     .problems-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 1rem;
         padding: 0 10px;
+    }
+
+    .service-card {
+        max-width: 100%;
+        padding: 1rem;
     }
 
     .section-header h2 {

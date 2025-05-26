@@ -602,9 +602,10 @@
 }
 
 .working-card h3 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    color: #1e293b;
+    font-size: 16px;
+    color: #fbbf24;
+    margin-bottom: 12px;
+    line-height: 1.3;
 }
 
 .client-details {
@@ -1343,58 +1344,10 @@ px rgba(0, 0,0, 0.15);
     .live-stats-grid,
     .working-cards,
     .case-studies-grid,
-    .testimonials-grid {
+    .testimonials-grid,
+    .chart-grid {
         grid-template-columns: 1fr;
         gap: 20px;
-    }
-
-    .uk-regions {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .cities-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .graph-legend {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .graph-chart {
-        height: 250px;
-        padding: 15px;
-    }
-
-    .graph-bars {
-        height: 200px;
-    }
-
-    .results-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    .case-study-header {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .industry-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-
-    .industry-row h3 {
-        min-width: auto;
-    }
-
-    .location-result {
-        flex-direction: column;
-        gap: 10px;
     }
 }
 
@@ -2172,7 +2125,8 @@ px rgba(0, 0,0, 0.15);
 .reviews-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 30px;
+    ```
+gap: 30px;
     margin-bottom: 60px;
 }
 
@@ -2887,3 +2841,4 @@ px rgba(0, 0,0, 0.15);
         grid-template-columns: 1fr;
         gap: 20px;
     }
+}
