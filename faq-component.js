@@ -43,6 +43,26 @@ class FAQComponent {
                 {
                     question: "What makes your pricing competitive?",
                     answer: "Our pricing reflects our position as the UK's #1 rated agency while remaining competitive. We offer flexible packages, no long-term contracts, and transparent pricing with no hidden fees. You're paying for proven expertise and guaranteed results."
+                },
+                {
+                    question: "How long are your SEO contracts?",
+                    answer: "We don't believe in tying clients into long-term contracts. Our services are month-to-month, allowing you the flexibility to adjust or cancel at any time. We prefer to earn your business through results rather than legal obligations."
+                },
+                {
+                    question: "What reporting do you provide?",
+                    answer: "We provide comprehensive monthly reports including keyword rankings, traffic growth, conversion tracking, competitor analysis, and detailed explanations of work completed. You'll also have 24/7 access to a client portal with real-time performance data."
+                },
+                {
+                    question: "Do you work with small businesses or just large companies?",
+                    answer: "We work with businesses of all sizes, from small local startups to large enterprises. Our flexible packages and scalable strategies ensure that every business, regardless of size, can benefit from our expertise and achieve measurable growth."
+                },
+                {
+                    question: "Can you help if my website has been penalized by Google?",
+                    answer: "Yes, we specialize in penalty recovery. Our team can identify the causes of Google penalties, develop comprehensive recovery strategies, and implement the necessary changes to restore your rankings and traffic."
+                },
+                {
+                    question: "What happens if I'm not satisfied with your services?",
+                    answer: "We offer a 90-day satisfaction guarantee. If you're not completely satisfied with our services within the first 90 days, we'll either continue working for free until you achieve your goals or provide a full refund."
                 }
             ],
             technical: [
@@ -187,31 +207,46 @@ class FAQComponent {
     }
 
     initializeFAQInteraction() {
-        const faqQuestions = document.querySelectorAll('.faq-question');
-        faqQuestions.forEach(question => {
-            question.addEventListener('click', function() {
-                const faqItem = this.parentElement;
-                const answer = faqItem.querySelector('.faq-answer');
-                const isActive = faqItem.classList.contains('active');
-                const icon = this.querySelector('.faq-icon');
-                
-                // Close all other answers
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('active');
-                    const otherIcon = item.querySelector('.faq-icon');
-                    if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
-                });
-                
-                // Toggle current answer
-                if (!isActive) {
-                    faqItem.classList.add('active');
-                    if (icon) icon.style.transform = 'rotate(180deg)';
-                } else {
-                    faqItem.classList.remove('active');
-                    if (icon) icon.style.transform = 'rotate(0deg)';
+        // Wait for DOM to be ready
+        setTimeout(() => {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                if (question && !question.hasAttribute('data-listener-added')) {
+                    question.setAttribute('data-listener-added', 'true');
+                    question.addEventListener('click', function() {
+                        console.log('FAQ clicked:', this.textContent.trim());
+                        
+                        const faqItem = this.parentElement;
+                        const answer = faqItem.querySelector('.faq-answer');
+                        const isActive = faqItem.classList.contains('active');
+                        const icon = this.querySelector('.faq-icon');
+                        
+                        // Close all other answers
+                        document.querySelectorAll('.faq-item').forEach(item => {
+                            if (item !== faqItem) {
+                                item.classList.remove('active');
+                                const otherAnswer = item.querySelector('.faq-answer');
+                                const otherIcon = item.querySelector('.faq-icon');
+                                if (otherAnswer) otherAnswer.style.maxHeight = '0px';
+                                if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                            }
+                        });
+                        
+                        // Toggle current answer
+                        if (!isActive) {
+                            faqItem.classList.add('active');
+                            if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
+                            if (icon) icon.style.transform = 'rotate(180deg)';
+                        } else {
+                            faqItem.classList.remove('active');
+                            if (answer) answer.style.maxHeight = '0px';
+                            if (icon) icon.style.transform = 'rotate(0deg)';
+                        }
+                    });
                 }
             });
-        });
+        }, 100);
     }
 }
 

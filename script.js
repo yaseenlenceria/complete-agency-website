@@ -433,28 +433,41 @@ function initializeFAQComponent() {
             
             // Insert before footer
             const footer = document.querySelector('.footer');
-            if (footer) {
+            if (footer && footer.parentNode) {
                 footer.parentNode.insertBefore(faqContainer, footer);
+            } else {
+                // If no footer, append to body
+                document.body.appendChild(faqContainer);
             }
         }
         
         if (faqContainer) {
-            const faq = new FAQComponent();
-            // Determine category based on page
-            let category = 'general';
-            if (window.location.pathname.includes('construction') || 
-                window.location.pathname.includes('roofing') || 
-                window.location.pathname.includes('plumber')) {
-                category = 'industries';
-            } else if (window.location.pathname.includes('cities') || 
-                      window.location.pathname.includes('manchester') || 
-                      window.location.pathname.includes('birmingham')) {
-                category = 'local';
-            } else if (window.location.pathname.includes('technical') || 
-                      window.location.pathname.includes('development')) {
-                category = 'technical';
+            try {
+                const faq = new FAQComponent();
+                // Determine category based on page
+                let category = 'general';
+                const pathname = window.location.pathname.toLowerCase();
+                
+                if (pathname.includes('construction') || 
+                    pathname.includes('roofing') || 
+                    pathname.includes('plumber') ||
+                    pathname.includes('architect')) {
+                    category = 'industries';
+                } else if (pathname.includes('cities') || 
+                          pathname.includes('manchester') || 
+                          pathname.includes('birmingham') ||
+                          pathname.includes('london')) {
+                    category = 'local';
+                } else if (pathname.includes('technical') || 
+                          pathname.includes('development') ||
+                          pathname.includes('website')) {
+                    category = 'technical';
+                }
+                
+                faq.init(category);
+            } catch (error) {
+                console.error('Error initializing FAQ component:', error);
             }
-            faq.init(category);
         }
     }
 }
@@ -506,31 +519,8 @@ function addPageStructuredData() {
 }
 
 function initializeFAQSEO() {
-    const faqQuestions = document.querySelectorAll('.faq-question');
-    faqQuestions.forEach(question => {
-        question.addEventListener('click', function() {
-            const faqItem = this.parentElement;
-            const answer = faqItem.querySelector('.faq-answer');
-            const isActive = faqItem.classList.contains('active');
-            const icon = this.querySelector('.faq-icon');
-            
-            // Close all other answers
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item.classList.remove('active');
-                const itemAnswer = item.querySelector('.faq-answer');
-                const itemIcon = item.querySelector('.faq-icon');
-                if (itemAnswer) itemAnswer.classList.remove('active');
-                if (itemIcon) itemIcon.style.transform = 'rotate(0deg)';
-            });
-            
-            // Toggle current answer
-            if (!isActive) {
-                faqItem.classList.add('active');
-                if (answer) answer.classList.add('active');
-                if (icon) icon.style.transform = 'rotate(180deg)';
-            }
-        });
-    });
+    // This function is now handled by the FAQComponent class
+    // Remove to avoid conflicts
 }
 
 function addServiceSchema() {
