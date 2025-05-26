@@ -187,31 +187,55 @@ class FAQComponent {
     }
 
     initializeFAQInteraction() {
-        const faqQuestions = document.querySelectorAll('.faq-question');
-        faqQuestions.forEach(question => {
-            question.addEventListener('click', function() {
-                const faqItem = this.parentElement;
-                const answer = faqItem.querySelector('.faq-answer');
-                const isActive = faqItem.classList.contains('active');
-                const icon = this.querySelector('.faq-icon');
-                
-                // Close all other answers
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('active');
-                    const otherIcon = item.querySelector('.faq-icon');
-                    if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+        // Add a small delay to ensure DOM is ready
+        setTimeout(() => {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const faqItem = this.parentElement;
+                    const answer = faqItem.querySelector('.faq-answer');
+                    const isActive = faqItem.classList.contains('active');
+                    const icon = this.querySelector('.faq-icon');
+                    
+                    // Close all other answers first
+                    document.querySelectorAll('.faq-item').forEach(item => {
+                        if (item !== faqItem) {
+                            item.classList.remove('active');
+                            const otherAnswer = item.querySelector('.faq-answer');
+                            const otherIcon = item.querySelector('.faq-icon');
+                            if (otherAnswer) {
+                                otherAnswer.classList.remove('active');
+                                otherAnswer.style.maxHeight = '0';
+                                otherAnswer.style.padding = '0 25px';
+                            }
+                            if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                        }
+                    });
+                    
+                    // Toggle current answer
+                    if (!isActive) {
+                        faqItem.classList.add('active');
+                        if (answer) {
+                            answer.classList.add('active');
+                            answer.style.maxHeight = answer.scrollHeight + 'px';
+                            answer.style.padding = '25px';
+                        }
+                        if (icon) icon.style.transform = 'rotate(180deg)';
+                    } else {
+                        faqItem.classList.remove('active');
+                        if (answer) {
+                            answer.classList.remove('active');
+                            answer.style.maxHeight = '0';
+                            answer.style.padding = '0 25px';
+                        }
+                        if (icon) icon.style.transform = 'rotate(0deg)';
+                    }
                 });
-                
-                // Toggle current answer
-                if (!isActive) {
-                    faqItem.classList.add('active');
-                    if (icon) icon.style.transform = 'rotate(180deg)';
-                } else {
-                    faqItem.classList.remove('active');
-                    if (icon) icon.style.transform = 'rotate(0deg)';
-                }
             });
-        });
+        }, 100);
     }
 }
 

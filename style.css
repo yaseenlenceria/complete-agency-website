@@ -2470,36 +2470,65 @@ document.head.appendChild(style);
 /* FAQ Section */
 .faq-section {
     background: white;
-    padding: 40px;
-    border-radius: 16px;
+    padding: 60px 0;
     margin-top: 40px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.faq-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.faq-section .section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.faq-section .section-header h2 {
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.faq-section .section-header p {
+    font-size: 1.2rem;
+    color: #cbd5e1;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .faq-container {
-    margin-top: 30px;
+    margin-top: 40px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .faq-item {
-    border: 2px solid #e5e7eb;
+    border: 2px solid #334155;
     border-radius: 12px;
     margin-bottom: 15px;
     overflow: hidden;
     transition: all 0.3s ease;
+    background: rgba(30, 41, 59, 0.5);
 }
 
 .faq-item:hover {
     border-color: #3b82f6;
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    background: rgba(30, 41, 59, 0.7);
 }
 
 .faq-item.active {
     border-color: #3b82f6;
-    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+    background: rgba(30, 41, 59, 0.9);
 }
 
 .faq-question {
-    color: #1e293b;
+    color: white;
     font-weight: 600;
     font-size: 1.1rem;
     margin: 0;
@@ -2508,12 +2537,16 @@ document.head.appendChild(style);
     justify-content: space-between;
     align-items: center;
     padding: 20px 25px;
-    background: #f8fafc;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
     transition: all 0.3s ease;
 }
 
 .faq-question:hover {
-    background: #e2e8f0;
+    background: rgba(59, 130, 246, 0.1);
+    color: #93c5fd;
 }
 
 .faq-item.active .faq-question {
@@ -2525,6 +2558,8 @@ document.head.appendChild(style);
     font-size: 1.2rem;
     color: #3b82f6;
     transition: all 0.3s ease;
+    margin-left: 10px;
+    flex-shrink: 0;
 }
 
 .faq-item.active .faq-icon {
@@ -2533,35 +2568,94 @@ document.head.appendChild(style);
 }
 
 .faq-answer {
-    color: #64748b;
+    color: #cbd5e1;
     line-height: 1.6;
     max-height: 0;
     overflow: hidden;
-    transition: all 0.3s ease;
-    background: white;
+    transition: all 0.4s ease-in-out;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 0 25px;
 }
 
 .faq-answer.active {
-    max-height: 300px;
+    max-height: 500px;
     padding: 25px;
 }
 
+.faq-answer p {
+    margin: 0;
+    color: #cbd5e1;
+}
+
 .faq-cta {
-    background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1));
     padding: 40px;
     border-radius: 16px;
     text-align: center;
     margin-top: 40px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 .faq-cta h3 {
-    color: #1e293b;
+    color: white;
     margin-bottom: 15px;
     font-size: 1.5rem;
 }
 
 .faq-cta p {
-    color: #64748b;
+    color: #cbd5e1;
     margin-bottom: 25px;
     font-size: 1.1rem;
+}
+
+/* Ensure all section headers have proper text color */
+.section-header h2 {
+    color: white !important;
+}
+
+.section-header p {
+    color: #cbd5e1 !important;
+}
+
+/* Fix text colors in all sections */
+.hero-content h1,
+.hero-content p,
+.hero-subtitle {
+    color: white !important;
+}
+
+.services-section .section-header h2,
+.why-choose-section .section-header h2,
+.industries-section .section-header h2,
+.enhanced-uk-cities .section-header h2 {
+    color: white !important;
+}
+
+.services-section .section-header p,
+.why-choose-section .section-header p,
+.industries-section .section-header p,
+.enhanced-uk-cities .section-header p {
+    color: #cbd5e1 !important;
+}
+
+/* Specific fixes for service cards and content */
+.service-card h3,
+.why-choose-item h3,
+.industry-card h3 {
+    color: #1e293b !important;
+}
+
+.service-card p,
+.why-choose-item p,
+.industry-card p {
+    color: #64748b !important;
+}
+
+/* Fix CTA section text */
+.cta-content h2 {
+    color: white !important;
+}
+
+.cta-content p {
+    color: #cbd5e1 !important;
 }
