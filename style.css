@@ -1,4 +1,3 @@
-
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -779,10 +778,11 @@ body {
     font-size: 1.1rem;
 }
 
+/* CTA Section */
 .cta-section {
-    padding: 80px 20px;
     background: linear-gradient(135deg, #2563eb, #3b82f6);
     color: white;
+    padding: 4rem 0;
     text-align: center;
 }
 
@@ -797,16 +797,251 @@ body {
     opacity: 0.9;
 }
 
-.cta-section .btn-primary {
-    background: white;
+/* Policy Pages Styles */
+.policy-content {
+    padding: 6rem 0 4rem;
+    background: #fff;
+}
+
+.policy-content h1 {
+    font-size: 3rem;
     color: #2563eb;
-    padding: 15px 30px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.policy-content > .container > p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 3rem;
     font-size: 1.1rem;
 }
 
-.cta-section .btn-primary:hover {
-    background: #f8fafc;
-    transform: translateY(-2px);
+.policy-section {
+    margin-bottom: 3rem;
+}
+
+.policy-section h2 {
+    color: #2563eb;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 0.5rem;
+}
+
+.policy-section h3 {
+    color: #333;
+    font-size: 1.3rem;
+    margin: 1.5rem 0 0.5rem;
+}
+
+.policy-section p {
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.policy-section ul {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.policy-section li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.contact-details {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+/* About Page Styles */
+.about-story {
+    padding: 4rem 0;
+    background: #f8f9fa;
+}
+
+.story-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: #555;
+}
+
+.values-section {
+    padding: 4rem 0;
+    background: #fff;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.value-card {
+    text-align: center;
+    padding: 2rem;
+    border-radius: 10px;
+    background: #f8f9fa;
+    transition: transform 0.3s ease;
+}
+
+.value-card:hover {
+    transform: translateY(-5px);
+}
+
+.value-card i {
+    font-size: 3rem;
+    color: #2563eb;
+    margin-bottom: 1rem;
+}
+
+.value-card h3 {
+    color: #2563eb;
+    margin-bottom: 1rem;
+}
+
+.team-section {
+    padding: 4rem 0;
+    background: #f8f9fa;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.team-member {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.team-member h3 {
+    color: #2563eb;
+    margin-bottom: 0.5rem;
+}
+
+.why-choose-us {
+    padding: 4rem 0;
+    background: #fff;
+}
+
+.reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.reason-item {
+    padding: 1.5rem;
+}
+
+.reason-item h3 {
+    color: #2563eb;
+    margin-bottom: 1rem;
+}
+
+/* Contact Page Styles */
+.contact-info-section {
+    padding: 4rem 0;
+    background: #f8f9fa;
+}
+
+.contact-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.contact-method {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.contact-method i {
+    font-size: 2.5rem;
+    color: #2563eb;
+    margin-bottom: 1rem;
+}
+
+.contact-method h3 {
+    color: #2563eb;
+    margin-bottom: 1rem;
+}
+
+.contact-form-section {
+    padding: 4rem 0;
+    background: #fff;
+}
+
+.consultation-benefits {
+    margin-top: 2rem;
+}
+
+.consultation-benefits ul {
+    list-style: none;
+    padding: 0;
+}
+
+.consultation-benefits li {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.consultation-benefits i {
+    color: #2563eb;
+    margin-right: 0.5rem;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.map-section {
+    padding: 4rem 0;
+    background: #f8f9fa;
+}
+
+.map-container {
+    margin: 2rem 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.office-info {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.office-info p {
+    margin-bottom: 0.5rem;
 }
 
 .expert-tips {
