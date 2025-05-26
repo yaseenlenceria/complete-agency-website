@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const href = anchor.getAttribute('href');
-        if (href && href !== '#' && href !== '#services' && href !== '#why-choose-us' && href.length > 1) {
+        if (href && href !== '#' && href.length > 1) {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
