@@ -132,13 +132,13 @@ class FAQComponent {
     }
 
     render(container, category = 'general') {
-        if (!container) {
-            console.error('FAQ container not found');
-            return;
-        }
-
-        container.innerHTML = this.generateHTML(category);
+        const faqHTML = this.createFAQSection(category);
+        container.innerHTML = faqHTML;
         this.initializeFAQEvents();
+    }
+
+    generateFAQHTML(category = 'general') {
+        return this.createFAQSection(category);
     }
 
     generateFAQSchema() {

@@ -46,7 +46,7 @@ function initializeNavigation() {
     }
 
     // Dropdown menu for mobile
-    document.querySelectorAll('.dropdown > a').forEach(dropdownToggle => {
+    document.querySelectorAll('.dropdown > a, .mega-dropdown > a').forEach(dropdownToggle => {
         dropdownToggle.addEventListener('click', (e) => {
             if (window.innerWidth <= 768) {
                 e.preventDefault();
@@ -54,6 +54,15 @@ function initializeNavigation() {
                 dropdown.classList.toggle('active');
             }
         });
+    });
+
+    // Close mega menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.mega-dropdown')) {
+            document.querySelectorAll('.mega-dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
     });
 
     // Smooth scrolling for anchor links
