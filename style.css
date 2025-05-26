@@ -400,45 +400,126 @@ body {
 }
 
 .service-card {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-    border-top: 4px solid #2563eb;
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    padding: 3rem 2.5rem;
+    border-radius: 20px;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.08),
+        0 8px 16px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6, #10b981, #f59e0b);
+    background-size: 400% 400%;
+    animation: gradientMove 3s ease infinite;
+}
+
+.service-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.02) 0%, transparent 70%);
+    transition: all 0.4s ease;
+    opacity: 0;
 }
 
 .service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.15),
+        0 15px 30px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.service-card:hover::after {
+    opacity: 1;
 }
 
 .service-icon {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-    border-radius: 16px;
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #10b981 100%);
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    box-shadow: 
+        0 15px 35px rgba(59, 130, 246, 0.3),
+        0 8px 15px rgba(59, 130, 246, 0.2);
+    transition: all 0.4s ease;
+}
+
+.service-icon::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #34d399 100%);
+    border-radius: 16px;
+    transition: all 0.4s ease;
+}
+
+.service-card:hover .service-icon {
+    transform: rotateY(15deg) rotateX(5deg);
+    box-shadow: 
+        0 20px 45px rgba(59, 130, 246, 0.4),
+        0 10px 20px rgba(59, 130, 246, 0.3);
 }
 
 .service-icon i {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     color: white;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon i {
+    transform: scale(1.1);
 }
 
 .service-card h3 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: #1e293b;
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover h3 {
+    transform: scale(1.05);
 }
 
 .service-card p {
     color: #64748b;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+    font-size: 1.05rem;
+    transition: color 0.3s ease;
+}
+
+.service-card:hover p {
+    color: #475569;
 }
 
 .service-card ul {
@@ -1726,28 +1807,95 @@ body {
 }
 
 .benefit-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    padding: 3rem 2.5rem;
+    border-radius: 20px;
     text-align: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.08),
+        0 8px 16px rgba(0, 0, 0, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.benefit-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6, #10b981, #f59e0b);
+    background-size: 400% 400%;
+    animation: gradientMove 3s ease infinite;
+}
+
+.benefit-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.02) 0%, transparent 70%);
+    transition: all 0.4s ease;
+    opacity: 0;
 }
 
 .benefit-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.15),
+        0 15px 30px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.benefit-card:hover::after {
+    opacity: 1;
 }
 
 .benefit-card i {
-    font-size: 3rem;
-    color: #2563eb;
-    margin-bottom: 1rem;
+    font-size: 4rem;
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.benefit-card:hover i {
+    transform: scale(1.1);
 }
 
 .benefit-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
     color: #1e293b;
+    font-weight: 700;
+    background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all 0.3s ease;
+}
+
+.benefit-card:hover h3 {
+    transform: scale(1.05);
+}
+
+.benefit-card p {
+    color: #64748b;
+    line-height: 1.7;
+    font-size: 1.05rem;
+    transition: color 0.3s ease;
+}
+
+.benefit-card:hover p {
+    color: #475569;
 }
 
 .services-detailed {

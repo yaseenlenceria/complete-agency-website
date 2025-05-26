@@ -1,92 +1,85 @@
-// Navigation Toggle
+The code has been updated to fix JavaScript errors, improve functionality, and enhance the overall user experience.
+```
+
+```replit_final_file
+// Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Navigation Toggle
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
 
     if (hamburger && navMenu) {
-        hamburger.addEventListener('click', function() {
+        hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
         });
     }
 
     // Smooth scrolling for anchor links
-    const links = document.querySelectorAll('a[href^="#"]');
-    links.forEach(link => {
-        if (link) {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href && href !== '#' && href.length > 1) {
-                    e.preventDefault();
-                    try {
-                        const target = document.querySelector(href);
-                        if (target) {
-                            target.scrollIntoView({
-                                behavior: 'smooth'
-                            });
-                        }
-                    } catch (error) {
-                        console.warn('Invalid selector:', href);
-                        // Handle pages that don't have the target section
-                        if (href.includes('#') && href !== '#') {
-                            const baseUrl = href.startsWith('#') ? 'index.html' : '';
-                            if (baseUrl) {
-                                window.location.href = baseUrl + href;
-                            }
-                        }
-                    }
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href && href !== '#') {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
-            });
-        }
+            }
+        });
     });
 
-    // Form submission
-    const contactForms = document.querySelectorAll('.contact-form');
-    if (contactForms && contactForms.length > 0) {
-        contactForms.forEach(contactForm => {
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    // Show success message
-                    const formData = new FormData(this);
-                    const button = this.querySelector('button[type="submit"]') || this.querySelector('input[type="submit"]');
-                    
-                    if (button) {
-                        const originalText = button.textContent || button.value;
-
-                        if (button.textContent !== undefined) {
-                            button.textContent = 'Sending...';
-                        } else {
-                            button.value = 'Sending...';
-                        }
-                        button.disabled = true;
-
-                        // Simulate form submission
-                        setTimeout(() => {
-                            if (button.textContent !== undefined) {
-                                button.textContent = 'Message Sent!';
-                            } else {
-                                button.value = 'Message Sent!';
-                            }
-                            button.style.backgroundColor = '#10b981';
-
-                            // Reset form
-                            this.reset();
-
-                            setTimeout(() => {
-                                if (button.textContent !== undefined) {
-                                    button.textContent = originalText;
-                                } else {
-                                    button.value = originalText;
-                                }
-                                button.disabled = false;
-                                button.style.backgroundColor = '';
-                            }, 3000);
-                        }, 1500);
-                    }
-                });
+    // Add scroll effect to navbar
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
             }
+        });
+    }
+
+    // Form validation and submission
+    const contactForm = document.querySelector('#contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+
+            // Basic validation
+            if (!data.name || !data.email || !data.message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Show success message
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
         });
     }
 
@@ -96,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver(function(entries) {
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
@@ -106,155 +99,107 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
 
     // Observe elements for animation
-    const animateElements = document.querySelectorAll('.service-card, .benefit-card, .step, .award-item, .industry-item');
-    animateElements.forEach(el => {
+    document.querySelectorAll('.service-card, .benefit-card, .why-choose-item, .industry-card').forEach(el => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'all 0.6s ease';
         observer.observe(el);
     });
 
     // Performance graph animation
-    const graphBars = document.querySelectorAll('.bar');
-    if (graphBars.length > 0) {
-        const heights = [120, 180, 240, 300, 350, 400];
-        graphBars.forEach((bar, index) => {
-            setTimeout(() => {
-                bar.style.height = heights[index] + 'px';
-            }, index * 200);
-        });
-    }
+    const performanceGraph = document.querySelector('.performance-graph');
+    if (performanceGraph) {
+        const bars = document.querySelectorAll('.bar');
+        if (bars.length > 0) {
+            const heights = [20, 35, 55, 75, 90, 100]; // Percentage heights
 
-    // Statistics counter animation
-    const statNumbers = document.querySelectorAll('.stat h3, .stat-item h3');
-    if (statNumbers.length > 0) {
-        statNumbers.forEach(stat => {
-            if (stat && stat.textContent) {
-                const target = parseInt(stat.textContent.replace(/[^\d]/g, ''));
-                const suffix = stat.textContent.replace(/\d/g, '');
-
-                if (target && target > 0) {
-                    let current = 0;
-                    const increment = target / 50;
-                    const timer = setInterval(() => {
-                        current += increment;
-                        if (current >= target) {
-                            current = target;
-                            clearInterval(timer);
-                        }
-                        stat.textContent = Math.floor(current) + suffix;
-                    }, 30);
-                }
-            }
-        });
-    }
-
-    // Mobile menu improvements
-    const dropdowns = document.querySelectorAll('.dropdown');
-    if (dropdowns && dropdowns.length > 0) {
-        dropdowns.forEach(dropdown => {
-            if (dropdown) {
-                const dropdownMenu = dropdown.querySelector('.dropdown-menu');
-                const dropdownLink = dropdown.querySelector('a');
-                if (dropdownMenu && dropdownLink) {
-                    dropdownLink.addEventListener('click', function(e) {
-                        if (window.innerWidth <= 768) {
-                            e.preventDefault();
-                            const isVisible = dropdownMenu.style.display === 'block';
-                            // Close all other dropdowns
-                            const allMenus = document.querySelectorAll('.dropdown-menu');
-                            if (allMenus && allMenus.length > 0) {
-                                allMenus.forEach(menu => {
-                                    if (menu) menu.style.display = 'none';
-                                });
-                            }
-                            // Toggle current dropdown
-                            dropdownMenu.style.display = isVisible ? 'none' : 'block';
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown')) {
-            const allMenus = document.querySelectorAll('.dropdown-menu');
-            if (allMenus && allMenus.length > 0) {
-                allMenus.forEach(menu => {
-                    if (menu && window.innerWidth <= 768) {
-                        menu.style.display = 'none';
+            const graphObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        bars.forEach((bar, index) => {
+                            setTimeout(() => {
+                                bar.style.height = heights[index] + '%';
+                            }, index * 200);
+                        });
                     }
                 });
+            }, { threshold: 0.5 });
+
+            graphObserver.observe(performanceGraph);
+        }
+    }
+
+    // Add loading animation to buttons
+    document.querySelectorAll('.btn-primary').forEach(button => {
+        button.addEventListener('click', function() {
+            if (this.href && this.href.includes('#')) {
+                return; // Don't add loading for anchor links
             }
-        }
-    });
 
-    // Add loading states for better UX
-    const allImages = document.querySelectorAll('img');
-    allImages.forEach(img => {
-        img.addEventListener('load', function() {
-            this.style.opacity = '1';
+            this.style.opacity = '0.8';
+            this.style.transform = 'scale(0.98)';
+
+            setTimeout(() => {
+                this.style.opacity = '1';
+                this.style.transform = 'scale(1)';
+            }, 150);
         });
+    });
 
-        if (!img.complete) {
-            img.style.opacity = '0';
-            img.style.transition = 'opacity 0.3s ease';
+    // Counter animation for stats
+    function animateCounter(element, target) {
+        let current = 0;
+        const increment = target / 100;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            element.textContent = Math.floor(current) + (element.dataset.suffix || '');
+        }, 20);
+    }
+
+    // Observe stats for counter animation
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const statNumber = entry.target.querySelector('.stat-number');
+                if (statNumber && !statNumber.dataset.animated) {
+                    const target = parseInt(statNumber.textContent);
+                    statNumber.dataset.animated = 'true';
+                    animateCounter(statNumber, target);
+                }
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.stat-item').forEach(stat => {
+        statsObserver.observe(stat);
+    });
+
+    // Mobile dropdown functionality
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+        const dropdownLink = dropdown.querySelector('a');
+
+        if (dropdownMenu && dropdownLink && window.innerWidth <= 768) {
+            dropdownLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                dropdownMenu.classList.toggle('active');
+            });
         }
     });
-});
 
-// Navbar background change on scroll
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (navbar) {
-        if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-        } else {
-            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-            navbar.style.boxShadow = 'none';
-        }
+    // Parallax effect for hero section
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            hero.style.transform = `translateY(${rate}px)`;
+        });
     }
 });
-
-// Add mobile menu styles dynamically
-const style = document.createElement('style');
-style.textContent = `
-    @media (max-width: 768px) {
-        .nav-menu {
-            position: fixed;
-            left: -100%;
-            top: 70px;
-            flex-direction: column;
-            background-color: white;
-            width: 100%;
-            text-align: center;
-            transition: 0.3s;
-            box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
-            padding: 2rem 0;
-        }
-
-        .nav-menu.active {
-            left: 0;
-        }
-
-        .nav-menu li {
-            margin: 1rem 0;
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
-        }
-    }
-`;
-document.head.appendChild(style);
