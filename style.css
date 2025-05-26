@@ -611,25 +611,35 @@ body {
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
-    align-items: start;
+    align-items: stretch;
+    padding: 0 10px;
 }
 
 @media (max-width: 1200px) {
     .services-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1.8rem;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        padding: 0 15px;
     }
 }
 
 @media (max-width: 768px) {
     .services-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 1.2rem;
         max-width: 100%;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-grid {
+        gap: 1rem;
+        padding: 0 5px;
     }
 }
 
@@ -645,11 +655,24 @@ body {
     position: relative;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.6);
-    height: fit-content;
-    min-height: 350px;
-    max-height: 480px;
+    height: 100%;
+    min-height: 400px;
     display: flex;
     flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    .service-card {
+        min-height: 350px;
+        padding: 1.5rem 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .service-card {
+        min-height: 320px;
+        padding: 1.2rem 1rem;
+    }
 }
 
 .service-card::before {
@@ -873,15 +896,17 @@ body {
 
 .why-choose-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    align-items: start;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.8rem;
+    align-items: stretch;
+    padding: 0 10px;
 }
 
 @media (max-width: 1200px) {
     .why-choose-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 1.5rem;
+        padding: 0 15px;
     }
 }
 
@@ -889,6 +914,14 @@ body {
     .why-choose-grid {
         grid-template-columns: 1fr;
         gap: 1.2rem;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .why-choose-grid {
+        gap: 1rem;
+        padding: 0 5px;
     }
 }
 
@@ -1054,22 +1087,32 @@ body {
 
 .industries-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    align-items: start;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.8rem;
+    align-items: stretch;
+    padding: 0 10px;
 }
 
 @media (max-width: 1200px) {
     .industries-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 1.5rem;
+        padding: 0 15px;
     }
 }
 
 @media (max-width: 768px) {
     .industries-grid {
         grid-template-columns: 1fr;
-        gap: 1.8rem;
+        gap: 1.2rem;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .industries-grid {
+        gap: 1rem;
+        padding: 0 5px;
     }
 }
 
@@ -2314,8 +2357,33 @@ body {
     margin-bottom: 3rem;
     color: #1e293b;.benefits-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.8rem;
+    align-items: stretch;
+    padding: 0 10px;
+}
+
+@media (max-width: 1200px) {
+    .benefits-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        padding: 0 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .benefits-grid {
+        gap: 1rem;
+        padding: 0 5px;
+    }
 }
 
 .benefit-card {

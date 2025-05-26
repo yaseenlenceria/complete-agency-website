@@ -40,21 +40,24 @@ document.addEventListener('DOMContentLoaded', function() {
             if (href && href !== '#' && href.length > 1) {
                 e.preventDefault();
                 try {
-                    const target = document.querySelector(href);
-                    if (target) {
-                        // Close mobile menu if open
-                        if (hamburger && navMenu) {
-                            hamburger.classList.remove('active');
-                            navMenu.classList.remove('active');
-                            document.body.classList.remove('nav-open');
+                    // Validate selector before using
+                    if (href.match(/^#[a-zA-Z][\w-]*$/)) {
+                        const target = document.querySelector(href);
+                        if (target) {
+                            // Close mobile menu if open
+                            if (hamburger && navMenu) {
+                                hamburger.classList.remove('active');
+                                navMenu.classList.remove('active');
+                                document.body.classList.remove('nav-open');
+                            }
+                            
+                            setTimeout(() => {
+                                target.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                            }, 100);
                         }
-                        
-                        setTimeout(() => {
-                            target.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'start'
-                            });
-                        }, 100);
                     }
                 } catch (error) {
                     console.warn('Invalid selector:', href);
