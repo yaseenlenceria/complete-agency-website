@@ -211,9 +211,36 @@ body {
     opacity: 0.9;
 }
 
+.value-proposition {
+    display: flex;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.value-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    font-weight: 600;
+}
+
+.value-item i {
+    color: #fbbf24;
+    font-size: 1.2rem;
+}
+
 .hero-buttons {
     display: flex;
     gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero-guarantee {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    text-align: center;
 }
 
 .btn-primary {

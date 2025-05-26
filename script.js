@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
                     }
                 } catch (error) {
+                    console.warn('Invalid selector:', href);
                     // Handle pages that don't have the target section
                     if (href.includes('#')) {
                         const baseUrl = href.startsWith('#') ? 'index.html' : '';
