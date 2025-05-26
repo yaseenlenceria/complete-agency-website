@@ -53,12 +53,15 @@ function initializeNavigation() {
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
+            const href = this.getAttribute('href');
+            if (href && href !== '#') {
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
             }
         });
     });
@@ -213,6 +216,31 @@ function handleContactForm(event) {
     alert('Thank you for your message! We will get back to you soon.');
 }
 
+function handleFormSubmit(event) {
+    event.preventDefault();
+    
+    // Get form data
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+    
+    // Show success message
+    const submitBtn = event.target.querySelector('.form-submit-btn');
+    const originalText = submitBtn.innerHTML;
+    
+    submitBtn.innerHTML = '<i class="fas fa-check"></i> <span>Message Sent Successfully!</span>';
+    submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+    
+    // Reset form after 3 seconds
+    setTimeout(() => {
+        event.target.reset();
+        submitBtn.innerHTML = originalText;
+        submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+        
+        // Show thank you alert
+        alert('Thank you for your interest! Our team will contact you within 24 hours with your free SEO audit and strategy recommendations.');
+    }, 2000);
+}
+
 // Dynamic page creation utilities
 function createDynamicSection(type, content) {
     const section = document.createElement('section');
@@ -236,28 +264,28 @@ function createDynamicGrid(items, className) {
 }
 
 // Add CSS for animations if not already added
-    if (!document.querySelector('#dynamic-animations')) {
-        const style = document.createElement('style');
-        style.id = 'dynamic-animations';
-        style.textContent = `
-            @keyframes slideInUp {
-                from { opacity: 0; transform: translateY(30px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            @keyframes slideInLeft {
-                from { opacity: 0; transform: translateX(-30px); }
-                to { opacity: 1; transform: translateX(0); }
-            }
-            @keyframes slideInRight {
-                from { opacity: 0; transform: translateX(30px); }
-                to { opacity: 1; transform: translateX(0); }
-            }
-            .animate-in { animation: slideInUp 0.8s ease-out forwards; }
-            .navbar { transition: transform 0.3s ease; }
-            .nav-menu.active { transform: translateX(0) !important; }
-            @media (max-width: 768px) {
-                .nav-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
-            }
-        `;
-        document.head.appendChild(style);
-    }
+if (!document.querySelector('#dynamic-animations')) {
+    const style = document.createElement('style');
+    style.id = 'dynamic-animations';
+    style.textContent = `
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .animate-in { animation: slideInUp 0.8s ease-out forwards; }
+        .navbar { transition: transform 0.3s ease; }
+        .nav-menu.active { transform: translateX(0) !important; }
+        @media (max-width: 768px) {
+            .nav-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
+        }
+    `;
+    document.head.appendChild(style);
+}
