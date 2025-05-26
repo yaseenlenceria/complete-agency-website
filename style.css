@@ -629,9 +629,11 @@ section .container {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
     position: relative;
-    height: 100%;
+    height: auto;
+    max-height: 580px;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .service-card:hover {
@@ -1218,6 +1220,81 @@ section .container {
 
 .cta-guarantee i {
     color: #10b981;
+}
+
+/* Nationwide Stats */
+.nationwide-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.nationwide-stat {
+    text-align: center;
+}
+
+.nationwide-stat .stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #3b82f6;
+    margin-bottom: 0.5rem;
+}
+
+.nationwide-stat .stat-label {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* Improved Card Styles */
+.service-card p {
+    color: #64748b;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    flex-grow: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.service-card ul {
+    list-style: none;
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+    overflow: hidden;
+    max-height: 200px;
+}
+
+.industry-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+    position: relative;
+    height: auto;
+    max-height: 650px;
+    overflow: hidden;
+}
+
+.why-choose-item {
+    display: flex;
+    gap: 1.5rem;
+    padding: 2rem;
+    background: #f8fafc;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+    height: auto;
+    max-height: 200px;
+    overflow: hidden;
 }
 
 /* Footer Styles */
