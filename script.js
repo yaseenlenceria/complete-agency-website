@@ -46,7 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const href = this.getAttribute('href');
             if (href && href !== '#' && href.length > 1) {
                 e.preventDefault();
-                const target = document.querySelector(href);
+                const targetId = href.substring(1);
+                const target = document.getElementById(targetId);
                 if (target) {
                     target.scrollIntoView({
                         behavior: 'smooth',
@@ -173,16 +174,55 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add loading class removal for better performance
     document.body.classList.add('loaded');
 
-    // Hero image loading
-    const heroImages = document.querySelectorAll('.hero-image img, .floating-card');
-    heroImages.forEach(img => {
+    // Enhanced image loading with animations
+    const heroImages = document.querySelectorAll('.hero-image img');
+    const floatingCards = document.querySelectorAll('.floating-card');
+    
+    heroImages.forEach((img, index) => {
         if (img.complete) {
-            img.style.opacity = '1';
+            setTimeout(() => {
+                img.style.opacity = '1';
+                img.style.transform = 'scale(1)';
+            }, index * 200);
         } else {
             img.addEventListener('load', function() {
-                this.style.opacity = '1';
+                setTimeout(() => {
+                    this.style.opacity = '1';
+                    this.style.transform = 'scale(1)';
+                }, index * 200);
             });
         }
+        
+        // Add loading placeholder
+        img.style.transform = 'scale(0.9)';
+        img.style.filter = 'blur(5px)';
+        
+        img.addEventListener('load', function() {
+            this.style.filter = 'blur(0)';
+            this.style.transform = 'scale(1)';
+        });
+    });
+    
+    // Animate floating cards
+    floatingCards.forEach((card, index) => {
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 1000 + (index * 300));
+        
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+    });
+    
+    // Parallax effect for hero images
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const heroImages = document.querySelectorAll('.hero-image img');
+        
+        heroImages.forEach(img => {
+            const speed = 0.5;
+            img.style.transform = `translateY(${scrolled * speed}px) scale(1.1)`;
+        });
     });
 
     // Grid layout improvements
