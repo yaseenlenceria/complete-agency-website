@@ -1,0 +1,27 @@
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://outsourcesu.com/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
+
+# Disallow admin areas (if any)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.config/
+
+# Allow important pages
+Allow: /index.html
+Allow: /about.html
+Allow: /contact.html
+Allow: /cities-pages.html
+Allow: /*.html
+
+# Block any temporary or test files
+Disallow: /test/
+Disallow: /temp/
+Disallow: /*.bak$
+Disallow: /*.tmp$

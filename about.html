@@ -68,15 +68,43 @@
         </div>
     </nav>
 
+    <!-- Breadcrumb -->
+    <section class="breadcrumb">
+        <div class="container">
+            <ul class="breadcrumb-list">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">About Us</li>
+            </ul>
+        </div>
+    </section>
+
     <!-- Hero Section -->
-    <section class="hero service-hero">
+    <section class="hero service-hero" itemscope itemtype="http://schema.org/Organization">
         <div class="hero-content">
             <div class="hero-text">
-                <h1>About OutSourceSU</h1>
-                <p>We are the UK's leading SEO and digital marketing agency, helping businesses grow online for over 15 years. Our commitment to excellence, innovation, and client success has made us the trusted partner for hundreds of businesses across the UK.</p>
+                <h1 itemprop="name">About OutSourceSU - UK's Leading SEO Agency</h1>
+                <p itemprop="description">We are the UK's premier SEO and digital marketing agency, delivering exceptional results for over 15 years. Our commitment to excellence, innovation, and client success has made us the trusted partner for 500+ businesses across Manchester, London, Birmingham, and nationwide.</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Happy Clients</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">94%</span>
+                        <span class="stat-label">Success Rate</span>
+                    </div>
+                </div>
+                <meta itemprop="url" content="https://outsourcesu.com">
+                <meta itemprop="logo" content="https://outsourcesu.com/logo.png">
+                <meta itemprop="telephone" content="07411575188">
+                <meta itemprop="email" content="contact@outsourcesu.com">
             </div>
             <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Digital Search Group Team">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="OutSourceSU Team - UK's Leading SEO Agency" loading="lazy">
             </div>
         </div>
     </section>
@@ -200,6 +228,9 @@
         </div>
     </section>
 
+    <!-- Reviews Section -->
+    <div id="reviews-section"></div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -244,5 +275,12 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="reviews-component.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const reviews = new ReviewsComponent();
+            reviews.init();
+        });
+    </script>
 </body>
 </html>

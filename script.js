@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeNavigation();
     initializeAnimations();
     initializeDynamicComponents();
+    initializeReviews();
+    initializeSEOEnhancements();
 });
 
 function initializeNavigation() {
@@ -375,30 +377,142 @@ function createDynamicGrid(items, className) {
 }
 
 // Add CSS for animations if not already added
-if (!document.querySelector('#dynamic-animations')) {
-    const animationStyle = document.createElement('style');
-    animationStyle.id = 'dynamic-animations';
-    animationStyle.textContent = `
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+function addDynamicStyles() {
+    if (!document.querySelector('#dynamic-animations')) {
+        const animationStyle = document.createElement('style');
+        animationStyle.id = 'dynamic-animations';
+        animationStyle.textContent = `
+            @keyframes slideInUp {
+                from { opacity: 0; transform: translateY(30px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes slideInLeft {
+                from { opacity: 0; transform: translateX(-30px); }
+                to { opacity: 1; transform: translateX(0); }
+            }
+            @keyframes slideInRight {
+                from { opacity: 0; transform: translateX(30px); }
+                to { opacity: 1; transform: translateX(0); }
+            }
+            .animate-in { animation: slideInUp 0.8s ease-out forwards; }
+            .navbar { transition: transform 0.3s ease; }
+            .nav-menu.active { transform: translateX(0) !important; }
+            @media (max-width: 768px) {
+                .nav-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
+            }
+        `;
+        document.head.appendChild(animationStyle);
+    }
+}
+
+// Initialize styles
+addDynamicStyles();
+
+// Initialize Reviews Component
+function initializeReviews() {
+    if (typeof ReviewsComponent !== 'undefined') {
+        const reviewsSection = document.getElementById('reviews-section');
+        if (reviewsSection) {
+            const reviews = new ReviewsComponent();
+            reviews.init();
         }
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
+    }
+}
+
+// SEO Enhancements
+function initializeSEOEnhancements() {
+    // Add structured data for pages
+    addPageStructuredData();
+    
+    // Initialize FAQ functionality
+    initializeFAQSEO();
+    
+    // Add schema markup for services
+    addServiceSchema();
+}
+
+function addPageStructuredData() {
+    const pageType = document.body.getAttribute('data-page-type') || 'WebPage';
+    const pageTitle = document.title;
+    const pageDescription = document.querySelector('meta[name="description"]')?.content || '';
+    
+    const structuredData = {
+        "@context": "http://schema.org",
+        "@type": pageType,
+        "name": pageTitle,
+        "description": pageDescription,
+        "url": window.location.href,
+        "publisher": {
+            "@type": "Organization",
+            "name": "OutSourceSU",
+            "url": "https://outsourcesu.com",
+            "logo": "https://outsourcesu.com/logo.png",
+            "telephone": "07411575188",
+            "email": "contact@outsourcesu.com",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "20-22 Wenlock Road",
+                "addressLocality": "London",
+                "postalCode": "N1 7GU",
+                "addressCountry": "GB"
+            }
         }
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        .animate-in { animation: slideInUp 0.8s ease-out forwards; }
-        .navbar { transition: transform 0.3s ease; }
-        .nav-menu.active { transform: translateX(0) !important; }
-        @media (max-width: 768px) {
-            .nav-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
-        }
-    `;
-    document.head.appendChild(animationStyle);
+    };
+    
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(structuredData);
+    document.head.appendChild(script);
+}
+
+function initializeFAQSEO() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+            const answer = this.nextElementSibling;
+            const isActive = answer.classList.contains('active');
+            
+            // Close all other answers
+            document.querySelectorAll('.faq-answer').forEach(ans => {
+                ans.classList.remove('active');
+            });
+            document.querySelectorAll('.faq-question').forEach(q => {
+                q.classList.remove('active');
+            });
+            
+            // Toggle current answer
+            if (!isActive) {
+                answer.classList.add('active');
+                this.classList.add('active');
+            }
+        });
+    });
+}
+
+function addServiceSchema() {
+    const servicePage = document.querySelector('[data-service]');
+    if (servicePage) {
+        const serviceName = servicePage.getAttribute('data-service');
+        const serviceSchema = {
+            "@context": "http://schema.org",
+            "@type": "Service",
+            "name": serviceName,
+            "description": document.querySelector('meta[name="description"]')?.content || '',
+            "provider": {
+                "@type": "Organization",
+                "name": "OutSourceSU",
+                "url": "https://outsourcesu.com",
+                "telephone": "07411575188"
+            },
+            "areaServed": "United Kingdom",
+            "serviceType": "SEO Services"
+        };
+        
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(serviceSchema);
+        document.head.appendChild(script);
+    }
 }
 
 // Global Navigation Template
