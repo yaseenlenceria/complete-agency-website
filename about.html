@@ -228,6 +228,9 @@
         </div>
     </section>
 
+    <!-- UK Performance Charts -->
+    <div id="uk-charts-section"></div>
+
     <!-- Reviews Section -->
     <div id="reviews-section"></div>
 
@@ -276,10 +279,14 @@
 
     <script src="script.js"></script>
     <script src="reviews-component.js"></script>
+    <script src="uk-ranking-charts.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const reviews = new ReviewsComponent();
             reviews.init();
+            
+            const charts = new UKRankingCharts();
+            charts.init();
         });
     </script>
 </body>

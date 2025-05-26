@@ -68,7 +68,8 @@ function initializeNavigation() {
                             });
                         }
                     } catch (error) {
-                        console.log('Invalid selector:', href);
+                        // Handle invalid selectors gracefully
+                        console.warn('Invalid selector:', href);
                     }
                 }
             });

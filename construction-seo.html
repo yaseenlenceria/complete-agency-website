@@ -480,17 +480,15 @@
 
     <script src="images-config.js"></script>
     <script src="script.js"></script>
+    <script src="enhanced-images-config.js"></script>
+    <script src="uk-ranking-charts.js"></script>
     <script>
-        // Add construction-specific images after DOM loads
         document.addEventListener('DOMContentLoaded', function() {
-            // Add hero background image for construction
-            const heroSection = document.querySelector('.hero');
-            if (heroSection) {
-                heroSection.style.backgroundImage = `linear-gradient(rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.7)), url('${getImageUrl('services', 'construction')}')`;
-                heroSection.style.backgroundSize = 'cover';
-                heroSection.style.backgroundPosition = 'center';
-                heroSection.style.backgroundAttachment = 'fixed';
-            }
+            const enhancedImages = new EnhancedImagesConfig();
+            enhancedImages.init();
+
+            const charts = new UKRankingCharts();
+            charts.init();
         });
     </script>
 </body>
