@@ -1,184 +1,171 @@
-
 // FAQ Component with Schema Markup for SEO
 class FAQComponent {
     constructor() {
         this.faqs = {
             general: [
                 {
-                    question: "Why is OutSourceSU the UK's #1 Rated SEO Agency 2025?",
-                    answer: "OutSourceSU has earned the title of UK's #1 Rated SEO Agency 2025 through our proven track record of delivering exceptional results for over 500+ UK businesses. With 15+ years of experience, 94% success rate, and industry-leading expertise across all major UK cities, we consistently outperform competitors in rankings, traffic growth, and client satisfaction."
+                    question: "What makes OutSourceSU different from other SEO agencies?",
+                    answer: "OutSourceSU stands out as the UK's #1 Rated SEO Agency 2025 due to our proven track record, specialized industry expertise, and commitment to transparent, results-driven strategies. We combine 15+ years of experience with cutting-edge techniques and provide dedicated account management for every client."
                 },
                 {
-                    question: "What makes OutSourceSU different from other SEO agencies?",
-                    answer: "As the UK's leading SEO and Website Development Agency, OutSourceSU specializes in industry-specific strategies with deep UK market knowledge. We offer transparent reporting, guaranteed results within 90 days, and personalized service with direct access to certified SEO specialists."
+                    question: "Why is OutSourceSU the UK's #1 Rated SEO Agency 2025?",
+                    answer: "We've earned this recognition through consistent delivery of exceptional results across 500+ client campaigns, maintaining a 94% client satisfaction rate, and achieving average traffic increases of 285%. Our expertise spans all major UK industries and cities, making us the trusted choice for businesses nationwide."
                 },
                 {
                     question: "How quickly can I expect to see SEO results?",
-                    answer: "Most clients see initial improvements within 30-60 days, with significant results typically appearing within 3-6 months. As the UK's #1 rated agency, we guarantee measurable improvements within 90 days or provide a full refund."
+                    answer: "While SEO is a long-term strategy, most clients see initial improvements within 30-60 days. Significant results typically appear within 3-6 months, with continued growth thereafter. We provide detailed monthly reports showing progress and ROI throughout your campaign."
                 },
                 {
                     question: "Do you provide SEO services across all UK cities?",
-                    answer: "Yes, we serve businesses across all major UK cities including London, Manchester, Birmingham, Leeds, Liverpool, Edinburgh, Cardiff, Belfast, and 50+ additional cities. Our nationwide coverage ensures local expertise wherever your business is located."
+                    answer: "Yes! As the UK's leading SEO agency, we provide comprehensive services across all major UK cities including London, Manchester, Birmingham, Liverpool, Leeds, Sheffield, Bristol, and many more. Our local SEO expertise helps businesses dominate their specific geographic markets."
                 },
                 {
                     question: "What industries do you specialize in?",
-                    answer: "We specialize in construction, roofing, law firms, healthcare, dental practices, real estate, financial services, accountants, architects, plumbers, and professional services. Our industry-specific approach ensures better results and higher ROI."
+                    answer: "We have proven expertise across multiple industries including Construction & Trade, Legal Services, Healthcare & Dental, Real Estate, Financial Services, Professional Services, and more. Our industry-specific approach ensures your SEO strategy is tailored to your market's unique requirements."
                 },
                 {
                     question: "Do you offer white label SEO services for agencies?",
-                    answer: "Yes, we provide comprehensive white label SEO services for digital agencies and web developers. Our white label solutions include full reporting, client communication support, scalable packages, and the expertise that made us the UK's #1 rated agency."
-                },
-                {
-                    question: "What's included in your SEO packages?",
-                    answer: "Our comprehensive SEO packages include technical SEO audits, keyword research, on-page optimization, content creation, link building, local SEO, Google Business Profile optimization, monthly reporting, and ongoing strategy refinements."
-                },
-                {
-                    question: "Do you offer website development alongside SEO?",
-                    answer: "Yes, as the Best SEO Agency and Website Development Agency for UK Industries, we offer complete website development services including responsive design, e-commerce development, WordPress development, and mobile-first design - all optimized for SEO from the ground up."
+                    answer: "Yes, we provide comprehensive white label SEO services for digital agencies and marketing professionals. Our white label solutions include full campaign management, detailed reporting, and ongoing support, allowing you to offer premium SEO services under your brand."
                 },
                 {
                     question: "How do you guarantee results?",
-                    answer: "We offer a 90-day money-back guarantee. If you don't see measurable improvements in your search rankings, organic traffic, or lead generation within 90 days, we'll continue working for free until you do, or provide a full refund."
+                    answer: "We offer a 90-day results guarantee - if you don't see measurable improvements in your search rankings and organic traffic within 90 days, we'll continue working for free until you do. This demonstrates our confidence in our proven methodologies and commitment to client success."
                 },
                 {
-                    question: "What makes your pricing competitive?",
-                    answer: "Our pricing reflects our position as the UK's #1 rated agency while remaining competitive. We offer flexible packages, no long-term contracts, and transparent pricing with no hidden fees. You're paying for proven expertise and guaranteed results."
+                    question: "What is your pricing structure?",
+                    answer: "Our SEO packages start from £800/month for small businesses and scale based on your requirements. We offer transparent pricing with no hidden fees, and every package includes keyword research, technical optimization, content creation, and monthly reporting."
                 },
                 {
-                    question: "How long are your SEO contracts?",
-                    answer: "We don't believe in tying clients into long-term contracts. Our services are month-to-month, allowing you the flexibility to adjust or cancel at any time. We prefer to earn your business through results rather than legal obligations."
+                    question: "Do you work with businesses outside of major cities?",
+                    answer: "Absolutely! While we have strong presence in major UK cities, we work with businesses across the entire country, including smaller towns and rural areas. Our local SEO expertise helps businesses succeed regardless of location."
                 },
                 {
-                    question: "What reporting do you provide?",
-                    answer: "We provide comprehensive monthly reports including keyword rankings, traffic growth, conversion tracking, competitor analysis, and detailed explanations of work completed. You'll also have 24/7 access to a client portal with real-time performance data."
-                },
-                {
-                    question: "Do you work with small businesses or just large companies?",
-                    answer: "We work with businesses of all sizes, from small local startups to large enterprises. Our flexible packages and scalable strategies ensure that every business, regardless of size, can benefit from our expertise and achieve measurable growth."
-                },
-                {
-                    question: "Can you help if my website has been penalized by Google?",
-                    answer: "Yes, we specialize in penalty recovery. Our team can identify the causes of Google penalties, develop comprehensive recovery strategies, and implement the necessary changes to restore your rankings and traffic."
-                },
-                {
-                    question: "What happens if I'm not satisfied with your services?",
-                    answer: "We offer a 90-day satisfaction guarantee. If you're not completely satisfied with our services within the first 90 days, we'll either continue working for free until you achieve your goals or provide a full refund."
+                    question: "What tools and technologies do you use?",
+                    answer: "We use industry-leading SEO tools including SEMrush, Ahrefs, Google Analytics, Search Console, and proprietary tracking systems. Our technology stack ensures we have comprehensive data to optimize your campaigns effectively."
                 }
             ],
-            technical: [
+            construction: [
                 {
-                    question: "What technical SEO services do you provide?",
-                    answer: "Our comprehensive technical SEO includes Core Web Vitals optimization, site speed enhancement, mobile-first indexing preparation, schema markup implementation, XML sitemaps, robots.txt optimization, crawl error fixes, and technical audits that identify and resolve all technical barriers to ranking success."
+                    question: "How can SEO help my construction business get more leads?",
+                    answer: "Construction SEO helps you appear when potential customers search for services like 'builders near me' or 'construction company [your city]'. We optimize your website to rank for high-intent keywords that drive qualified leads, resulting in more project inquiries and contract opportunities."
                 },
                 {
-                    question: "How do you handle website development for SEO?",
-                    answer: "As the Best SEO Agency and Website Development Agency for UK Industries, we build websites optimized for SEO from the ground up. This includes responsive design, fast loading speeds, proper URL structure, optimized images, clean code, and SEO-friendly architecture."
+                    question: "What construction keywords should I target?",
+                    answer: "We target a mix of service-based keywords ('home extension builders', 'commercial construction'), location-based terms ('construction company Manchester'), and project-specific phrases ('kitchen extensions', 'office refurbishments'). Our keyword research identifies the most profitable terms for your specific services."
                 },
                 {
-                    question: "Do you ensure websites comply with Google guidelines?",
-                    answer: "Absolutely. We strictly follow Google's Webmaster Guidelines, use only white-hat SEO techniques, implement proper schema markup, ensure mobile-first indexing compatibility, maintain high-quality content standards, and stay updated with all Google algorithm changes."
+                    question: "How long does construction SEO take to work?",
+                    answer: "Construction businesses typically see initial ranking improvements within 2-3 months, with significant lead increases by month 4-6. The competitive nature of construction search terms requires consistent effort, but the ROI is substantial once rankings are achieved."
                 },
                 {
-                    question: "How do you optimize for Core Web Vitals?",
-                    answer: "We optimize Largest Contentful Paint (LCP), First Input Delay (FID), and Cumulative Layout Shift (CLS) through image optimization, code minification, server optimization, and implementing best practices that Google uses to rank websites."
+                    question: "Do you understand the construction industry?",
+                    answer: "Absolutely. Our construction SEO team has worked with builders, contractors, architects, and construction companies across the UK for over 10 years. We understand your seasonal patterns, project cycles, and the importance of local search visibility."
                 },
                 {
-                    question: "What's your approach to mobile optimization?",
-                    answer: "We implement mobile-first design, ensure responsive layouts work perfectly across all devices, optimize touch elements, improve mobile page speed, and test extensively on various mobile devices to ensure optimal user experience."
+                    question: "Can you help with both residential and commercial construction SEO?",
+                    answer: "Yes, we have expertise in both sectors. Residential construction SEO focuses on homeowner searches, while commercial construction targets business decision-makers. We tailor strategies for each sector's unique search behavior and sales cycles."
                 }
             ],
-            local: [
+            legal: [
                 {
-                    question: "How does local SEO work for UK businesses?",
-                    answer: "Local SEO optimizes your business for location-based searches across the UK. We optimize Google Business Profile, build local citations, target location-specific keywords, ensure NAP consistency, and implement local schema markup to dominate local search results in your area."
+                    question: "How can law firm SEO help attract more clients?",
+                    answer: "Law firm SEO helps potential clients find your practice when searching for legal services in your area. We optimize for high-value keywords like 'personal injury lawyer [city]' or 'family solicitor near me', ensuring you appear when people need legal representation most."
                 },
                 {
-                    question: "Can you help with Google Business Profile optimization?",
-                    answer: "Yes, we provide complete Google Business Profile optimization including proper categories, compelling descriptions, high-quality photos, regular posts, review management, Q&A optimization, and local keyword integration to maximize local visibility."
+                    question: "Is SEO suitable for all areas of law?",
+                    answer: "Yes, we have successfully implemented SEO strategies for personal injury, family law, criminal defense, corporate law, conveyancing, and more. Each practice area requires a unique approach to keyword targeting and content strategy."
                 },
                 {
-                    question: "Do you provide citation building services across the UK?",
-                    answer: "Yes, we build high-quality local citations on relevant UK business directories, industry-specific platforms, local chamber of commerce sites, and regional websites to improve your local search authority and rankings in your specific UK location."
+                    question: "How do you handle legal advertising regulations?",
+                    answer: "We ensure all SEO content and marketing materials comply with SRA guidelines and legal advertising regulations. Our team understands the importance of maintaining professional standards while effectively marketing legal services."
                 },
                 {
-                    question: "How do you handle multi-location businesses?",
-                    answer: "For businesses with multiple UK locations, we create individual Google Business Profiles for each location, develop location-specific landing pages, implement local schema markup, and create targeted local content strategies for each area you serve."
-                },
-                {
-                    question: "What local ranking factors do you focus on?",
-                    answer: "We optimize proximity, relevance, and prominence factors including Google Business Profile completion, customer reviews, local citations, on-page local optimization, local content creation, and building local backlinks from UK websites."
+                    question: "What results can law firms expect from SEO?",
+                    answer: "Our legal clients typically see 200-400% increases in qualified inquiries within 6-12 months. We focus on attracting high-value cases rather than just traffic, ensuring your SEO investment directly impacts your practice's revenue."
                 }
             ],
-            industries: [
+            healthcare: [
                 {
-                    question: "Which industries do you specialize in across the UK?",
-                    answer: "We specialize in construction, roofing, law firms, healthcare, dental practices, real estate, financial services, accountants, architects, plumbers, electricians, builders merchants, insurance, travel, hotels, restaurants, and professional services across all UK cities."
+                    question: "How can dental practice SEO increase patient bookings?",
+                    answer: "Dental SEO helps your practice appear when local patients search for dental services. We optimize for terms like 'dentist near me', 'dental implants [city]', and emergency dental services, driving qualified patient inquiries and appointment bookings."
                 },
                 {
-                    question: "Do you have experience with construction and trade businesses?",
-                    answer: "Yes, we're experts in construction SEO, helping builders, contractors, roofers, plumbers, electricians, and architects dominate local searches. We understand the unique challenges and opportunities in the construction industry across the UK."
+                    question: "Is healthcare SEO compliant with regulations?",
+                    answer: "Yes, all our healthcare SEO strategies comply with relevant medical advertising guidelines and professional standards. We ensure your online presence maintains the trust and professionalism expected in healthcare while effectively attracting new patients."
                 },
                 {
-                    question: "How do you help professional services firms?",
-                    answer: "We help law firms, accountants, financial advisors, consultants, and other professional services establish thought leadership, attract high-value clients, and dominate search results for professional services in their local markets."
+                    question: "What dental services benefit most from SEO?",
+                    answer: "High-value services like dental implants, orthodontics, cosmetic dentistry, and emergency dental care see the best ROI from SEO. We also optimize for general dental services to build your patient base across all treatment areas."
                 },
                 {
-                    question: "Can you help with healthcare and medical SEO?",
-                    answer: "Absolutely. We specialize in healthcare SEO for dental practices, medical clinics, private healthcare providers, and healthcare services, ensuring compliance with medical advertising guidelines while maximizing patient acquisition."
+                    question: "How do you measure success for healthcare SEO?",
+                    answer: "We track patient inquiries, appointment bookings, phone calls, and form submissions. Our healthcare clients typically see 250-500% increases in new patient acquisition within 6-9 months of starting SEO."
+                }
+            ],
+            about: [
+                {
+                    question: "How long has OutSourceSU been in business?",
+                    answer: "OutSourceSU was founded in 2008 and has been delivering exceptional SEO results for over 15 years. We've grown from a small consultancy to one of the UK's most respected digital marketing agencies, helping 500+ businesses achieve their online goals."
+                },
+                {
+                    question: "What is your company's mission?",
+                    answer: "Our mission is simple: every business deserves to be found online. We're committed to helping UK businesses achieve sustainable growth through ethical, results-driven SEO strategies that deliver measurable ROI."
+                },
+                {
+                    question: "Where is OutSourceSU located?",
+                    answer: "Our headquarters is located at 20-22 Wenlock Road, London, N1 7GU. While based in London, we serve clients across the entire UK, with particular expertise in major cities like Manchester, Birmingham, Leeds, and Liverpool."
+                },
+                {
+                    question: "What makes your team qualified to handle SEO?",
+                    answer: "Our team consists of certified SEO specialists, each with 5+ years of experience. We maintain Google Partner status, stay current with all algorithm updates, and continuously train in the latest SEO techniques and tools."
+                },
+                {
+                    question: "How many clients do you currently serve?",
+                    answer: "We proudly serve over 500 active clients across various industries throughout the UK. Our client retention rate of 94% demonstrates our commitment to delivering consistent, measurable results."
                 }
             ]
         };
-        
-        this.generateFAQSchema();
     }
 
-    generateFAQHTML(category = 'general') {
-        const categoryFAQs = this.faqs[category] || this.faqs.general;
-        
-        return `
-            <section class="faq-section" itemscope itemtype="https://schema.org/FAQPage">
+    getFAQs(category = 'general') {
+        return this.faqs[category] || this.faqs.general;
+    }
+
+    render(container, category = 'general') {
+        if (!container) return;
+
+        const faqs = this.getFAQs(category);
+
+        container.innerHTML = `
+            <section class="faq-component">
                 <div class="container">
                     <div class="section-header">
                         <h2>Frequently Asked Questions</h2>
-                        <p>Get answers to common questions about our SEO services and how we can help your business grow online.</p>
+                        <p>Get answers to common questions about our SEO services</p>
                     </div>
-                    
-                    <div class="faq-container">
-                        ${categoryFAQs.map((faq, index) => this.generateFAQItem(faq, index)).join('')}
-                    </div>
-                    
-                    <div class="faq-cta">
-                        <h3>Still Have Questions?</h3>
-                        <p>Our SEO experts are here to help. Get in touch for a free consultation and personalized advice for your business.</p>
-                        <a href="contact.html" class="btn-primary">
-                            <i class="fas fa-comments"></i>
-                            Ask Our SEO Experts
-                        </a>
+                    <div class="faq-list">
+                        ${faqs.map((faq, index) => `
+                            <div class="faq-item">
+                                <button class="faq-question" onclick="toggleFAQ(${index}); console.log('FAQ clicked:', '${faq.question.replace(/'/g, "\\'")}');">
+                                    <span>${faq.question}</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="faq-answer" id="faq-${index}" style="max-height: 0px; overflow: hidden;">
+                                    <div class="faq-content">
+                                        <p>${faq.answer}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
                     </div>
                 </div>
             </section>
         `;
     }
 
-    generateFAQItem(faq, index) {
-        return `
-            <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
-                <h3 class="faq-question" itemprop="name">
-                    ${faq.question}
-                    <i class="fas fa-chevron-down faq-icon"></i>
-                </h3>
-                <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
-                    <div itemprop="text">
-                        <p>${faq.answer}</p>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
     generateFAQSchema() {
         const allFAQs = [...this.faqs.general, ...this.faqs.technical, ...this.faqs.local];
-        
+
         const faqSchema = {
             "@context": "https://schema.org",
             "@type": "FAQPage",
@@ -210,18 +197,18 @@ class FAQComponent {
         // Wait for DOM to be ready
         setTimeout(() => {
             const faqQuestions = document.querySelectorAll('.faq-question');
-            
+
             faqQuestions.forEach(question => {
                 if (question && !question.hasAttribute('data-listener-added')) {
                     question.setAttribute('data-listener-added', 'true');
                     question.addEventListener('click', function() {
                         console.log('FAQ clicked:', this.textContent.trim());
-                        
+
                         const faqItem = this.parentElement;
                         const answer = faqItem.querySelector('.faq-answer');
                         const isActive = faqItem.classList.contains('active');
                         const icon = this.querySelector('.faq-icon');
-                        
+
                         // Close all other answers
                         document.querySelectorAll('.faq-item').forEach(item => {
                             if (item !== faqItem) {
@@ -232,7 +219,7 @@ class FAQComponent {
                                 if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
                             }
                         });
-                        
+
                         // Toggle current answer
                         if (!isActive) {
                             faqItem.classList.add('active');

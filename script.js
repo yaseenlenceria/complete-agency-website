@@ -69,7 +69,7 @@ function initializeNavigation() {
                             // Add smooth scroll with offset for fixed navbar
                             const navHeight = document.querySelector('.navbar')?.offsetHeight || 0;
                             const targetPosition = target.offsetTop - navHeight - 20;
-                            
+
                             window.scrollTo({
                                 top: targetPosition,
                                 behavior: 'smooth'
@@ -154,7 +154,7 @@ function animateCounter(element) {
 
     element.dataset.animated = 'true';
     element.classList.add('counting');
-    
+
     let current = 0;
     const duration = 3000; // 3 seconds for slower animation
     const steps = 120; // More steps for smoother animation
@@ -189,7 +189,7 @@ function animateCounter(element) {
 // Enhanced number counter for all stat elements
 function initializeNumberCounters() {
     const counters = document.querySelectorAll('.stat-number, .live-stat-card .stat-number, .coverage-stat h3, .summary-stat h4');
-    
+
     const counterObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting && !entry.target.dataset.animated) {
@@ -311,15 +311,15 @@ function initializePerformanceGraph() {
 function initializeFAQ() {
     // Clean FAQ initialization
     const faqItems = document.querySelectorAll('.faq-item');
-    
+
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
         const answer = item.querySelector('.faq-answer');
-        
+
         if (question && answer) {
             question.addEventListener('click', () => {
                 const isActive = item.classList.contains('active');
-                
+
                 // Close all FAQ items
                 faqItems.forEach(otherItem => {
                     otherItem.classList.remove('active');
@@ -328,7 +328,7 @@ function initializeFAQ() {
                         otherAnswer.style.maxHeight = '0';
                     }
                 });
-                
+
                 // Toggle current item
                 if (!isActive) {
                     item.classList.add('active');
@@ -411,7 +411,7 @@ function addCleanStyles() {
 function initializeSmoothTransitions() {
     // Add smooth hover effects to all interactive elements
     const interactiveElements = document.querySelectorAll('button, a, .card, .service-card, .industry-card');
-    
+
     interactiveElements.forEach(element => {
         element.addEventListener('mouseenter', function() {
             this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
@@ -426,11 +426,11 @@ function initializeSmoothTransitions() {
                 // Add page transition effect
                 document.body.style.opacity = '0.95';
                 document.body.style.transform = 'scale(0.98)';
-                
+
                 setTimeout(() => {
                     window.location.href = this.href;
                 }, 200);
-                
+
                 e.preventDefault();
             }
         });
@@ -443,7 +443,7 @@ function initializeSmoothTransitions() {
             this.style.transform = 'scale(1.02)';
             this.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
         });
-        
+
         element.addEventListener('blur', function() {
             this.style.transform = 'scale(1)';
             this.style.boxShadow = 'none';
@@ -777,4 +777,217 @@ function initializeMobileMenu() {
             });
         }
     });
+}
+
+// Mobile Navigation
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+    }
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href && href !== '#') {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+    });
+
+    // Stats Animation
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const statNumbers = entry.target.querySelectorAll('.stat-number');
+                statNumbers.forEach(stat => {
+                    animateNumber(stat);
+                });
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe stats sections
+    const statsContainers = document.querySelectorAll('.hero-stats, .stats-grid, .success-metrics');
+    statsContainers.forEach(container => {
+        if (container) {
+            observer.observe(container);
+        }
+    });
+
+    // Initialize FAQ
+    initializeFAQComponent();
+
+    // Add smooth transitions
+    addSmoothTransitions();
+});
+
+function animateNumber(element) {
+    if (!element) return;
+
+    const text = element.textContent;
+    const hasPercent = text.includes('%');
+    const hasPlus = text.includes('+');
+    const number = parseFloat(text.replace(/[^\d.]/g, ''));
+
+    if (isNaN(number)) return;
+
+    element.textContent = '0';
+
+    const duration = 3000; // Slower animation
+    const steps = 120; // More steps for smoother animation
+    const increment = number / steps;
+    const stepDuration = duration / steps;
+
+    let current = 0;
+
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= number) {
+            current = number;
+            clearInterval(timer);
+        }
+
+        let displayValue = Math.floor(current).toString();
+        if (hasPlus) displayValue = '+' + displayValue;
+        if (hasPercent) displayValue += '%';
+
+        element.textContent = displayValue;
+    }, stepDuration);
+}
+
+function initializeFAQComponent() {
+    if (typeof FAQComponent !== 'undefined') {
+        let faqContainer = document.getElementById('faq-section');
+
+        // If FAQ section doesn't exist, create it
+        if (!faqContainer) {
+            faqContainer = document.createElement('div');
+            faqContainer.id = 'faq-section';
+
+            // Insert before footer
+            const footer = document.querySelector('.footer');
+            if (footer && footer.parentNode) {
+                footer.parentNode.insertBefore(faqContainer, footer);
+            } else {
+                // If no footer, append to body
+                document.body.appendChild(faqContainer);
+            }
+        }
+
+        if (faqContainer) {
+            try {
+                const faq = new FAQComponent();
+                // Determine category based on page
+                let category = 'general';
+                const pathname = window.location.pathname.toLowerCase();
+
+                if (pathname.includes('construction')) category = 'construction';
+                else if (pathname.includes('law-firm') || pathname.includes('legal')) category = 'legal';
+                else if (pathname.includes('healthcare') || pathname.includes('dentist')) category = 'healthcare';
+                else if (pathname.includes('real-estate')) category = 'real-estate';
+                else if (pathname.includes('plumber')) category = 'plumbing';
+                else if (pathname.includes('architect')) category = 'architecture';
+                else if (pathname.includes('roofer') || pathname.includes('roofing')) category = 'roofing';
+                else if (pathname.includes('about')) category = 'about';
+
+                faq.render(faqContainer, category);
+            } catch (error) {
+                console.error('Error initializing FAQ component:', error);
+            }
+        }
+    }
+}
+
+// Global function for FAQ toggle
+function toggleFAQ(index) {
+    const faqAnswer = document.getElementById(`faq-${index}`);
+    const faqQuestion = faqAnswer ? faqAnswer.previousElementSibling : null;
+
+    if (faqAnswer && faqQuestion) {
+        const isOpen = faqAnswer.style.maxHeight && faqAnswer.style.maxHeight !== '0px';
+
+        // Close all other FAQs first
+        document.querySelectorAll('.faq-answer').forEach(answer => {
+            if (answer !== faqAnswer) {
+                answer.style.maxHeight = '0px';
+                const question = answer.previousElementSibling;
+                if (question) question.classList.remove('active');
+            }
+        });
+
+        if (isOpen) {
+            faqAnswer.style.maxHeight = '0px';
+            faqQuestion.classList.remove('active');
+        } else {
+            faqAnswer.style.maxHeight = faqAnswer.scrollHeight + 'px';
+            faqQuestion.classList.add('active');
+        }
+    }
+}
+
+// Add smooth transitions to all elements
+function addSmoothTransitions() {
+    const style = document.createElement('style');
+    style.textContent = `
+        * {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .service-card, .why-choose-item, .value-card, .team-member, .industry-card {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                       box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                       background 0.3s ease !important;
+        }
+
+        .service-card:hover, .why-choose-item:hover, .value-card:hover, 
+        .team-member:hover, .industry-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .faq-question {
+            transition: all 0.3s ease !important;
+        }
+
+        .faq-answer {
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .btn-primary, .btn-secondary {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .nav-menu a {
+            transition: color 0.3s ease !important;
+        }
+    `;
+    document.head.appendChild(style);
 }
