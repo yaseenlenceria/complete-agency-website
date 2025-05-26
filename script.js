@@ -139,13 +139,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             try {
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    e.preventDefault();
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                if (targetId.length > 1) {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
                 }
             } catch (error) {
                 console.log('Invalid selector:', targetId);
@@ -401,28 +403,28 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Add CSS for animations if not already added
-if (!document.querySelector('#dynamic-animations')) {
-    const style = document.createElement('style');
-    style.id = 'dynamic-animations';
-    style.textContent = `
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        .animate-in { animation: slideInUp 0.8s ease-out forwards; }
-        .navbar { transition: transform 0.3s ease; }
-        .nav-menu.active { transform: translateX(0) !important; }
-        @media (max-width: 768px) {
-            .nav-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
-        }
-    `;
-    document.head.appendChild(style);
-}
+    if (!document.querySelector('#dynamic-animations')) {
+        const style = document.createElement('style');
+        style.id = 'dynamic-animations';
+        style.textContent = `
+            @keyframes slideInUp {
+                from { opacity: 0; transform: translateY(30px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes slideInLeft {
+                from { opacity: 0; transform: translateX(-30px); }
+                to { opacity: 1; transform: translateX(0); }
+            }
+            @keyframes slideInRight {
+                from { opacity: 0; transform: translateX(30px); }
+                to { opacity: 1; transform: translateX(0); }
+            }
+            .animate-in { animation: slideInUp 0.8s ease-out forwards; }
+            .navbar { transition: transform 0.3s ease; }
+            .nav-menu.active { transform: translateX(0) !important; }
+            @media (max-width: 768px) {
+                .nav-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
