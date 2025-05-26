@@ -1,275 +1,185 @@
-// Mobile Navigation
+// Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Mobile Navigation Toggle
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
-    const dropdowns = document.querySelectorAll('.dropdown');
 
-    // Mobile menu toggle
     if (hamburger && navMenu) {
-        hamburger.addEventListener('click', function() {
+        hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-    }
 
-    // Close mobile menu when clicking on a link
-    const navLinks = document.querySelectorAll('.nav-menu a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            if (navMenu.classList.contains('active')) {
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
+            });
+        });
+    }
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         });
     });
 
-    // Dropdown functionality for mobile
-    dropdowns.forEach(dropdown => {
-        const dropdownLink = dropdown.querySelector('a');
-        const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+    // Enhanced Parallax effect for hero images
+    let ticking = false;
+    function updateParallax() {
+        const scrolled = window.pageYOffset;
+        const heroImages = document.querySelectorAll('.hero-image img, .service-hero img');
 
-        if (dropdownLink && dropdownMenu) {
-            dropdownLink.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    dropdownMenu.classList.toggle('active');
-                }
-            });
+        heroImages.forEach(img => {
+            if (img) {
+                const speed = 0.3;
+                img.style.transform = `translateY(${scrolled * speed}px)`;
+            }
+        });
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
         }
     });
 
-    // Smooth scrolling for anchor links
-    const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
-    smoothScrollLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href && href !== '#' && href.length > 1) {
-                e.preventDefault();
-                try {
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                } catch (error) {
-                    console.log('Invalid selector:', href);
-                }
-            }
-        });
-    });
-
-    // Grid animations on scroll
+    // Add animation classes when elements come into view
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver(function(entries) {
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('animate-in');
             }
         });
     }, observerOptions);
 
-    // Observe grid items for animations
-    const gridItems = document.querySelectorAll('.service-card, .why-choose-item, .industry-card, .benefit-card, .problem-card');
-    gridItems.forEach((item, index) => {
-        item.style.opacity = '0';
-        item.style.transform = 'translateY(20px)';
-        item.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-        observer.observe(item);
+    // Observe elements for animation
+    document.querySelectorAll('.service-card, .why-choose-item, .industry-card, .benefit-card, .problem-card').forEach(el => {
+        observer.observe(el);
     });
 
-    // Form handling
-    const contactForm = document.querySelector('.contact-form form');
+    // Contact form submission
+    const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Get form data
-            const formData = new FormData(this);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const service = formData.get('service');
-            const message = formData.get('message');
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
 
-            // Basic validation
-            if (!name || !email || !message) {
-                alert('Please fill in all required fields.');
-                return;
-            }
-
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Please enter a valid email address.');
-                return;
-            }
-
-            // Show success message
-            alert('Thank you for your message! We will get back to you within 24 hours.');
-            this.reset();
+            // Simulate form submission
+            setTimeout(() => {
+                alert('Thank you for your inquiry! We will contact you within 24 hours.');
+                this.reset();
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
         });
     }
 
-    // Statistics counter animation
-    const statNumbers = document.querySelectorAll('.stat-number, .hero-stats .stat-number');
-    const countUp = (element, target) => {
-        const increment = target / 100;
-        let current = 0;
+    // Dropdown menu functionality
+    document.querySelectorAll('.dropdown').forEach(dropdown => {
+        const dropdownMenu = dropdown.querySelector('.dropdown-menu');
 
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
+        dropdown.addEventListener('mouseenter', function() {
+            this.classList.add('active');
+        });
 
-            if (target >= 1000) {
-                element.textContent = Math.floor(current / 1000) + 'k+';
-            } else if (target >= 100) {
-                element.textContent = Math.floor(current) + '+';
-            } else {
-                element.textContent = Math.floor(current) + '%';
-            }
-        }, 20);
-    };
+        dropdown.addEventListener('mouseleave', function() {
+            this.classList.remove('active');
+        });
 
-    const statsObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = parseInt(entry.target.textContent.replace(/[^\d]/g, ''));
-                if (target > 0) {
-                    countUp(entry.target, target);
-                    statsObserver.unobserve(entry.target);
-                }
+        dropdown.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                this.classList.toggle('active');
             }
         });
-    }, { threshold: 0.5 });
-
-    statNumbers.forEach(stat => {
-        statsObserver.observe(stat);
     });
 
-    // Navbar scroll effect
-    let lastScrollTop = 0;
-    const navbar = document.querySelector('.navbar');
-
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-        if (scrollTop > lastScrollTop && scrollTop > 100) {
-            // Scrolling down
-            navbar.style.transform = 'translateY(-100%)';
-        } else {
-            // Scrolling up
-            navbar.style.transform = 'translateY(0)';
-        }
-
-        lastScrollTop = scrollTop;
-    });
-
-    // Add loading class removal for better performance
-    document.body.classList.add('loaded');
-
-    // Enhanced image loading with animations
-    const heroImages = document.querySelectorAll('.hero-image img');
-    const floatingCards = document.querySelectorAll('.floating-card');
-
-    heroImages.forEach((img, index) => {
-        if (img.complete) {
-            setTimeout(() => {
-                img.style.opacity = '1';
-                img.style.transform = 'scale(1)';
-            }, index * 200);
-        } else {
-            img.addEventListener('load', function() {
-                setTimeout(() => {
-                    this.style.opacity = '1';
-                    this.style.transform = 'scale(1)';
-                }, index * 200);
+    // Close dropdown when clicking outside (mobile)
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown') && window.innerWidth <= 768) {
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
             });
         }
-
-        // Add loading placeholder
-        img.style.transform = 'scale(0.9)';
-        img.style.filter = 'blur(5px)';
-
-        img.addEventListener('load', function() {
-            this.style.filter = 'blur(0)';
-            this.style.transform = 'scale(1)';
-        });
     });
 
-    // Animate floating cards
-    floatingCards.forEach((card, index) => {
-        setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, 1000 + (index * 300));
+    // Stats counter animation
+    function animateStats() {
+        const stats = document.querySelectorAll('.stat-number');
+        stats.forEach(stat => {
+            const text = stat.textContent;
+            const target = parseInt(text.replace(/[^\d]/g, ''));
+            let current = 0;
+            const increment = target / 60;
+            const suffix = text.replace(/[\d\s]/g, '');
 
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-    });
-
-    // Parallax effect for hero images
-    window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        const heroImages = document.querySelectorAll('.hero-image img');
-
-        heroImages.forEach(img => {
-            const speed = 0.5;
-            img.style.transform = `translateY(${scrolled * speed}px) scale(1.1)`;
-        });
-    });
-
-    // Grid layout improvements
-    function adjustGridLayouts() {
-        const grids = document.querySelectorAll('.services-grid, .why-choose-grid, .industries-grid');
-
-        grids.forEach(grid => {
-            const items = grid.children;
-            const itemCount = items.length;
-
-            // Adjust grid columns based on item count and screen size
-            if (window.innerWidth > 1024) {
-                if (itemCount % 3 === 0 || itemCount >= 6) {
-                    grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
-                } else if (itemCount % 2 === 0 || itemCount === 4) {
-                    grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    stat.textContent = target + suffix;
+                    clearInterval(timer);
                 } else {
-                    grid.style.gridTemplateColumns = 'repeat(3, 1fr)';
+                    stat.textContent = Math.floor(current) + suffix;
                 }
-            } else if (window.innerWidth > 768) {
-                grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
-            } else {
-                grid.style.gridTemplateColumns = '1fr';
+            }, 30);
+        });
+    }
+
+    // Trigger stats animation when in view
+    const statsElements = document.querySelectorAll('.hero-stats, .results-stats');
+    statsElements.forEach(statsSection => {
+        if (statsSection) {
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStats();
+                        statsObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            statsObserver.observe(statsSection);
+        }
+    });
+
+    // Floating elements animation
+    const floatingElements = document.querySelectorAll('.animate-float, .animate-bounce-1, .animate-bounce-2, .animate-bounce-3');
+    floatingElements.forEach((element, index) => {
+        element.style.animationDelay = `${index * 0.2}s`;
+    });
+
+    // Add loading effect to buttons
+    document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            if (!this.classList.contains('loading')) {
+                this.classList.add('loading');
+                setTimeout(() => {
+                    this.classList.remove('loading');
+                }, 2000);
             }
         });
-    }
-
-    // Initial grid adjustment
-    adjustGridLayouts();
-
-    // Readjust on window resize
-    window.addEventListener('resize', adjustGridLayouts);
-
-    // Performance optimization for scroll events
-    let ticking = false;
-    function updateScrollEffects() {
-        // Update any scroll-based effects here
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', function() {
-        if (!ticking) {
-            requestAnimationFrame(updateScrollEffects);
-            ticking = true;
-        }
     });
 });
 
