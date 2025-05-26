@@ -82,7 +82,7 @@ function initializeAnimations() {
     // Add loading class
     document.body.classList.add('loaded');
 
-    // Initialize scroll animations
+    // Initialize simple scroll animations
     initializeScrollAnimations();
 
     // Initialize counter animations for hero stats
@@ -93,66 +93,44 @@ function initializeAnimations() {
 }
 
 function initializeScrollAnimations() {
-    // Create intersection observer for scroll animations
+    // Simple intersection observer without complex animations
     const observerOptions = {
         threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
+        rootMargin: '0px 0px -50px 0px'
     };
 
     const scrollObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('in-view');
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
 
                 // Animate counters when they come into view
                 if (entry.target.classList.contains('stat-item')) {
-                    animateCounter(entry.target.querySelector('.stat-number'));
+                    const numberEl = entry.target.querySelector('.stat-number');
+                    if (numberEl) {
+                        animateCounter(numberEl);
+                    }
                 }
             }
         });
     }, observerOptions);
 
-    // Add scroll animation classes and observe elements
-    const animateElements = document.querySelectorAll(`
-        .service-card, 
-        .why-choose-item, 
-        .industry-card, 
-        .problem-card, 
-        .benefit-card, 
-        .process-step,
-        .stat-card,
-        .feature-item,
-        .testimonial-card,
-        .case-study-card
-    `);
-
-    animateElements.forEach((el, index) => {
-        // Add appropriate animation class based on element type and position
-        if (index % 3 === 0) {
-            el.classList.add('scroll-animate-left');
-        } else if (index % 3 === 1) {
-            el.classList.add('scroll-animate');
-        } else {
-            el.classList.add('scroll-animate-right');
-        }
-
+    // Observe elements with simple animations
+    const animateElements = document.querySelectorAll('.service-card, .why-choose-item, .industry-card, .section-header');
+    animateElements.forEach(el => {
+        el.style.opacity = '0.8';
+        el.style.transform = 'translateY(10px)';
         scrollObserver.observe(el);
-    });
-
-    // Special handling for specific sections
-    document.querySelectorAll('.section-header').forEach(header => {
-        header.classList.add('scroll-animate');
-        scrollObserver.observe(header);
     });
 }
 
 function initializeCounterAnimations() {
-    // Counter animation for hero stats
+    // Simple counter animation for hero stats
     const heroStats = document.querySelectorAll('.hero-stats .stat-number');
-    heroStats.forEach((stat, index) => {
-        setTimeout(() => {
-            animateCounter(stat);
-        }, 1000 + (index * 200));
+    heroStats.forEach(stat => {
+        animateCounter(stat);
     });
 }
 
@@ -292,24 +270,30 @@ function initializePerformanceGraph() {
 }
 
 function initializeFAQ() {
-    const faqQuestions = document.querySelectorAll('.faq-question');
-
-    faqQuestions.forEach(question => {
-        if (question) {
+    // Clean FAQ initialization
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        
+        if (question && answer) {
             question.addEventListener('click', () => {
-                const answer = question.nextElementSibling;
-                if (answer) {
-                    const isActive = answer.classList.contains('active');
-
-                    // Close all other answers
-                    document.querySelectorAll('.faq-answer').forEach(ans => {
-                        ans.classList.remove('active');
-                    });
-
-                    // Toggle current answer
-                    if (!isActive) {
-                        answer.classList.add('active');
+                const isActive = item.classList.contains('active');
+                
+                // Close all FAQ items
+                faqItems.forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                    const otherAnswer = otherItem.querySelector('.faq-answer');
+                    if (otherAnswer) {
+                        otherAnswer.style.maxHeight = '0';
                     }
+                });
+                
+                // Toggle current item
+                if (!isActive) {
+                    item.classList.add('active');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
                 }
             });
         }
@@ -378,37 +362,11 @@ function createDynamicGrid(items, className) {
     return grid;
 }
 
-// Add CSS for animations if not already added
-function addDynamicStyles() {
-    if (!document.querySelector('#dynamic-animations')) {
-        const animationStyle = document.createElement('style');
-        animationStyle.id = 'dynamic-animations';
-        animationStyle.textContent = `
-            @keyframes slideInUp {
-                from { opacity: 0; transform: translateY(30px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            @keyframes slideInLeft {
-                from { opacity: 0; transform: translateX(-30px); }
-                to { opacity: 1; transform: translateX(0); }
-            }
-            @keyframes slideInRight {
-                from { opacity: 0; transform: translateX(30px); }
-                to { opacity: 1; transform: translateX(0); }
-            }
-            .animate-in { animation: slideInUp 0.8s ease-out forwards; }
-            .navbar { transition: transform 0.3s ease; }
-            .nav-menu.active { transform: translateX(0) !important; }
-            @media (max-width: 768px) {
-                .nav-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
-            }
-        `;
-        document.head.appendChild(animationStyle);
-    }
+// Clean initialization without dynamic style injection
+function addCleanStyles() {
+    // Styles are now handled in CSS file
+    document.body.classList.add('styles-loaded');
 }
-
-// Initialize styles
-addDynamicStyles();
 
 // Initialize Reviews Component
 function initializeReviews() {

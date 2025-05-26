@@ -820,7 +820,24 @@ section .container {
 /* UK Cities Showcase */
 .uk-cities-showcase {
     padding: 60px 0;
-    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+    position: relative;
+}
+
+.uk-cities-showcase::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.7) 0%, rgba(248, 250, 252, 0.5) 100%);
+    z-index: 1;
+}
+
+.uk-cities-showcase .container {
+    position: relative;
+    z-index: 2;
 }
 
 .cities-showcase-grid {
@@ -987,8 +1004,7 @@ section .container {
 }
 
 .industry-content h3 {
-    color: #fbbf24;
-    margin-bottom: 12px;
+    color: #fbbf24;    margin-bottom: 12px;
     font-size: 1.2rem;
     font-weight: 700;
     line-height: 1.3;
