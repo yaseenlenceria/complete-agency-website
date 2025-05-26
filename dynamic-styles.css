@@ -1,3 +1,470 @@
+/* Enhanced Dynamic Components Styles */
+
+/* City Search Bar */
+.city-search-bar {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto 2rem auto;
+}
+
+.city-search-input {
+    width: 100%;
+    padding: 12px 40px 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 50px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.city-search-input:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    pointer-events: none;
+}
+
+/* Enhanced City Cards */
+.city-card {
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.city-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.city-link {
+    display: block;
+    padding: 20px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.city-icon {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.city-icon i {
+    font-size: 24px;
+    color: #10b981;
+}
+
+.city-info {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.city-name {
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 4px;
+    color: #1e293b;
+}
+
+.major-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.population {
+    display: block;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.city-services {
+    text-align: center;
+    padding-top: 12px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.services-available {
+    color: #10b981;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.major-city {
+    border: 2px solid #fbbf24;
+}
+
+/* City Coverage Stats */
+.city-coverage-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border-radius: 16px;
+    color: white;
+}
+
+.coverage-stat {
+    text-align: center;
+}
+
+.coverage-stat h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #10b981;
+    margin-bottom: 0.5rem;
+}
+
+.coverage-stat p {
+    color: #cbd5e1;
+    font-weight: 500;
+}
+
+/* Industry Services Overview */
+.industry-services-overview {
+    background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+    padding: 4rem 0;
+}
+
+.industry-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.industry-category {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.industry-category:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.industry-category h3 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+}
+
+.industry-category h3 i {
+    color: #10b981;
+    font-size: 1.5rem;
+}
+
+.services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.service-link {
+    display: block;
+    padding: 12px 16px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #334155;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.service-link:hover {
+    background: #10b981;
+    color: white;
+    border-color: #10b981;
+    transform: translateX(4px);
+}
+
+/* Loading Modal */
+.loading-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.loading-content {
+    background: white;
+    padding: 3rem;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #e2e8f0;
+    border-top: 4px solid #10b981;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1.5rem auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* City Content Modal */
+.city-content-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 2rem 1rem 2rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-header h2 {
+    color: #1e293b;
+    margin: 0;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #64748b;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.close-modal:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.city-overview {
+    margin-bottom: 2rem;
+}
+
+.city-overview h3 {
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.city-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.stat {
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.available-services {
+    margin-bottom: 2rem;
+}
+
+.available-services h4 {
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.service-item {
+    padding: 1rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+.service-item h5 {
+    color: #10b981;
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+}
+
+.service-item p {
+    color: #64748b;
+    margin: 0;
+    font-size: 14px;
+}
+
+.keywords-preview {
+    margin-bottom: 2rem;
+}
+
+.keywords-preview h4 {
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+.keywords-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.keyword-tag {
+    background: #e2e8f0;
+    color: #334155;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    padding-top: 2rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.modal-actions .btn-primary,
+.modal-actions .btn-secondary {
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-actions .btn-primary {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+}
+
+.modal-actions .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.modal-actions .btn-secondary {
+    background: white;
+    color: #334155;
+    border: 2px solid #e2e8f0;
+}
+
+.modal-actions .btn-secondary:hover {
+    border-color: #10b981;
+    color: #10b981;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .industry-categories {
+        grid-template-columns: 1fr;
+    }
+
+    .city-coverage-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+
+    .coverage-stat h3 {
+        font-size: 2rem;
+    }
+
+    .modal-content {
+        margin: 10px;
+        max-height: calc(100vh - 20px);
+    }
+
+    .modal-header,
+    .modal-body {
+        padding: 1.5rem;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .city-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Dynamic Components Styles */
 
 /* Live Stats Component */
@@ -605,7 +1072,7 @@
 
 .testimonial-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 30px rgba(0, 0,0, 0.15);
 }
 
 .testimonial-rating {
