@@ -423,47 +423,40 @@ function initializeReviews() {
 
 // Initialize FAQ Component on all pages
 function initializeFAQComponent() {
-    setTimeout(() => {
-        if (typeof FAQComponent !== 'undefined') {
-            let faqContainer = document.getElementById('faq-section');
+    if (typeof FAQComponent !== 'undefined') {
+        let faqContainer = document.getElementById('faq-section');
+        
+        // If FAQ section doesn't exist, create it
+        if (!faqContainer) {
+            faqContainer = document.createElement('div');
+            faqContainer.id = 'faq-section';
             
-            // If FAQ section doesn't exist, create it
-            if (!faqContainer) {
-                faqContainer = document.createElement('div');
-                faqContainer.id = 'faq-section';
-                
-                // Insert before footer
-                const footer = document.querySelector('.footer');
-                if (footer) {
-                    footer.parentNode.insertBefore(faqContainer, footer);
-                }
-            }
-            
-            if (faqContainer) {
-                const faq = new FAQComponent();
-                // Determine category based on page
-                let category = 'general';
-                if (window.location.pathname.includes('construction') || 
-                    window.location.pathname.includes('roofing') || 
-                    window.location.pathname.includes('plumber')) {
-                    category = 'industries';
-                } else if (window.location.pathname.includes('cities') || 
-                          window.location.pathname.includes('manchester') || 
-                          window.location.pathname.includes('birmingham')) {
-                    category = 'local';
-                } else if (window.location.pathname.includes('technical') || 
-                          window.location.pathname.includes('development')) {
-                    category = 'technical';
-                }
-                faq.init(category);
-                
-                // Initialize FAQ interaction after a brief delay
-                setTimeout(() => {
-                    initializeFAQSEO();
-                }, 300);
+            // Insert before footer
+            const footer = document.querySelector('.footer');
+            if (footer) {
+                footer.parentNode.insertBefore(faqContainer, footer);
             }
         }
-    }, 500);
+        
+        if (faqContainer) {
+            const faq = new FAQComponent();
+            // Determine category based on page
+            let category = 'general';
+            if (window.location.pathname.includes('construction') || 
+                window.location.pathname.includes('roofing') || 
+                window.location.pathname.includes('plumber')) {
+                category = 'industries';
+            } else if (window.location.pathname.includes('cities') || 
+                      window.location.pathname.includes('manchester') || 
+                      window.location.pathname.includes('birmingham')) {
+                category = 'local';
+            } else if (window.location.pathname.includes('technical') || 
+                      window.location.pathname.includes('development')) {
+                category = 'technical';
+            }
+            faq.init(category);
+        }
+    }
 }
 
 // SEO Enhancements
@@ -513,61 +506,31 @@ function addPageStructuredData() {
 }
 
 function initializeFAQSEO() {
-    // Add delay to ensure all elements are loaded
-    setTimeout(() => {
-        const faqQuestions = document.querySelectorAll('.faq-question');
-        faqQuestions.forEach(question => {
-            // Remove any existing event listeners
-            const newQuestion = question.cloneNode(true);
-            question.parentNode.replaceChild(newQuestion, question);
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+            const faqItem = this.parentElement;
+            const answer = faqItem.querySelector('.faq-answer');
+            const isActive = faqItem.classList.contains('active');
+            const icon = this.querySelector('.faq-icon');
             
-            newQuestion.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const faqItem = this.parentElement;
-                const answer = faqItem.querySelector('.faq-answer');
-                const isActive = faqItem.classList.contains('active');
-                const icon = this.querySelector('.faq-icon');
-                
-                console.log('FAQ clicked:', this.textContent.trim());
-                
-                // Close all other answers
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    if (item !== faqItem) {
-                        item.classList.remove('active');
-                        const itemAnswer = item.querySelector('.faq-answer');
-                        const itemIcon = item.querySelector('.faq-icon');
-                        if (itemAnswer) {
-                            itemAnswer.classList.remove('active');
-                            itemAnswer.style.maxHeight = '0';
-                            itemAnswer.style.padding = '0 25px';
-                        }
-                        if (itemIcon) itemIcon.style.transform = 'rotate(0deg)';
-                    }
-                });
-                
-                // Toggle current answer
-                if (!isActive) {
-                    faqItem.classList.add('active');
-                    if (answer) {
-                        answer.classList.add('active');
-                        answer.style.maxHeight = answer.scrollHeight + 'px';
-                        answer.style.padding = '25px';
-                    }
-                    if (icon) icon.style.transform = 'rotate(180deg)';
-                } else {
-                    faqItem.classList.remove('active');
-                    if (answer) {
-                        answer.classList.remove('active');
-                        answer.style.maxHeight = '0';
-                        answer.style.padding = '0 25px';
-                    }
-                    if (icon) icon.style.transform = 'rotate(0deg)';
-                }
+            // Close all other answers
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                const itemAnswer = item.querySelector('.faq-answer');
+                const itemIcon = item.querySelector('.faq-icon');
+                if (itemAnswer) itemAnswer.classList.remove('active');
+                if (itemIcon) itemIcon.style.transform = 'rotate(0deg)';
             });
+            
+            // Toggle current answer
+            if (!isActive) {
+                faqItem.classList.add('active');
+                if (answer) answer.classList.add('active');
+                if (icon) icon.style.transform = 'rotate(180deg)';
+            }
         });
-    }, 200);
+    });
 }
 
 function addServiceSchema() {
