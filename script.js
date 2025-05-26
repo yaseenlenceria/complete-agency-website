@@ -401,7 +401,7 @@ function createDynamicGrid(items, className) {
     return grid;
 }
 
-// Clean initialization without dynamic style injection
+// Enhanced scroll animations and initialization
 function addCleanStyles() {
     // Styles are now handled in CSS file
     document.body.classList.add('styles-loaded');

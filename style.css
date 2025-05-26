@@ -563,6 +563,10 @@ section .container {
 .problem-solution {
     padding: 80px 0;
     background: white;
+    opacity: 1;
+    visibility: visible;
+    position: relative;
+    z-index: 1;
 }
 
 .section-header {
@@ -589,6 +593,8 @@ section .container {
     gap: 2rem;
     padding: 0 20px;
     width: 100%;
+    margin: 0 auto;
+    max-width: 1400px;
 }
 
 .problem-card {
@@ -597,11 +603,20 @@ section .container {
     border-radius: 16px;
     text-align: center;
     border: 1px solid #e5e7eb;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    opacity: 1;
+    visibility: visible;
+    position: relative;
+    z-index: 2;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .problem-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
 .problem-icon {
