@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,37 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <h2>Digital Search Group</h2>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#about">About</a></li>
-                <li class="dropdown">
-                    <a href="index.html#services">Services ↓</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="real-estate-seo.html">Real Estate SEO</a></li>
-                        <li><a href="construction-seo.html">SEO For Construction</a></li>
-                        <li><a href="roofer-seo.html">Roofer SEO</a></li>
-                        <li><a href="plumbers-seo.html">Plumbers SEO</a></li>
-                        <li><a href="law-firm-seo.html">Law Firm SEO</a></li>
-                        <li><a href="healthcare-seo.html">Healthcare SEO</a></li>
-                        <li><a href="white-label-seo.html">White Label SEO</a></li>
-                    </ul>
-                </li>
-                <li><a href="index.html#industries">Industries</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+    <!-- Navigation will be inserted by JavaScript -->
+    <nav class="navbar"></nav>
 
     <!-- Hero Section -->
     <section class="hero service-hero">
@@ -260,7 +230,21 @@
         </div>
     </footer>
 
+    <script src="images-config.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Add construction-specific images after DOM loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hero background image for construction
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) {
+                heroSection.style.backgroundImage = `linear-gradient(rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.7)), url('${getImageUrl('services', 'construction')}')`;
+                heroSection.style.backgroundSize = 'cover';
+                heroSection.style.backgroundPosition = 'center';
+                heroSection.style.backgroundAttachment = 'fixed';
+            }
+        });
+    </script>
 </body>
 </html>
 <!DOCTYPE html>
@@ -275,39 +259,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <h2>OutSourceSU</h2>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li class="dropdown">
-                    <a href="index.html#services">Services ↓</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="real-estate-seo.html">Real Estate SEO</a></li>
-                        <li><a href="construction-seo.html">SEO For Construction</a></li>
-                        <li><a href="architects-seo.html">SEO for Architects</a></li>
-                        <li><a href="plumbers-seo.html">Plumbers SEO</a></li>
-                        <li><a href="roofer-seo.html">Roofer SEO</a></li>
-                        <li><a href="dentists-seo.html">Dentists SEO</a></li>
-                        <li><a href="financial-seo.html">Financial SEO</a></li>
-                        <li><a href="accountants-seo.html">SEO For Accountants</a></li>
-                        <li><a href="law-firm-seo.html">Law Firm SEO</a></li>
-                    </ul>
-                </li>
-                <li><a href="index.html#industries">Industries</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+    <!-- Navigation will be inserted by JavaScript -->
+    <nav class="navbar"></nav>
 
     <!-- Hero Section -->
     <section class="hero service-hero">
@@ -525,6 +478,20 @@
         </div>
     </footer>
 
+    <script src="images-config.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Add construction-specific images after DOM loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hero background image for construction
+            const heroSection = document.querySelector('.hero');
+            if (heroSection) {
+                heroSection.style.backgroundImage = `linear-gradient(rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.7)), url('${getImageUrl('services', 'construction')}')`;
+                heroSection.style.backgroundSize = 'cover';
+                heroSection.style.backgroundPosition = 'center';
+                heroSection.style.backgroundAttachment = 'fixed';
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 // Navigation and UI functionality
 document.addEventListener('DOMContentLoaded', function() {
+    initializeGlobalNavigation();
     initializeNavigation();
     initializeAnimations();
     initializeDynamicComponents();
@@ -52,18 +53,24 @@ function initializeNavigation() {
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            if (href && href !== '#' && href.length > 1) {
-                const target = document.querySelector(href);
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
+        if (anchor) {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href && href !== '#' && href.length > 1) {
+                    try {
+                        const target = document.querySelector(href);
+                        if (target) {
+                            e.preventDefault();
+                            target.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        }
+                    } catch (error) {
+                        console.log('Invalid selector:', href);
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 }
 
@@ -284,10 +291,26 @@ function initializeFAQ() {
     const faqQuestions = document.querySelectorAll('.faq-question');
 
     faqQuestions.forEach(question => {
-        question.addEventListener('click', () => {
-            const answer = question.nextElementSibling;
-            const isActive = answer.classList.contains('active');
+        if (question) {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                if (answer) {
+                    const isActive = answer.classList.contains('active');
 
+                    // Close all other answers
+                    document.querySelectorAll('.faq-answer').forEach(ans => {
+                        ans.classList.remove('active');
+                    });
+
+                    // Toggle current answer
+                    if (!isActive) {
+                        answer.classList.add('active');
+                    }
+                }
+            });
+        }
+    });
+}
 
 // Cities Page Manager Integration
 if (typeof CitiesPageManager !== 'undefined') {
@@ -295,19 +318,6 @@ if (typeof CitiesPageManager !== 'undefined') {
         if (window.location.pathname.includes('cities-pages.html')) {
             window.citiesPageManager = new CitiesPageManager();
         }
-    });
-}
-
-            // Close all other answers
-            document.querySelectorAll('.faq-answer').forEach(ans => {
-                ans.classList.remove('active');
-            });
-
-            // Toggle current answer
-            if (!isActive) {
-                answer.classList.add('active');
-            }
-        });
     });
 }
 
@@ -366,9 +376,9 @@ function createDynamicGrid(items, className) {
 
 // Add CSS for animations if not already added
 if (!document.querySelector('#dynamic-animations')) {
-    const style = document.createElement('style');
-    style.id = 'dynamic-animations';
-    style.textContent = `
+    const animationStyle = document.createElement('style');
+    animationStyle.id = 'dynamic-animations';
+    animationStyle.textContent = `
         @keyframes slideInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -388,5 +398,79 @@ if (!document.querySelector('#dynamic-animations')) {
             .nav-menu { transform: translateX(-100%); transition: transform 0.3s ease; }
         }
     `;
-    document.head.appendChild(style);
+    document.head.appendChild(animationStyle);
+}
+
+// Global Navigation Template
+function getGlobalNavigation() {
+    return `
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2>OutSourceSU</h2>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li class="dropdown">
+                        <a href="index.html#services">SEO Services ↓</a>
+                        <ul class="dropdown-menu">
+                            <li><h4>Construction & Trade</h4></li>
+                            <li><a href="construction-seo.html">Construction SEO</a></li>
+                            <li><a href="architects-seo.html">Architects SEO</a></li>
+                            <li><a href="plumbers-seo.html">Plumbers SEO</a></li>
+                            <li><hr></li>
+                            <li><h4>Roofing SEO Specialists</h4></li>
+                            <li><a href="roofer-seo.html">Roofer SEO</a></li>
+                            <li><a href="roof-repair-seo.html">Roof Repair SEO</a></li>
+                            <li><a href="roof-replacement-seo.html">Roof Replacement SEO</a></li>
+                            <li><a href="commercial-roofing-seo.html">Commercial Roofing SEO</a></li>
+                            <li><a href="best-roofing-company.html">Best Roofing Company SEO</a></li>
+                            <li><a href="best-roofing-companies-seo.html">Best Roofing Companies SEO</a></li>
+                            <li><hr></li>
+                            <li><h4>Roofing Company Rankings</h4></li>
+                            <li><a href="best-roofing-companies-london.html">Best Roofing Companies London</a></li>
+                            <li><hr></li>
+                            <li><h4>Professional Services</h4></li>
+                            <li><a href="law-firm-seo.html">Law Firm SEO</a></li>
+                            <li><a href="dentists-seo.html">Dentists SEO</a></li>
+                            <li><a href="financial-seo.html">Financial SEO</a></li>
+                            <li><a href="accountants-seo.html">Accountants SEO</a></li>
+                            <li><hr></li>
+                            <li><h4>Real Estate & Property</h4></li>
+                            <li><a href="real-estate-seo.html">Real Estate SEO</a></li>
+                            <li><hr></li>
+                            <li><h4>Agency Services</h4></li>
+                            <li><a href="white-label-seo.html">White Label SEO</a></li>
+                            <li><a href="professional-seo-services-uk.html">Professional SEO Services UK</a></li>
+                            <li><a href="top-seo-agency-uk.html">Top SEO Agency UK</a></li>
+                            <li><a href="best-seo-agency-manchester.html">Best SEO Agency Manchester</a></li>
+                            <li><a href="seo-agency-birmingham.html">SEO Agency Birmingham</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="website-development.html">Web Development</a></li>
+                    <li><a href="cities-pages.html">UK Cities</a></li>
+                    <li><a href="index.html#why-choose-us">Why Choose Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    `;
+}
+
+// Initialize global navigation on all pages
+function initializeGlobalNavigation() {
+    const existingNav = document.querySelector('.navbar');
+    if (existingNav && !existingNav.classList.contains('global-nav-initialized')) {
+        existingNav.outerHTML = getGlobalNavigation();
+        existingNav.classList.add('global-nav-initialized');
+        
+        // Reinitialize navigation functionality
+        initializeNavigation();
+    }
 }
