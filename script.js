@@ -71,48 +71,139 @@ function initializeAnimations() {
     // Add loading class
     document.body.classList.add('loaded');
 
-    // Stats animation
-    const stats = document.querySelectorAll('.stat-number');
-    if (stats.length > 0) {
-        animateStats();
-    }
+    // Initialize scroll animations
+    initializeScrollAnimations();
 
-    // Initialize intersection observer for animations
+    // Initialize counter animations for hero stats
+    initializeCounterAnimations();
+
+    // Initialize image loading
+    initializeImageLoading();
+}
+
+function initializeScrollAnimations() {
+    // Create intersection observer for scroll animations
     const observerOptions = {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '0px 0px -100px 0px'
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    const scrollObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
+                entry.target.classList.add('in-view');
+                
+                // Animate counters when they come into view
+                if (entry.target.classList.contains('stat-item')) {
+                    animateCounter(entry.target.querySelector('.stat-number'));
+                }
             }
         });
     }, observerOptions);
 
-    // Observe elements for animation
-    document.querySelectorAll('.service-card, .why-choose-item, .industry-card, .problem-card, .benefit-card, .process-step').forEach(el => {
-        observer.observe(el);
+    // Add scroll animation classes and observe elements
+    const animateElements = document.querySelectorAll(`
+        .service-card, 
+        .why-choose-item, 
+        .industry-card, 
+        .problem-card, 
+        .benefit-card, 
+        .process-step,
+        .stat-card,
+        .feature-item,
+        .testimonial-card,
+        .case-study-card
+    `);
+
+    animateElements.forEach((el, index) => {
+        // Add appropriate animation class based on element type and position
+        if (index % 3 === 0) {
+            el.classList.add('scroll-animate-left');
+        } else if (index % 3 === 1) {
+            el.classList.add('scroll-animate');
+        } else {
+            el.classList.add('scroll-animate-right');
+        }
+        
+        scrollObserver.observe(el);
+    });
+
+    // Special handling for specific sections
+    document.querySelectorAll('.section-header').forEach(header => {
+        header.classList.add('scroll-animate');
+        scrollObserver.observe(header);
     });
 }
 
-function animateStats() {
-    const stats = document.querySelectorAll('.stat-number');
-    stats.forEach(stat => {
-        const target = parseInt(stat.textContent);
-        if (isNaN(target)) return;
+function initializeCounterAnimations() {
+    // Counter animation for hero stats
+    const heroStats = document.querySelectorAll('.hero-stats .stat-number');
+    heroStats.forEach((stat, index) => {
+        setTimeout(() => {
+            animateCounter(stat);
+        }, 1000 + (index * 200));
+    });
+}
 
-        let current = 0;
-        const increment = target / 100;
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            stat.textContent = Math.floor(current);
-        }, 20);
+function animateCounter(element) {
+    if (!element || element.dataset.animated) return;
+    
+    const target = parseInt(element.dataset.count || element.textContent);
+    if (isNaN(target)) return;
+
+    element.dataset.animated = 'true';
+    let current = 0;
+    const increment = target / 60; // 60 frames for smooth animation
+    const duration = 2000; // 2 seconds
+    const stepTime = duration / 60;
+
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
+        }
+        
+        // Add suffix for percentage or plus sign
+        const value = Math.floor(current);
+        if (element.dataset.count === '94') {
+            element.textContent = value + '%';
+        } else if (element.dataset.count === '500') {
+            element.textContent = value + '+';
+        } else if (element.dataset.count === '15') {
+            element.textContent = value + '+';
+        } else {
+            element.textContent = value;
+        }
+    }, stepTime);
+}
+
+function initializeImageLoading() {
+    // Lazy loading for images
+    const images = document.querySelectorAll('img[loading="lazy"]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.classList.add('loaded');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+
+    // Add loading animation to images
+    const allImages = document.querySelectorAll('img');
+    allImages.forEach(img => {
+        img.addEventListener('load', () => {
+            img.classList.add('image-loaded');
+        });
     });
 }
 
