@@ -18,18 +18,20 @@ document.addEventListener('DOMContentLoaded', function() {
             if (href && href !== '#' && href.length > 1) {
                 e.preventDefault();
                 try {
-                    // Clean the href to ensure it's a valid selector
-                    const cleanHref = href.replace(/[^a-zA-Z0-9-_]/g, '');
-                    if (cleanHref) {
-                        const target = document.querySelector('#' + cleanHref) || document.querySelector(href);
-                        if (target) {
-                            target.scrollIntoView({
-                                behavior: 'smooth'
-                            });
-                        }
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
                     }
                 } catch (error) {
-                    console.warn('Invalid selector:', href);
+                    // Handle pages that don't have the target section
+                    if (href.includes('#')) {
+                        const baseUrl = href.startsWith('#') ? 'index.html' : '';
+                        if (baseUrl) {
+                            window.location.href = baseUrl + href;
+                        }
+                    }
                 }
             }
         });
