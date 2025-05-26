@@ -35,6 +35,100 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Dropdown functionality for mobile
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+        const dropdownToggle = dropdown.querySelector('a');
+        if (dropdownToggle) {
+            dropdownToggle.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                }
+            });
+        }
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Navbar scroll effect
+    if (navbar) {
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+    }
+
+    // Initialize dynamic components
+    if (typeof LiveStatsComponent !== 'undefined') {
+        const liveStatsContainer = document.getElementById('live-stats');
+        if (liveStatsContainer) {
+            new LiveStatsComponent('live-stats');
+        }
+    }
+    
+    if (typeof CurrentlyWorkingComponent !== 'undefined') {
+        const currentlyWorkingContainer = document.getElementById('currently-working');
+        if (currentlyWorkingContainer) {
+            new CurrentlyWorkingComponent('currently-working');
+        }
+    }
+    
+    if (typeof PerformanceGraphComponent !== 'undefined') {
+        const performanceGraphContainer = document.getElementById('performance-graph');
+        if (performanceGraphContainer) {
+            new PerformanceGraphComponent('performance-graph');
+        }
+    }
+
+    // Image lazy loading
+    const images = document.querySelectorAll('img[data-src]');
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+
+    images.forEach(img => imageObserver.observe(img));
+
+    // Animation on scroll
+    const animateElements = document.querySelectorAll('.service-card, .why-choose-item, .industry-card, .problem-card');
+    const animationObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                animationObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    animateElements.forEach(el => animationObserver.observe(el));
+});
+
     // Safe smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
