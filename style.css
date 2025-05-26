@@ -13,7 +13,7 @@ body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
     color: #1e293b;
-    background: #ffffff;
+    background: white;
     overflow-x: hidden;
 }
 
@@ -488,7 +488,7 @@ section .container {
 /* Trust Section */
 .trust-section {
     padding: 3rem 0;
-    background: #f8fafc;
+    background: white;
 }
 
 .trust-section .container {
@@ -610,7 +610,7 @@ section .container {
 /* Services Section */
 .services-section {
     padding: 80px 0;
-    background: #f8fafc;
+    background: white;
 }
 
 .services-grid {
@@ -841,7 +841,7 @@ section .container {
 /* Industries Section */
 .industries-section {
     padding: 80px 0;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    background: white;
 }
 
 .industry-stats {
