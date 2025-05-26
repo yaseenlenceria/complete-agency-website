@@ -1,4 +1,3 @@
-
 // Enhanced Navigation and Website Functionality
 document.addEventListener('DOMContentLoaded', function() {
     
@@ -36,55 +35,48 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Smooth scrolling for anchor links
+    // Safe smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
-            if (targetId === '#' || targetId === '') return; // Skip empty anchors
-            
-            e.preventDefault();
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                // Add smooth transition
-                document.documentElement.style.scrollBehavior = 'smooth';
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-                
-                // Reset scroll behavior after animation
-                setTimeout(() => {
-                    document.documentElement.style.scrollBehavior = 'auto';
-                }, 1000);
+            if (targetId === '#' || targetId === '' || targetId === '#!') {
+                e.preventDefault();
+                return;
+            }
+
+            try {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            } catch (error) {
+                console.log('Invalid selector:', targetId);
             }
         });
     });
 
-    // Navbar scroll behavior with debouncing to reduce blinking
+    // Simple navbar scroll behavior
     let ticking = false;
-    
+
     function updateNavbar() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
+
         if (navbar) {
-            if (scrollTop > lastScrollTop && scrollTop > 100) {
-                navbar.classList.add('hidden');
-                navbar.classList.remove('scrolled');
+            if (scrollTop > 100) {
+                navbar.classList.add('scrolled');
             } else {
-                navbar.classList.remove('hidden');
-                if (scrollTop > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
+                navbar.classList.remove('scrolled');
             }
         }
-        
+
         lastScrollTop = scrollTop;
         ticking = false;
     }
-    
+
     window.addEventListener('scroll', function() {
         if (!ticking) {
             requestAnimationFrame(updateNavbar);
@@ -97,15 +89,13 @@ document.addEventListener('DOMContentLoaded', function() {
     contactForms.forEach(form => {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Show loading state
+
             const submitBtn = this.querySelector('button[type="submit"]');
             if (submitBtn) {
                 const originalText = submitBtn.textContent;
                 submitBtn.textContent = 'Sending...';
                 submitBtn.disabled = true;
 
-                // Simulate form submission
                 setTimeout(() => {
                     alert('Thank you for your inquiry! We will contact you within 24 hours.');
                     this.reset();
@@ -130,7 +120,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.classList.remove('active');
             });
         } else {
-            // Mobile dropdown toggle
             if (dropdownLink) {
                 dropdownLink.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -138,6 +127,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         }
+    });
+
+    // Add loaded class after page loads
+    window.addEventListener('load', function() {
+        document.body.classList.add('loaded');
+        
+        // Fade in hero images
+        const heroImages = document.querySelectorAll('.hero-image img, .floating-card');
+        heroImages.forEach(img => {
+            img.style.opacity = '1';
+        });
     });
 
     // Intersection Observer for animations
@@ -177,17 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         images.forEach(img => imageObserver.observe(img));
     }
-
-    // Add loaded class after page loads
-    window.addEventListener('load', function() {
-        document.body.classList.add('loaded');
-        
-        // Fade in hero images
-        const heroImages = document.querySelectorAll('.hero-image img, .floating-card');
-        heroImages.forEach(img => {
-            img.style.opacity = '1';
-        });
-    });
 
     // Performance graph animation
     const graphBars = document.querySelectorAll('.bar');
