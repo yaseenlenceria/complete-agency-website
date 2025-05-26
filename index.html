@@ -91,15 +91,15 @@
 
                 <div class="hero-stats fade-in-up" data-delay="600">
                     <div class="stat-item">
-                        <span class="stat-number" data-count="500">0</span>
+                        <span class="stat-number number-counter" data-count="500">500+</span>
                         <span class="stat-label">Happy Clients</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number" data-count="15">0</span>
+                        <span class="stat-number number-counter" data-count="15">15+</span>
                         <span class="stat-label">Years Experience</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number" data-count="94">0</span>
+                        <span class="stat-number number-counter" data-count="94">94%</span>
                         <span class="stat-label">Success Rate</span>
                     </div>
                 </div>
@@ -503,7 +503,7 @@
                 <h2>Best SEO Agency and Website Development Agency for UK Industries</h2>
                 <p>Specialized digital solutions across all major UK industries - from construction to professional services, we deliver exceptional results that drive business growth.</p>
             </div>
-            
+
             <!-- Industry Stats -->
             <div class="industry-stats">
                 <div class="stat-card">
@@ -676,7 +676,7 @@
                 <h2>SEO Services Available Nationwide - Every UK City Covered</h2>
                 <p>Professional SEO and website development services across all 60+ major UK cities. Local expertise, national reach, proven results.</p>
             </div>
-            
+
             <div class="cities-preview-grid">
                 <div class="region-preview" data-region="england">
                     <div class="region-header">
@@ -699,7 +699,7 @@
                         <span>15+ Years Experience</span>
                     </div>
                 </div>
-                
+
                 <div class="region-preview" data-region="scotland">
                     <div class="region-header">
                         <i class="fas fa-map-marked-alt"></i>
@@ -717,7 +717,7 @@
                         <span>Local Market Expertise</span>
                     </div>
                 </div>
-                
+
                 <div class="region-preview" data-region="wales">
                     <div class="region-header">
                         <i class="fas fa-map-marked-alt"></i>
@@ -734,7 +734,7 @@
                         <span>Bilingual SEO Available</span>
                     </div>
                 </div>
-                
+
                 <div class="region-preview" data-region="northernIreland">
                     <div class="region-header">
                         <i class="fas fa-map-marked-alt"></i>
@@ -752,7 +752,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="cities-features">
                 <div class="feature-item">
                     <i class="fas fa-map-marker-alt"></i>
@@ -775,7 +775,7 @@
                     <p>Fast response times and emergency support across all UK time zones</p>
                 </div>
             </div>
-            
+
             <div class="cities-cta">
                 <h3>Find Your City & Get Started Today</h3>
                 <p>Explore our comprehensive city-by-city SEO services and see how we can help your business dominate local search results.</p>
@@ -880,10 +880,37 @@
             // Initialize Reviews
             const reviews = new ReviewsComponent();
             reviews.init();
-            
+
             // Initialize FAQ
             const faq = new FAQComponent();
             faq.init('general');
+
+             // Function to animate number counters
+            function animateNumberCounters() {
+                const counters = document.querySelectorAll('.number-counter');
+
+                counters.forEach(counter => {
+                    const target = parseInt(counter.dataset.count);
+                    const duration = 1500; // Animation duration in milliseconds
+                    let startTimestamp = null;
+
+                    const step = (timestamp) => {
+                        if (!startTimestamp) startTimestamp = timestamp;
+                        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                        counter.innerText = Math.floor(progress * target);
+                        if (progress < 1) {
+                            window.requestAnimationFrame(step);
+                        } else {
+                            counter.innerText = counter.dataset.count; // Ensure final value is exact
+                        }
+                    };
+
+                    window.requestAnimationFrame(step);
+                });
+            }
+
+            // Call animateNumberCounters when the page loads
+            animateNumberCounters();
         });
     </script>
 </body>

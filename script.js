@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeReviews();
     initializeFAQComponent();
     initializeSEOEnhancements();
+    initializeNumberCounters();
+    initializeSmoothTransitions();
 });
 
 function initializeNavigation() {
@@ -64,7 +66,12 @@ function initializeNavigation() {
                         const target = document.querySelector(href);
                         if (target) {
                             e.preventDefault();
-                            target.scrollIntoView({
+                            // Add smooth scroll with offset for fixed navbar
+                            const navHeight = document.querySelector('.navbar')?.offsetHeight || 0;
+                            const targetPosition = target.offsetTop - navHeight - 20;
+                            
+                            window.scrollTo({
+                                top: targetPosition,
                                 behavior: 'smooth'
                             });
                         }
@@ -93,35 +100,39 @@ function initializeAnimations() {
 }
 
 function initializeScrollAnimations() {
-    // Simple intersection observer without complex animations
     const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: 0.15,
+        rootMargin: '0px 0px -80px 0px'
     };
 
     const scrollObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('in-view');
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                // Add staggered reveal for cards
+                setTimeout(() => {
+                    entry.target.classList.add('in-view', 'revealed');
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0) scale(1)';
+                }, index * 100); // Stagger by 100ms
 
                 // Animate counters when they come into view
                 if (entry.target.classList.contains('stat-item')) {
                     const numberEl = entry.target.querySelector('.stat-number');
                     if (numberEl) {
-                        animateCounter(numberEl);
+                        setTimeout(() => {
+                            numberEl.classList.add('animated');
+                            animateCounter(numberEl);
+                        }, 300);
                     }
                 }
             }
         });
     }, observerOptions);
 
-    // Observe elements with simple animations
-    const animateElements = document.querySelectorAll('.service-card, .why-choose-item, .industry-card, .section-header');
-    animateElements.forEach(el => {
-        el.style.opacity = '0.8';
-        el.style.transform = 'translateY(10px)';
+    // Add card-reveal class and observe elements
+    const animateElements = document.querySelectorAll('.service-card, .why-choose-item, .industry-card, .section-header, .value-card, .team-member');
+    animateElements.forEach((el, index) => {
+        el.classList.add('card-reveal', `stagger-${Math.min(index % 6 + 1, 6)}`);
         scrollObserver.observe(el);
     });
 }
@@ -137,34 +148,62 @@ function initializeCounterAnimations() {
 function animateCounter(element) {
     if (!element || element.dataset.animated) return;
 
-    const target = parseInt(element.dataset.count || element.textContent);
+    const targetText = element.textContent;
+    const target = parseInt(targetText.replace(/[^\d]/g, ''));
     if (isNaN(target)) return;
 
     element.dataset.animated = 'true';
+    element.classList.add('counting');
+    
     let current = 0;
-    const increment = target / 60; // 60 frames for smooth animation
-    const duration = 2000; // 2 seconds
-    const stepTime = duration / 60;
+    const duration = 3000; // 3 seconds for slower animation
+    const steps = 120; // More steps for smoother animation
+    const increment = target / steps;
+    const stepTime = duration / steps;
 
     const timer = setInterval(() => {
         current += increment;
         if (current >= target) {
             current = target;
             clearInterval(timer);
+            element.classList.remove('counting');
+            element.classList.add('animated');
         }
 
-        // Add suffix for percentage or plus sign
+        // Preserve original formatting
         const value = Math.floor(current);
-        if (element.dataset.count === '94') {
+        if (targetText.includes('%')) {
             element.textContent = value + '%';
-        } else if (element.dataset.count === '500') {
+        } else if (targetText.includes('+')) {
             element.textContent = value + '+';
-        } else if (element.dataset.count === '15') {
-            element.textContent = value + '+';
+        } else if (targetText.includes('K')) {
+            element.textContent = value + 'K+';
+        } else if (targetText.includes('M')) {
+            element.textContent = (value / 1000000).toFixed(1) + 'M+';
         } else {
-            element.textContent = value;
+            element.textContent = value.toLocaleString();
         }
     }, stepTime);
+}
+
+// Enhanced number counter for all stat elements
+function initializeNumberCounters() {
+    const counters = document.querySelectorAll('.stat-number, .live-stat-card .stat-number, .coverage-stat h3, .summary-stat h4');
+    
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.dataset.animated) {
+                // Add a small delay for visual effect
+                setTimeout(() => {
+                    animateCounter(entry.target);
+                }, 200);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => {
+        counterObserver.observe(counter);
+    });
 }
 
 function initializeImageLoading() {
@@ -366,6 +405,50 @@ function createDynamicGrid(items, className) {
 function addCleanStyles() {
     // Styles are now handled in CSS file
     document.body.classList.add('styles-loaded');
+}
+
+// Initialize smooth transitions
+function initializeSmoothTransitions() {
+    // Add smooth hover effects to all interactive elements
+    const interactiveElements = document.querySelectorAll('button, a, .card, .service-card, .industry-card');
+    
+    interactiveElements.forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+    });
+
+    // Add smooth page transitions
+    const links = document.querySelectorAll('a:not([href^="#"]):not([href^="mailto"]):not([href^="tel"])');
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            if (this.hostname === window.location.hostname) {
+                // Add page transition effect
+                document.body.style.opacity = '0.95';
+                document.body.style.transform = 'scale(0.98)';
+                
+                setTimeout(() => {
+                    window.location.href = this.href;
+                }, 200);
+                
+                e.preventDefault();
+            }
+        });
+    });
+
+    // Add smooth form interactions
+    const formElements = document.querySelectorAll('input, textarea, select');
+    formElements.forEach(element => {
+        element.addEventListener('focus', function() {
+            this.style.transform = 'scale(1.02)';
+            this.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
+        });
+        
+        element.addEventListener('blur', function() {
+            this.style.transform = 'scale(1)';
+            this.style.boxShadow = 'none';
+        });
+    });
 }
 
 // Initialize Reviews Component

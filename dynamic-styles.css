@@ -479,6 +479,18 @@
     color: white;
 }
 
+/* Enhanced number animations for live stats */
+.live-stat-card .stat-number {
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+}
+
+.live-stat-card .stat-number.updating {
+    transform: scale(1.1);
+    color: #00ff88;
+    text-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+}
+
 .live-indicator {
     display: flex;
     align-items: center;
@@ -510,8 +522,15 @@
     border-radius: 15px;
     padding: 30px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(255, 255, 255, 0.2);
+    transform: translateY(20px);
+    opacity: 0;
+}
+
+.live-stat-card.revealed {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .live-stat-card:hover {
