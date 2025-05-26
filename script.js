@@ -15,13 +15,17 @@ document.addEventListener('DOMContentLoaded', function() {
     links.forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
-            if (href && href !== '#') {
+            if (href && href !== '#' && href.length > 1) {
                 e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
+                try {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                } catch (error) {
+                    console.warn('Invalid selector:', href);
                 }
             }
         });
@@ -36,25 +40,28 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show success message
             const formData = new FormData(this);
             const button = this.querySelector('button[type="submit"]');
-            const originalText = button.textContent;
+            
+            if (button) {
+                const originalText = button.textContent;
 
-            button.textContent = 'Sending...';
-            button.disabled = true;
+                button.textContent = 'Sending...';
+                button.disabled = true;
 
-            // Simulate form submission
-            setTimeout(() => {
-                button.textContent = 'Message Sent!';
-                button.style.backgroundColor = '#10b981';
-
-                // Reset form
-                this.reset();
-
+                // Simulate form submission
                 setTimeout(() => {
-                    button.textContent = originalText;
-                    button.disabled = false;
-                    button.style.backgroundColor = '';
-                }, 3000);
-            }, 1500);
+                    button.textContent = 'Message Sent!';
+                    button.style.backgroundColor = '#10b981';
+
+                    // Reset form
+                    this.reset();
+
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.disabled = false;
+                        button.style.backgroundColor = '';
+                    }, 3000);
+                }, 1500);
+            }
         });
     }
 
@@ -95,37 +102,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Statistics counter animation
     const statNumbers = document.querySelectorAll('.stat h3, .stat-item h3');
-    statNumbers.forEach(stat => {
-        const target = parseInt(stat.textContent.replace(/[^\d]/g, ''));
-        const suffix = stat.textContent.replace(/\d/g, '');
+    if (statNumbers.length > 0) {
+        statNumbers.forEach(stat => {
+            if (stat && stat.textContent) {
+                const target = parseInt(stat.textContent.replace(/[^\d]/g, ''));
+                const suffix = stat.textContent.replace(/\d/g, '');
 
-        if (target && target > 0) {
-            let current = 0;
-            const increment = target / 50;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
+                if (target && target > 0) {
+                    let current = 0;
+                    const increment = target / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+                        stat.textContent = Math.floor(current) + suffix;
+                    }, 30);
                 }
-                stat.textContent = Math.floor(current) + suffix;
-            }, 30);
-        }
-    });
+            }
+        });
+    }
 
     // Mobile menu improvements
     const dropdowns = document.querySelectorAll('.dropdown');
-    dropdowns.forEach(dropdown => {
-        const dropdownMenu = dropdown.querySelector('.dropdown-menu');
-        if (dropdownMenu) {
-            dropdown.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
-                }
-            });
-        }
-    });
+    if (dropdowns.length > 0) {
+        dropdowns.forEach(dropdown => {
+            const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+            if (dropdownMenu) {
+                dropdown.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+                    }
+                });
+            }
+        });
+    }
 
     // Add loading states for better UX
     const allImages = document.querySelectorAll('img');
@@ -144,12 +157,14 @@ document.addEventListener('DOMContentLoaded', function() {
 // Navbar background change on scroll
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = 'none';
+    if (navbar) {
+        if (window.scrollY > 50) {
+            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+        } else {
+            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            navbar.style.boxShadow = 'none';
+        }
     }
 });
 
