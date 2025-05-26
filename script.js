@@ -1,7 +1,3 @@
-The code has been updated to fix JavaScript errors, improve functionality, and enhance the overall user experience.
-```
-
-```replit_final_file
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile Navigation Toggle
