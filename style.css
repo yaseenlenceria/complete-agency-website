@@ -619,6 +619,12 @@ body {
     padding: 0 10px;
 }
 
+@media (min-width: 1200px) {
+    .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 1200px) {
     .services-grid {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -902,6 +908,12 @@ body {
     padding: 0 10px;
 }
 
+@media (min-width: 1200px) {
+    .why-choose-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 1200px) {
     .why-choose-grid {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1091,6 +1103,12 @@ body {
     gap: 1.8rem;
     align-items: stretch;
     padding: 0 10px;
+}
+
+@media (min-width: 1200px) {
+    .industries-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 @media (max-width: 1200px) {
@@ -1855,6 +1873,12 @@ body {
     margin-top: 3rem;
 }
 
+@media (min-width: 1200px) {
+    .awards-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 .award-item {
     text-align: center;
     padding: 2rem;
@@ -2363,6 +2387,12 @@ body {
     padding: 0 10px;
 }
 
+@media (min-width: 1200px) {
+    .benefits-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 1200px) {
     .benefits-grid {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -2640,6 +2670,12 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
+}
+
+@media (min-width: 1200px) {
+    .links-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 .link-card {
