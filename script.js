@@ -48,7 +48,8 @@ window.addEventListener('scroll', () => {
 
 // Contact form handling
 const contactForm = document.querySelector('.contact-form');
-contactForm.addEventListener('submit', function(e) {
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
     // Get form data
@@ -79,6 +80,7 @@ contactForm.addEventListener('submit', function(e) {
         submitBtn.disabled = false;
     }, 2000);
 });
+}
 
 // Animate elements on scroll
 const observerOptions = {
@@ -130,7 +132,9 @@ const statsObserver = new IntersectionObserver((entries) => {
             const counters = entry.target.querySelectorAll('.stat h3');
             counters.forEach(counter => {
                 const target = parseInt(counter.textContent);
-                animateCounter(counter, target);
+                if (!isNaN(target)) {
+                    animateCounter(counter, target);
+                }
             });
             statsObserver.unobserve(entry.target);
         }

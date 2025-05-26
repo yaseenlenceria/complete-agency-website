@@ -219,51 +219,84 @@ body {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* How We Grow Section */
-.how-we-grow {
+/* 5 Steps To SEO Success Section */
+.seo-steps {
     padding: 80px 20px;
     background: #f8fafc;
 }
 
-.how-we-grow h2 {
+.seo-steps h2 {
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
     color: #1e293b;
 }
 
-.growth-steps {
+.section-intro {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #64748b;
+    margin-bottom: 4rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.steps-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 3rem;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .step {
-    text-align: center;
-    padding: 2rem;
+    display: flex;
+    gap: 2rem;
+    padding: 2.5rem;
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border-left: 5px solid #2563eb;
 }
 
 .step:hover {
     transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
 }
 
-.step-icon {
+.step-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2563eb;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
     width: 80px;
     height: 80px;
-    background: linear-gradient(135deg, #2563eb, #3b82f6);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 1.5rem;
+    flex-shrink: 0;
+    border: 3px solid #2563eb;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
 }
 
 .step-icon i {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: white;
 }
 
@@ -271,11 +304,35 @@ body {
     font-size: 1.5rem;
     margin-bottom: 1rem;
     color: #1e293b;
+    font-weight: 600;
 }
 
 .step p {
     color: #64748b;
-    line-height: 1.6;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.step ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.step ul li {
+    color: #64748b;
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+    line-height: 1.5;
+}
+
+.step ul li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #2563eb;
+    font-weight: bold;
 }
 
 /* About Section */
@@ -379,6 +436,62 @@ body {
     line-height: 1.6;
 }
 
+/* Awards Section */
+.awards-section {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color: white;
+}
+
+.awards-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.awards-section .section-intro {
+    color: #cbd5e1;
+}
+
+.awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.award-item {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.award-item:hover {
+    transform: translateY(-5px);
+}
+
+.award-item i {
+    font-size: 3rem;
+    color: #fbbf24;
+    margin-bottom: 1rem;
+}
+
+.award-item h3 {
+    color: white;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.award-item p {
+    color: #cbd5e1;
+    font-size: 0.9rem;
+}
+
 /* Industries Section */
 .industries {
     padding: 80px 20px;
@@ -419,6 +532,13 @@ body {
 .industry-item h3 {
     color: #1e293b;
     font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.industry-item p {
+    color: #64748b;
+    font-size: 0.9rem;
+    line-height: 1.4;
 }
 
 /* Contact Section */
@@ -586,8 +706,14 @@ body {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 
-    .growth-steps {
-        grid-template-columns: 1fr;
+    .step {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+    
+    .step-number {
+        align-self: center;
     }
 }
 
