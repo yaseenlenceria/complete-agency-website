@@ -1,4 +1,3 @@
-
 // Mobile Navigation
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector('.hamburger');
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     dropdowns.forEach(dropdown => {
         const dropdownLink = dropdown.querySelector('a');
         const dropdownMenu = dropdown.querySelector('.dropdown-menu');
-        
+
         if (dropdownLink && dropdownMenu) {
             dropdownLink.addEventListener('click', function(e) {
                 if (window.innerWidth <= 768) {
@@ -46,13 +45,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const href = this.getAttribute('href');
             if (href && href !== '#' && href.length > 1) {
                 e.preventDefault();
-                const targetId = href.substring(1);
-                const target = document.getElementById(targetId);
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                try {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                } catch (error) {
+                    console.log('Invalid selector:', href);
                 }
             }
         });
@@ -87,27 +89,27 @@ document.addEventListener('DOMContentLoaded', function() {
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             // Get form data
             const formData = new FormData(this);
             const name = formData.get('name');
             const email = formData.get('email');
             const service = formData.get('service');
             const message = formData.get('message');
-            
+
             // Basic validation
             if (!name || !email || !message) {
                 alert('Please fill in all required fields.');
                 return;
             }
-            
+
             // Email validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 alert('Please enter a valid email address.');
                 return;
             }
-            
+
             // Show success message
             alert('Thank you for your message! We will get back to you within 24 hours.');
             this.reset();
@@ -119,14 +121,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const countUp = (element, target) => {
         const increment = target / 100;
         let current = 0;
-        
+
         const timer = setInterval(() => {
             current += increment;
             if (current >= target) {
                 current = target;
                 clearInterval(timer);
             }
-            
+
             if (target >= 1000) {
                 element.textContent = Math.floor(current / 1000) + 'k+';
             } else if (target >= 100) {
@@ -156,10 +158,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Navbar scroll effect
     let lastScrollTop = 0;
     const navbar = document.querySelector('.navbar');
-    
+
     window.addEventListener('scroll', function() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
+
         if (scrollTop > lastScrollTop && scrollTop > 100) {
             // Scrolling down
             navbar.style.transform = 'translateY(-100%)';
@@ -167,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Scrolling up
             navbar.style.transform = 'translateY(0)';
         }
-        
+
         lastScrollTop = scrollTop;
     });
 
@@ -177,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Enhanced image loading with animations
     const heroImages = document.querySelectorAll('.hero-image img');
     const floatingCards = document.querySelectorAll('.floating-card');
-    
+
     heroImages.forEach((img, index) => {
         if (img.complete) {
             setTimeout(() => {
@@ -192,33 +194,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, index * 200);
             });
         }
-        
+
         // Add loading placeholder
         img.style.transform = 'scale(0.9)';
         img.style.filter = 'blur(5px)';
-        
+
         img.addEventListener('load', function() {
             this.style.filter = 'blur(0)';
             this.style.transform = 'scale(1)';
         });
     });
-    
+
     // Animate floating cards
     floatingCards.forEach((card, index) => {
         setTimeout(() => {
             card.style.opacity = '1';
             card.style.transform = 'translateY(0)';
         }, 1000 + (index * 300));
-        
+
         card.style.transform = 'translateY(20px)';
         card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
     });
-    
+
     // Parallax effect for hero images
     window.addEventListener('scroll', function() {
         const scrolled = window.pageYOffset;
         const heroImages = document.querySelectorAll('.hero-image img');
-        
+
         heroImages.forEach(img => {
             const speed = 0.5;
             img.style.transform = `translateY(${scrolled * speed}px) scale(1.1)`;
@@ -228,11 +230,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Grid layout improvements
     function adjustGridLayouts() {
         const grids = document.querySelectorAll('.services-grid, .why-choose-grid, .industries-grid');
-        
+
         grids.forEach(grid => {
             const items = grid.children;
             const itemCount = items.length;
-            
+
             // Adjust grid columns based on item count and screen size
             if (window.innerWidth > 1024) {
                 if (itemCount % 3 === 0 || itemCount >= 6) {
@@ -279,24 +281,24 @@ style.textContent = `
     .loaded .industry-card {
         transition: all 0.3s ease;
     }
-    
+
     .navbar {
         transition: transform 0.3s ease;
     }
-    
+
     .hero-image img,
     .floating-card {
         opacity: 0;
         transition: opacity 0.5s ease;
     }
-    
+
     @media (max-width: 768px) {
         .services-grid,
         .why-choose-grid,
         .industries-grid {
             gap: 1rem !important;
         }
-        
+
         .service-card,
         .why-choose-item,
         .industry-card {
