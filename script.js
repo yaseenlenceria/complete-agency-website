@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
-            if (targetId === '#' || targetId === '' || targetId === '#!') {
+            if (targetId === '#' || targetId === '' || targetId === '#!' || targetId.length <= 1) {
                 e.preventDefault();
                 return;
             }
@@ -86,25 +86,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Form submission handling
     const contactForms = document.querySelectorAll('form');
-    contactForms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+    if (contactForms.length > 0) {
+        contactForms.forEach(form => {
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
 
-            const submitBtn = this.querySelector('button[type="submit"]');
-            if (submitBtn) {
-                const originalText = submitBtn.textContent;
-                submitBtn.textContent = 'Sending...';
-                submitBtn.disabled = true;
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    if (submitBtn) {
+                        const originalText = submitBtn.textContent;
+                        submitBtn.textContent = 'Sending...';
+                        submitBtn.disabled = true;
 
-                setTimeout(() => {
-                    alert('Thank you for your inquiry! We will contact you within 24 hours.');
-                    this.reset();
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                }, 2000);
+                        setTimeout(() => {
+                            alert('Thank you for your inquiry! We will contact you within 24 hours.');
+                            this.reset();
+                            submitBtn.textContent = originalText;
+                            submitBtn.disabled = false;
+                        }, 2000);
+                    }
+                });
             }
         });
-    });
+    }
 
     // Dropdown menu functionality
     document.querySelectorAll('.dropdown').forEach(dropdown => {

@@ -730,8 +730,12 @@ body {
 }
 
 /* Footer */
+/* Import dynamic styles */
+@import url('dynamic-styles.css');
+
+/* Footer Styles */
 .footer {
-    background: #0f172a;
+    background: #1e293b;
     color: white;
     padding: 60px 0 20px;
 }
@@ -1150,8 +1154,7 @@ body {
     }
 }
 
-@keyframes slideInLeft {
-    from {
+@keyframes slideInLeft {    from {
         opacity: 0;
         transform: translateX(-30px);
     }
@@ -1363,3 +1366,26 @@ document.head.appendChild(style);
             }
         });
     }, observerOptions);
+
+.services-list .service-item ul {
+    list-style: none;
+    margin-left: 0;
+    margin-top: 15px;
+}
+
+.services-list .service-item ul li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+.services-list .service-item ul li:before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #00ff88;
+    font-weight: bold;
+    font-size: 14px;
+}
