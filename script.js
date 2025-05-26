@@ -37,23 +37,27 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
-            if (href && href !== '#') {
+            if (href && href !== '#' && href.length > 1) {
                 e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    // Close mobile menu if open
-                    if (hamburger && navMenu) {
-                        hamburger.classList.remove('active');
-                        navMenu.classList.remove('active');
-                        document.body.classList.remove('nav-open');
+                try {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        // Close mobile menu if open
+                        if (hamburger && navMenu) {
+                            hamburger.classList.remove('active');
+                            navMenu.classList.remove('active');
+                            document.body.classList.remove('nav-open');
+                        }
+                        
+                        setTimeout(() => {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }, 100);
                     }
-                    
-                    setTimeout(() => {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }, 100);
+                } catch (error) {
+                    console.warn('Invalid selector:', href);
                 }
             }
         });
@@ -109,17 +113,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Show loading state
             const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
+            if (submitBtn) {
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
 
-            // Simulate form submission
-            setTimeout(() => {
-                alert('Thank you for your inquiry! We will contact you within 24 hours.');
-                this.reset();
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 2000);
+                // Simulate form submission
+                setTimeout(() => {
+                    alert('Thank you for your inquiry! We will contact you within 24 hours.');
+                    this.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 2000);
+            }
         });
     }
 
@@ -142,14 +148,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 dropdownLink.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    dropdown.classList.toggle('active');
-                    
-                    // Close other dropdowns
-                    document.querySelectorAll('.dropdown').forEach(otherDropdown => {
-                        if (otherDropdown !== dropdown) {
-                            otherDropdown.classList.remove('active');
-                        }
-                    });
+                    if (dropdown) {
+                        dropdown.classList.toggle('active');
+                        
+                        // Close other dropdowns
+                        document.querySelectorAll('.dropdown').forEach(otherDropdown => {
+                            if (otherDropdown !== dropdown) {
+                                otherDropdown.classList.remove('active');
+                            }
+                        });
+                    }
                 });
             }
         }
