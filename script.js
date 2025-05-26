@@ -18,11 +18,15 @@ document.addEventListener('DOMContentLoaded', function() {
             if (href && href !== '#' && href.length > 1) {
                 e.preventDefault();
                 try {
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth'
-                        });
+                    // Clean the href to ensure it's a valid selector
+                    const cleanHref = href.replace(/[^a-zA-Z0-9-_]/g, '');
+                    if (cleanHref) {
+                        const target = document.querySelector('#' + cleanHref) || document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        }
                     }
                 } catch (error) {
                     console.warn('Invalid selector:', href);
@@ -32,38 +36,40 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Form submission
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+    const contactForms = document.querySelectorAll('.contact-form');
+    contactForms.forEach(contactForm => {
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
 
-            // Show success message
-            const formData = new FormData(this);
-            const button = this.querySelector('button[type="submit"]');
-            
-            if (button) {
-                const originalText = button.textContent;
+                // Show success message
+                const formData = new FormData(this);
+                const button = this.querySelector('button[type="submit"]');
+                
+                if (button) {
+                    const originalText = button.textContent;
 
-                button.textContent = 'Sending...';
-                button.disabled = true;
+                    button.textContent = 'Sending...';
+                    button.disabled = true;
 
-                // Simulate form submission
-                setTimeout(() => {
-                    button.textContent = 'Message Sent!';
-                    button.style.backgroundColor = '#10b981';
-
-                    // Reset form
-                    this.reset();
-
+                    // Simulate form submission
                     setTimeout(() => {
-                        button.textContent = originalText;
-                        button.disabled = false;
-                        button.style.backgroundColor = '';
-                    }, 3000);
-                }, 1500);
-            }
-        });
-    }
+                        button.textContent = 'Message Sent!';
+                        button.style.backgroundColor = '#10b981';
+
+                        // Reset form
+                        this.reset();
+
+                        setTimeout(() => {
+                            button.textContent = originalText;
+                            button.disabled = false;
+                            button.style.backgroundColor = '';
+                        }, 3000);
+                    }, 1500);
+                }
+            });
+        }
+    });
 
     // Animate elements on scroll
     const observerOptions = {
@@ -129,16 +135,34 @@ document.addEventListener('DOMContentLoaded', function() {
     if (dropdowns.length > 0) {
         dropdowns.forEach(dropdown => {
             const dropdownMenu = dropdown.querySelector('.dropdown-menu');
-            if (dropdownMenu) {
-                dropdown.addEventListener('click', function(e) {
+            const dropdownLink = dropdown.querySelector('a');
+            if (dropdownMenu && dropdownLink) {
+                dropdownLink.addEventListener('click', function(e) {
                     if (window.innerWidth <= 768) {
                         e.preventDefault();
-                        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+                        const isVisible = dropdownMenu.style.display === 'block';
+                        // Close all other dropdowns
+                        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                            menu.style.display = 'none';
+                        });
+                        // Toggle current dropdown
+                        dropdownMenu.style.display = isVisible ? 'none' : 'block';
                     }
                 });
             }
         });
     }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                if (window.innerWidth <= 768) {
+                    menu.style.display = 'none';
+                }
+            });
+        }
+    });
 
     // Add loading states for better UX
     const allImages = document.querySelectorAll('img');
