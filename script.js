@@ -51,6 +51,14 @@ function initializeNavigation() {
             if (window.innerWidth <= 768) {
                 e.preventDefault();
                 const dropdown = dropdownToggle.parentElement;
+                
+                // Close other dropdowns
+                document.querySelectorAll('.dropdown, .mega-dropdown').forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+                
                 dropdown.classList.toggle('active');
             }
         });

@@ -164,11 +164,44 @@ class FAQComponent {
     }
 
     init(category = 'general') {
-        const faqContainer = document.getElementById('faq-section');
-        if (faqContainer) {
-            faqContainer.innerHTML = this.generateFAQHTML(category);
-            this.initializeFAQInteraction();
+        const container = document.getElementById('faq-section');
+        if (container) {
+            this.render(container, category);
         }
+    }
+
+    generateFAQHTML(category) {
+        return this.createFAQSection(category);
+    }
+
+    createFAQSection(category) {
+        const faqs = this.getFAQsByCategory(category);
+
+        return `
+            <section class="faq-component">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Frequently Asked Questions</h2>
+                        <p>Get answers to common questions about our SEO services and process</p>
+                    </div>
+                    <div class="faq-list">
+                        ${faqs.map((faq, index) => `
+                            <div class="faq-item">
+                                <button class="faq-question" onclick="this.parentElement.classList.toggle('active'); this.nextElementSibling.style.maxHeight = this.parentElement.classList.contains('active') ? this.nextElementSibling.scrollHeight + 'px' : '0';">
+                                    ${faq.question}
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="faq-answer">
+                                    <div class="faq-content">
+                                        <p>${faq.answer}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </section>
+        `;
     }
 
     initializeFAQInteraction() {
