@@ -197,6 +197,16 @@ function initializeFAQ() {
             const answer = question.nextElementSibling;
             const isActive = answer.classList.contains('active');
 
+
+// Cities Page Manager Integration
+if (typeof CitiesPageManager !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.location.pathname.includes('cities-pages.html')) {
+            window.citiesPageManager = new CitiesPageManager();
+        }
+    });
+}
+
             // Close all other answers
             document.querySelectorAll('.faq-answer').forEach(ans => {
                 ans.classList.remove('active');
