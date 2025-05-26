@@ -1,6 +1,7 @@
+
 // Enhanced Navigation and Website Functionality
 document.addEventListener('DOMContentLoaded', function() {
-
+    
     // Navigation functionality
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
@@ -38,43 +39,65 @@ document.addEventListener('DOMContentLoaded', function() {
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            if (href && href !== '#') {
-                e.preventDefault();
-                const targetElement = document.querySelector(href);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+            const targetId = this.getAttribute('href');
+            if (targetId === '#' || targetId === '') return; // Skip empty anchors
+            
+            e.preventDefault();
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                // Add smooth transition
+                document.documentElement.style.scrollBehavior = 'smooth';
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Reset scroll behavior after animation
+                setTimeout(() => {
+                    document.documentElement.style.scrollBehavior = 'auto';
+                }, 1000);
             }
         });
     });
 
-    // Navbar scroll behavior
-    if (navbar) {
-        window.addEventListener('scroll', function() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
+    // Navbar scroll behavior with debouncing to reduce blinking
+    let ticking = false;
+    
+    function updateNavbar() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (navbar) {
             if (scrollTop > lastScrollTop && scrollTop > 100) {
                 navbar.classList.add('hidden');
                 navbar.classList.remove('scrolled');
             } else {
                 navbar.classList.remove('hidden');
-                navbar.classList.add('scrolled');
+                if (scrollTop > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
             }
-
-            lastScrollTop = scrollTop;
-        });
+        }
+        
+        lastScrollTop = scrollTop;
+        ticking = false;
     }
+    
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(updateNavbar);
+            ticking = true;
+        }
+    });
 
     // Form submission handling
     const contactForms = document.querySelectorAll('form');
     contactForms.forEach(form => {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-
+            
             // Show loading state
             const submitBtn = this.querySelector('button[type="submit"]');
             if (submitBtn) {
@@ -134,12 +157,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
 
     // Observe elements for animation
-    const animateElements = document.querySelectorAll('.service-card, .why-choose-item, .industry-card, .benefit-card');
-    if (animateElements.length > 0) {
-        animateElements.forEach(el => {
-            observer.observe(el);
-        });
-    }
+    document.querySelectorAll('.service-card, .why-choose-item, .industry-card, .benefit-card').forEach(el => {
+        observer.observe(el);
+    });
 
     // Image lazy loading
     const images = document.querySelectorAll('img[loading="lazy"]');
@@ -161,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add loaded class after page loads
     window.addEventListener('load', function() {
         document.body.classList.add('loaded');
-
+        
         // Fade in hero images
         const heroImages = document.querySelectorAll('.hero-image img, .floating-card');
         heroImages.forEach(img => {
@@ -189,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             }, { threshold: 0.5 });
-
+            
             graphObserver.observe(graphSection);
         }
     }
@@ -204,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const duration = 2000;
                     const step = target / (duration / 16);
                     let current = 0;
-
+                    
                     const timer = setInterval(() => {
                         current += step;
                         if (current >= target) {
@@ -213,12 +233,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         entry.target.textContent = Math.floor(current) + (entry.target.textContent.includes('%') ? '%' : '+');
                     }, 16);
-
+                    
                     observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.5 });
-
+        
         observer.observe(stat);
     });
 
@@ -227,18 +247,18 @@ document.addEventListener('DOMContentLoaded', function() {
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
         const answer = item.querySelector('.faq-answer');
-
+        
         if (question && answer) {
             question.addEventListener('click', () => {
                 const isActive = item.classList.contains('active');
-
+                
                 // Close all other items
                 faqItems.forEach(otherItem => {
                     otherItem.classList.remove('active');
                     const otherAnswer = otherItem.querySelector('.faq-answer');
                     if (otherAnswer) otherAnswer.classList.remove('active');
                 });
-
+                
                 // Toggle current item
                 if (!isActive) {
                     item.classList.add('active');
@@ -254,18 +274,18 @@ document.addEventListener('DOMContentLoaded', function() {
         let currentSlide = 0;
         const slides = testimonialCarousel.querySelectorAll('.testimonial-slide');
         const totalSlides = slides.length;
-
+        
         function showSlide(index) {
             slides.forEach((slide, i) => {
                 slide.style.display = i === index ? 'block' : 'none';
             });
         }
-
+        
         function nextSlide() {
             currentSlide = (currentSlide + 1) % totalSlides;
             showSlide(currentSlide);
         }
-
+        
         if (totalSlides > 1) {
             showSlide(0);
             setInterval(nextSlide, 5000); // Auto-advance every 5 seconds
@@ -277,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Contact page specific code
         const serviceSelect = document.querySelector('select[name="service"]');
         const budgetField = document.querySelector('input[name="budget"]');
-
+        
         if (serviceSelect && budgetField) {
             serviceSelect.addEventListener('change', function() {
                 if (this.value === 'enterprise-seo') {

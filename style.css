@@ -84,6 +84,13 @@ html {
     scroll-behavior: smooth;
 }
 
+* {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
 body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
@@ -107,7 +114,10 @@ body {
     z-index: 1000;
     border-bottom: 1px solid #e5e5e5;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                background-color 0.3s ease,
+                box-shadow 0.3s ease;
+    will-change: transform;
 }
 
 .navbar.scrolled {
@@ -287,6 +297,18 @@ body {
     .hero {
         padding: 100px 15px 60px;
         min-height: 80vh;
+        text-align: center;
+    }
+    
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .hero-text {
+        max-width: 100%;
+        text-align: center;
     }
 }
 
@@ -294,6 +316,17 @@ body {
     .hero {
         padding: 90px 10px 50px;
         min-height: 75vh;
+        text-align: center;
+    }
+    
+    .hero-content h1 {
+        text-align: center;
+        line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+        text-align: center;
+        line-height: 1.4;
     }
 }
 
@@ -3396,6 +3429,7 @@ body {
 @media (max-width: 480px) {
     .hero {
         padding: 100px 15px 60px;
+        text-align: center;
     }
 
     .hero-content {
@@ -3407,14 +3441,27 @@ body {
     .hero-content h1 {
         font-size: 1.8rem;
         line-height: 1.3;
+        text-align: center;
+        margin-bottom: 1rem;
     }
 
     .hero-content p {
         font-size: 0.95rem;
+        text-align: center;
+        line-height: 1.5;
     }
 
     .hero-subtitle {
         font-size: 1rem;
+        text-align: center;
+        line-height: 1.4;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        margin: 0 auto 1.5rem auto;
+        text-align: center;
     }
 
     .container {
@@ -3535,55 +3582,108 @@ body {
 
     /* Stats section mobile */
     .hero-stats {
+        display: flex;
         gap: 1rem;
         justify-content: center;
         margin: 2rem 0;
+        text-align: center;
+        flex-wrap: wrap;
     }
 
     .stat-item {
         text-align: center;
         min-width: 80px;
+        flex: 1;
+        max-width: 120px;
     }
 
     .stat-number {
         font-size: 1.5rem;
+        display: block;
+        text-align: center;
     }
 
     .stat-label {
         font-size: 0.8rem;
+        text-align: center;
+        display: block;
     }
 
     /* Guarantees mobile */
     .hero-guarantees {
+        display: flex;
         flex-direction: column;
         gap: 0.8rem;
         align-items: center;
+        text-align: center;
+        width: 100%;
     }
 
     .guarantee-item {
         font-size: 0.85rem;
         text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+        max-width: 280px;
     }
 
     /* Section headers mobile */
+    .section-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
     .section-header h2 {
         font-size: 1.8rem;
         line-height: 1.3;
+        text-align: center;
+        margin-bottom: 1rem;
     }
 
     .section-header p {
         font-size: 1rem;
+        text-align: center;
+        line-height: 1.5;
+        max-width: 100%;
+        margin: 0 auto;
     }
 
     /* Trust section mobile */
+    .trust-section {
+        padding: 2rem 0;
+        text-align: center;
+    }
+    
+    .trust-text {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+    }
+    
     .trust-logos {
+        display: flex;
         gap: 0.8rem;
         justify-content: center;
+        flex-wrap: wrap;
+        align-items: center;
     }
 
     .trust-item {
         font-size: 0.8rem;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.3rem;
+        min-width: 80px;
+    }
+    
+    .trust-item i {
+        font-size: 1.2rem;
+        margin-bottom: 0.2rem;
     }
 
     /* Problems grid mobile */
