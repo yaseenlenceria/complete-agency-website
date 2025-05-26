@@ -1,6 +1,6 @@
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile Navigation Toggle
+    // Mobile Navigation
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
 
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
-            if (href && href !== '#' && href.length > 1) {
+            if (href && href !== '#') {
                 e.preventDefault();
                 const target = document.querySelector(href);
                 if (target) {
@@ -41,183 +41,205 @@ document.addEventListener('DOMContentLoaded', function() {
     if (navbar) {
         window.addEventListener('scroll', () => {
             if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.backdropFilter = 'blur(15px)';
             } else {
                 navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
+                navbar.style.backdropFilter = 'blur(15px)';
             }
         });
     }
 
-    // Form validation and submission
-    const contactForms = document.querySelectorAll('form');
-    contactForms.forEach(form => {
-        if (form) {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
+    // Graph animation for performance section
+    function animateGraph() {
+        const bars = document.querySelectorAll('.bar');
+        const values = [30, 45, 60, 75, 90, 100]; // percentage heights
 
-                // Get form data
-                const formData = new FormData(this);
-                const data = Object.fromEntries(formData);
+        bars.forEach((bar, index) => {
+            setTimeout(() => {
+                bar.style.height = values[index] + '%';
+            }, index * 200);
+        });
+    }
 
-                // Basic validation
-                const nameField = this.querySelector('[name="name"]') || this.querySelector('#name');
-                const emailField = this.querySelector('[name="email"]') || this.querySelector('#email');
-                const messageField = this.querySelector('[name="message"]') || this.querySelector('#message');
-
-                if (nameField && !nameField.value.trim()) {
-                    alert('Please enter your name.');
-                    nameField.focus();
-                    return;
+    // Trigger graph animation when section comes into view
+    const graphSection = document.querySelector('.performance-graph');
+    if (graphSection) {
+        const observerGraph = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateGraph();
                 }
+            });
+        }, { threshold: 0.5 });
 
-                if (emailField && !emailField.value.trim()) {
-                    alert('Please enter your email address.');
-                    emailField.focus();
-                    return;
+        observerGraph.observe(graphSection);
+    }
+
+    // Counter animation for stats
+    function animateCounters() {
+        const counters = document.querySelectorAll('.stat-number');
+
+        counters.forEach(counter => {
+            const target = parseInt(counter.textContent.replace(/[^\d]/g, ''));
+            const increment = target / 60; // 60 frames for 1 second animation
+            let current = 0;
+
+            const updateCounter = () => {
+                if (current < target) {
+                    current += increment;
+                    counter.textContent = Math.round(current) + '+';
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.textContent = target + '+';
                 }
+            };
 
-                // Email validation
-                if (emailField && emailField.value.trim()) {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailRegex.test(emailField.value.trim())) {
-                        alert('Please enter a valid email address.');
-                        emailField.focus();
-                        return;
-                    }
+            updateCounter();
+        });
+    }
+
+    // Trigger counter animation when section comes into view
+    const statsSection = document.querySelector('.hero-stats');
+    if (statsSection) {
+        const observerStats = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
                 }
+            });
+        }, { threshold: 0.5 });
 
-                if (messageField && !messageField.value.trim()) {
-                    alert('Please enter your message.');
-                    messageField.focus();
-                    return;
+        observerStats.observe(statsSection);
+    }
+
+    // Form submission handling
+    const contactForm = document.querySelector('.contact-form form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(this);
+            const formObject = {};
+            formData.forEach((value, key) => {
+                formObject[key] = value;
+            });
+
+            // Show success message (you can replace this with actual form submission)
+            alert('Thank you for your message! We will get back to you within 24 hours.');
+
+            // Reset form
+            this.reset();
+        });
+    }
+
+    // Add loading animation to CTA buttons
+    document.querySelectorAll('.btn-primary').forEach(button => {
+        if (button) {
+            button.addEventListener('click', function(e) {
+                if (this.href && this.href.includes('contact')) {
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-rocket"></i> Get FREE SEO Audit';
+                    }, 1000);
                 }
-
-                // Show success message
-                alert('Thank you for your message! We will get back to you soon.');
-                this.reset();
             });
         }
     });
 
-    // Animate elements on scroll
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+    // Mobile dropdown functionality
+    document.querySelectorAll('.dropdown > a').forEach(link => {
+        if (link) {
+            link.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    const dropdown = this.parentElement;
+                    const dropdownMenu = dropdown.querySelector('.dropdown-menu');
 
-    const observer = new IntersectionObserver((entries) => {
+                    if (dropdownMenu) {
+                        // Toggle dropdown
+                        dropdownMenu.classList.toggle('active');
+
+                        // Close other dropdowns
+                        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                            if (menu !== dropdownMenu) {
+                                menu.classList.remove('active');
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+    // Enhanced scroll animations
+    const observerFade = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
                 entry.target.style.transform = 'translateY(0)';
             }
         });
-    }, observerOptions);
+    }, { threshold: 0.1 });
 
-    // Observe elements for animation
-    document.querySelectorAll('.service-card, .benefit-card, .why-choose-item, .industry-card').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'all 0.6s ease';
-        observer.observe(el);
+    // Add fade-in animation to cards and sections
+    document.querySelectorAll('.service-card, .why-choose-item, .industry-card, .problem-card').forEach(el => {
+        if (el) {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observerFade.observe(el);
+        }
     });
 
-    // Performance graph animation
-    const performanceGraph = document.querySelector('.performance-graph');
-    if (performanceGraph) {
-        const bars = document.querySelectorAll('.bar');
-        if (bars.length > 0) {
-            const heights = [20, 35, 55, 75, 90, 100]; // Percentage heights
+    // SEO Performance Graph Animation (for service pages)
+    function initServicePageGraph() {
+        const graphBars = document.querySelectorAll('.graph-bars .bar');
+        if (graphBars.length > 0) {
+            const performanceData = [25, 40, 60, 80, 95, 100]; // Sample data
 
-            const graphObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        bars.forEach((bar, index) => {
-                            setTimeout(() => {
-                                bar.style.height = heights[index] + '%';
-                            }, index * 200);
-                        });
-                    }
-                });
-            }, { threshold: 0.5 });
-
-            graphObserver.observe(performanceGraph);
+            graphBars.forEach((bar, index) => {
+                setTimeout(() => {
+                    bar.style.height = performanceData[index] + '%';
+                    bar.setAttribute('data-value', performanceData[index] + '%');
+                }, index * 300);
+            });
         }
     }
 
-    // Add loading animation to buttons
-    document.querySelectorAll('.btn-primary').forEach(button => {
-        button.addEventListener('click', function() {
-            if (this.href && this.href.includes('#')) {
-                return; // Don't add loading for anchor links
-            }
+    // Initialize service page graph when visible
+    const serviceGraph = document.querySelector('.performance-graph');
+    if (serviceGraph) {
+        const serviceGraphObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    initServicePageGraph();
+                    serviceGraphObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
 
-            this.style.opacity = '0.8';
-            this.style.transform = 'scale(0.98)';
-
-            setTimeout(() => {
-                this.style.opacity = '1';
-                this.style.transform = 'scale(1)';
-            }, 150);
-        });
-    });
-
-    // Counter animation for stats
-    function animateCounter(element, target) {
-        let current = 0;
-        const increment = target / 100;
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            element.textContent = Math.floor(current) + (element.dataset.suffix || '');
-        }, 20);
+        serviceGraphObserver.observe(serviceGraph);
     }
 
-    // Observe stats for counter animation
-    const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const statNumber = entry.target.querySelector('.stat-number');
-                if (statNumber && !statNumber.dataset.animated) {
-                    const target = parseInt(statNumber.textContent);
-                    statNumber.dataset.animated = 'true';
-                    animateCounter(statNumber, target);
-                }
-            }
-        });
-    }, { threshold: 0.5 });
-
-    document.querySelectorAll('.stat-item').forEach(stat => {
-        statsObserver.observe(stat);
+    // Lazy loading for images
+    document.querySelectorAll('img').forEach(img => {
+        if (img) {
+            img.loading = 'lazy';
+        }
     });
 
-    // Mobile dropdown functionality
-    const dropdowns = document.querySelectorAll('.dropdown');
+    // Add smooth hover effects to buttons
+    document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
+        if (button) {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
 
-    dropdowns.forEach(dropdown => {
-        const dropdownMenu = dropdown.querySelector('.dropdown-menu');
-        const dropdownLink = dropdown.querySelector('a');
-
-        if (dropdownMenu && dropdownLink && window.innerWidth <= 768) {
-            dropdownLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                dropdownMenu.classList.toggle('active');
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
             });
         }
     });
-
-    // Parallax effect for hero section
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            hero.style.transform = `translateY(${rate}px)`;
-        });
-    }
 });
