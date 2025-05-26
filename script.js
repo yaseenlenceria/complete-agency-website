@@ -13,66 +13,82 @@ document.addEventListener('DOMContentLoaded', function() {
     // Smooth scrolling for anchor links
     const links = document.querySelectorAll('a[href^="#"]');
     links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href && href !== '#' && href.length > 1) {
-                e.preventDefault();
-                try {
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    }
-                } catch (error) {
-                    console.warn('Invalid selector:', href);
-                    // Handle pages that don't have the target section
-                    if (href.includes('#')) {
-                        const baseUrl = href.startsWith('#') ? 'index.html' : '';
-                        if (baseUrl) {
-                            window.location.href = baseUrl + href;
+        if (link) {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href !== '#' && href.length > 1) {
+                    e.preventDefault();
+                    try {
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                        }
+                    } catch (error) {
+                        console.warn('Invalid selector:', href);
+                        // Handle pages that don't have the target section
+                        if (href.includes('#') && href !== '#') {
+                            const baseUrl = href.startsWith('#') ? 'index.html' : '';
+                            if (baseUrl) {
+                                window.location.href = baseUrl + href;
+                            }
                         }
                     }
-                }
-            }
-        });
-    });
-
-    // Form submission
-    const contactForms = document.querySelectorAll('.contact-form');
-    contactForms.forEach(contactForm => {
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                // Show success message
-                const formData = new FormData(this);
-                const button = this.querySelector('button[type="submit"]');
-                
-                if (button) {
-                    const originalText = button.textContent;
-
-                    button.textContent = 'Sending...';
-                    button.disabled = true;
-
-                    // Simulate form submission
-                    setTimeout(() => {
-                        button.textContent = 'Message Sent!';
-                        button.style.backgroundColor = '#10b981';
-
-                        // Reset form
-                        this.reset();
-
-                        setTimeout(() => {
-                            button.textContent = originalText;
-                            button.disabled = false;
-                            button.style.backgroundColor = '';
-                        }, 3000);
-                    }, 1500);
                 }
             });
         }
     });
+
+    // Form submission
+    const contactForms = document.querySelectorAll('.contact-form');
+    if (contactForms && contactForms.length > 0) {
+        contactForms.forEach(contactForm => {
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    // Show success message
+                    const formData = new FormData(this);
+                    const button = this.querySelector('button[type="submit"]') || this.querySelector('input[type="submit"]');
+                    
+                    if (button) {
+                        const originalText = button.textContent || button.value;
+
+                        if (button.textContent !== undefined) {
+                            button.textContent = 'Sending...';
+                        } else {
+                            button.value = 'Sending...';
+                        }
+                        button.disabled = true;
+
+                        // Simulate form submission
+                        setTimeout(() => {
+                            if (button.textContent !== undefined) {
+                                button.textContent = 'Message Sent!';
+                            } else {
+                                button.value = 'Message Sent!';
+                            }
+                            button.style.backgroundColor = '#10b981';
+
+                            // Reset form
+                            this.reset();
+
+                            setTimeout(() => {
+                                if (button.textContent !== undefined) {
+                                    button.textContent = originalText;
+                                } else {
+                                    button.value = originalText;
+                                }
+                                button.disabled = false;
+                                button.style.backgroundColor = '';
+                            }, 3000);
+                        }, 1500);
+                    }
+                });
+            }
+        });
+    }
 
     // Animate elements on scroll
     const observerOptions = {
@@ -147,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             const isVisible = dropdownMenu.style.display === 'block';
                             // Close all other dropdowns
                             const allMenus = document.querySelectorAll('.dropdown-menu');
-                            if (allMenus) {
+                            if (allMenus && allMenus.length > 0) {
                                 allMenus.forEach(menu => {
                                     if (menu) menu.style.display = 'none';
                                 });
@@ -164,11 +180,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Close dropdowns when clicking outside
     document.addEventListener('click', function(e) {
         if (!e.target.closest('.dropdown')) {
-            document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                if (window.innerWidth <= 768) {
-                    menu.style.display = 'none';
-                }
-            });
+            const allMenus = document.querySelectorAll('.dropdown-menu');
+            if (allMenus && allMenus.length > 0) {
+                allMenus.forEach(menu => {
+                    if (menu && window.innerWidth <= 768) {
+                        menu.style.display = 'none';
+                    }
+                });
+            }
         }
     });
 
