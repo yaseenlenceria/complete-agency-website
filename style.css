@@ -492,11 +492,8 @@ p {
     font-weight: 800;
     margin-bottom: 1.5rem;
     line-height: 1.1;
-    color: white;
-    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: white !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero-subtitle {
@@ -806,13 +803,10 @@ section {
 }
 
 .service-card h3 {
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
     margin-bottom: 1rem;
     font-size: 1.3rem;
-    background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-weight: 700;
 }
 
 .service-card p {
@@ -920,13 +914,10 @@ border-radius: 16px;
 }
 
 .why-choose-content h3 {
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
     margin-bottom: 0.5rem;
     font-size: 1.2rem;
-    background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-weight: 700;
 }
 
 .why-choose-content p {
@@ -1141,6 +1132,53 @@ border-radius: 16px;
     font-weight: 500;
 }
 
+/* Button Styles */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--gradient-secondary);
+    color: white !important;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    transition: var(--transition);
+    box-shadow: 0 6px 20px rgba(255, 102, 0, 0.3);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 102, 0, 0.4);
+    color: white !important;
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: white !important;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    transition: var(--transition);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    color: white !important;
+}
+
 /* Hero Section Mobile Responsive */
 @media (max-width: 768px) {
     .hero-content {
@@ -1227,4 +1265,40 @@ border-radius: 16px;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+}
+
+/* Utility classes for heading visibility */
+.heading-white {
+    color: white !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.heading-dark {
+    color: var(--text-primary) !important;
+}
+
+.heading-gradient {
+    background: linear-gradient(135deg, #0066cc 0%, #004499 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Ensure all card headings are visible */
+.service-card h3,
+.why-choose-item h3,
+.benefit-card h3,
+.industry-card h3 {
+    color: var(--text-primary) !important;
+    font-weight: 700;
+}
+
+/* Fix all button text visibility */
+.hero-buttons a,
+.cta-buttons a,
+.service-cta,
+.btn-primary,
+.btn-secondary {
+    color: white !important;
+    font-weight: 600;
 }

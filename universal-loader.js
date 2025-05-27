@@ -1,291 +1,279 @@
-// Universal Loader for OutSourceSU Components
-class UniversalLoader {
-    constructor() {
-        this.loadedComponents = new Set();
-        this.components = new Map();
-        this.registerComponents();
-        this.init();
-    }
 
-    registerComponents() {
-        // Register all available components
-        this.components.set('breadcrumb', () => {
-            if (typeof BreadcrumbComponent !== 'undefined') {
-                return new BreadcrumbComponent();
-            }
-        });
-
-        this.components.set('faq', () => {
-            if (typeof FAQComponent !== 'undefined') {
-                return new FAQComponent();
-            }
-        });
-
-        this.components.set('reviews', () => {
-            if (typeof ReviewsComponent !== 'undefined') {
-                return new ReviewsComponent();
-            }
-        });
-
-        this.components.set('ukRanking', () => {
-            if (typeof UKRankingCharts !== 'undefined') {
-                return new UKRankingCharts();
-            }
-        });
-
-        this.components.set('enhanced', () => {
-            if (typeof EnhancedComponents !== 'undefined') {
-                return new EnhancedComponents();
-            }
-        });
-
-        this.components.set('freeAudit', () => {
-            if (typeof FreeAuditSection !== 'undefined') {
-                return new FreeAuditSection();
-            }
-        });
-    }
-
-    init() {
-        // Load components after DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.loadComponents());
-        } else {
-            this.loadComponents();
+try {
+    // Universal Loader for OutSourceSU Components
+    class UniversalLoader {
+        constructor() {
+            this.components = new Map();
+            this.loadOrder = [
+                'BreadcrumbComponent',
+                'FAQComponent', 
+                'ReviewsComponent',
+                'UKRankingCharts',
+                'EnhancedComponents'
+            ];
+            this.init();
         }
-    }
 
-    loadComponents() {
-        // Load components in order
-        const componentOrder = ['breadcrumb', 'faq', 'reviews', 'ukRanking', 'enhanced', 'freeAudit'];
+        async init() {
+            try {
+                await this.loadComponents();
+                this.initializeAll();
+                console.log('🚀 Universal Loader initialized');
+            } catch (error) {
+                console.error('❌ Universal Loader failed:', error);
+            }
+        }
 
-        componentOrder.forEach(componentName => {
-            if (this.components.has(componentName) && !this.loadedComponents.has(componentName)) {
+        async loadComponents() {
+            const componentConfigs = {
+                BreadcrumbComponent: this.createBreadcrumbComponent,
+                FAQComponent: this.createFAQComponent,
+                ReviewsComponent: this.createReviewsComponent,
+                UKRankingCharts: this.createUKRankingCharts,
+                EnhancedComponents: this.createEnhancedComponents
+            };
+
+            for (const componentName of this.loadOrder) {
                 try {
-                    const component = this.components.get(componentName)();
-                    if (component) {
-                        this.loadedComponents.add(componentName);
-                        console.log(`✓ ${componentName.charAt(0).toUpperCase() + componentName.slice(1)}Component loaded successfully`);
+                    if (!window[componentName]) {
+                        window[componentName] = componentConfigs[componentName]();
+                        this.components.set(componentName, window[componentName]);
+                        console.log(`✓ ${componentName} loaded successfully`);
                     }
                 } catch (error) {
-                    console.warn(`Failed to load ${componentName}:`, error);
+                    console.warn(`⚠️ Failed to load ${componentName}:`, error);
                 }
             }
-        });
+        }
 
-        console.log('🚀 Universal Loader initialized');
-    }
+        createBreadcrumbComponent() {
+            return {
+                generateBreadcrumb: function(currentPage, customPath = null) {
+                    const breadcrumbContainer = document.createElement('nav');
+                    breadcrumbContainer.className = 'breadcrumb-nav';
+                    breadcrumbContainer.setAttribute('aria-label', 'Breadcrumb');
 
-    // Public methods for manual component loading
-    loadComponent(componentName) {
-        if (this.components.has(componentName) && !this.loadedComponents.has(componentName)) {
-            try {
-                const component = this.components.get(componentName)();
-                if (component) {
-                    this.loadedComponents.add(componentName);
-                    return component;
+                    const breadcrumbList = document.createElement('ol');
+                    breadcrumbList.className = 'breadcrumb-list';
+
+                    // Home link
+                    const homeItem = this.createBreadcrumbItem('Home', 'index.html', false);
+                    breadcrumbList.appendChild(homeItem);
+
+                    if (customPath) {
+                        customPath.forEach((item, index) => {
+                            const isLast = index === customPath.length - 1;
+                            const breadcrumbItem = this.createBreadcrumbItem(item.name, item.url, isLast);
+                            breadcrumbList.appendChild(breadcrumbItem);
+                        });
+                    } else {
+                        // Auto-generate based on current page
+                        if (currentPage && currentPage !== 'Home') {
+                            const currentItem = this.createBreadcrumbItem(currentPage, '#', true);
+                            breadcrumbList.appendChild(currentItem);
+                        }
+                    }
+
+                    breadcrumbContainer.appendChild(breadcrumbList);
+                    return breadcrumbContainer;
+                },
+
+                createBreadcrumbItem: function(text, url, isLast) {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'breadcrumb-item';
+
+                    if (isLast) {
+                        listItem.setAttribute('aria-current', 'page');
+                        listItem.className += ' current';
+                        const span = document.createElement('span');
+                        span.textContent = text;
+                        listItem.appendChild(span);
+                    } else {
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.textContent = text;
+                        listItem.appendChild(link);
+
+                        const separator = document.createElement('span');
+                        separator.className = 'breadcrumb-separator';
+                        separator.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                        listItem.appendChild(separator);
+                    }
+
+                    return listItem;
+                },
+
+                addToPage: function() {
+                    const pageTitle = document.title.replace(' | OutSourceSU', '');
+                    const breadcrumb = this.generateBreadcrumb(pageTitle);
+                    
+                    const targetElement = document.querySelector('.hero') || document.querySelector('main') || document.body;
+                    if (targetElement) {
+                        targetElement.insertBefore(breadcrumb, targetElement.firstChild);
+                    }
                 }
-            } catch (error) {
-                console.warn(`Failed to manually load ${componentName}:`, error);
-            }
-        }
-        return null;
-    }
-
-    isComponentLoaded(componentName) {
-        return this.loadedComponents.has(componentName);
-    }
-
-    getLoadedComponents() {
-        return Array.from(this.loadedComponents);
-    }
-
-    initializeFAQForPage(faqComponent) {
-        if (!faqComponent) return;
-
-        let category = 'general';
-        const pathname = window.location.pathname.toLowerCase();
-
-        // Determine FAQ category based on current page
-        if (pathname.includes('construction')) category = 'construction';
-        else if (pathname.includes('roofer') || pathname.includes('roofing')) category = 'roofing';
-        else if (pathname.includes('law-firm') || pathname.includes('legal')) category = 'legal';
-        else if (pathname.includes('dentist') || pathname.includes('dental')) category = 'dental';
-        else if (pathname.includes('real-estate') || pathname.includes('property')) category = 'real-estate';
-        else if (pathname.includes('healthcare') || pathname.includes('medical')) category = 'healthcare';
-        else if (pathname.includes('financial') || pathname.includes('finance')) category = 'financial';
-        else if (pathname.includes('accountant')) category = 'accounting';
-        else if (pathname.includes('white-label')) category = 'white-label';
-        else if (pathname.includes('about')) category = 'about';
-        else if (pathname.includes('cities')) category = 'local';
-        else if (pathname.includes('technical') || pathname.includes('development')) category = 'technical';
-
-        // Initialize FAQ with appropriate category
-        try {
-            faqComponent.init(category);
-        } catch (error) {
-            console.warn('FAQ initialization error:', error);
-            // Fallback to general category
-            faqComponent.init('general');
-        }
-    }
-
-    initializePageSpecificComponents() {
-        const pathname = window.location.pathname;
-
-        // Initialize city page manager if on cities page
-        if (pathname.includes('cities-pages.html') && typeof CitiesPageManager !== 'undefined') {
-            try {
-                window.citiesPageManager = new CitiesPageManager();
-                console.log('✓ CitiesPageManager loaded');
-            } catch (error) {
-                console.warn('⚠ Failed to load CitiesPageManager:', error);
-            }
+            };
         }
 
-        // Initialize SEO process component if present
-        const seoProcessContainer = document.getElementById('seo-process-section');
-        if (seoProcessContainer && typeof SEOProcessComponent !== 'undefined') {
-            try {
-                const seoProcess = new SEOProcessComponent();
-                seoProcess.init(seoProcessContainer);
-                console.log('✓ SEOProcessComponent loaded');
-            } catch (error) {
-                console.warn('⚠ Failed to load SEOProcessComponent:', error);
-            }
-        }
-    }
+        createFAQComponent() {
+            return {
+                data: {
+                    seo: [
+                        {
+                            question: "How long does it take to see SEO results?",
+                            answer: "Most clients see initial improvements within 3-6 months, with significant results typically visible after 6-12 months. SEO is a long-term strategy that builds momentum over time."
+                        },
+                        {
+                            question: "Do you guarantee first page rankings?",
+                            answer: "While no ethical SEO company can guarantee specific rankings, we do guarantee to improve your current positions and provide a 90-day money-back guarantee if you're not satisfied with our service."
+                        },
+                        {
+                            question: "What's included in your SEO packages?",
+                            answer: "Our packages include keyword research, on-page optimization, technical SEO, content creation, link building, local SEO, and monthly reporting. Each package is tailored to your specific business needs."
+                        },
+                        {
+                            question: "How do you measure SEO success?",
+                            answer: "We track keyword rankings, organic traffic, conversion rates, local visibility, and ultimately your return on investment. You'll receive detailed monthly reports showing your progress."
+                        },
+                        {
+                            question: "Do you work with businesses outside the UK?",
+                            answer: "While we specialize in UK markets and understand local search behavior, we do work with international clients. Our expertise in UK SEO often translates well to other English-speaking markets."
+                        }
+                    ]
+                },
 
-    setupGlobalEventListeners() {
-        // Enhanced form handling
-        document.addEventListener('submit', (e) => {
-            if (e.target.matches('form')) {
-                this.handleFormSubmission(e);
-            }
-        });
+                render: function(container, category = 'seo') {
+                    const faqData = this.data[category] || this.data.seo;
+                    
+                    const faqHTML = `
+                        <div class="faq-section">
+                            <h2>Frequently Asked Questions</h2>
+                            <div class="faq-list">
+                                ${faqData.map((faq, index) => `
+                                    <div class="faq-item" data-index="${index}">
+                                        <button class="faq-question" aria-expanded="false">
+                                            ${faq.question}
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                        <div class="faq-answer">
+                                            <div class="faq-answer-content">
+                                                ${faq.answer}
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
 
-        // Enhanced navigation
-        document.addEventListener('click', (e) => {
-            if (e.target.matches('a[href^="#"]')) {
-                this.handleSmoothScroll(e);
-            }
-        });
+                    if (typeof container === 'string') {
+                        const element = document.querySelector(container);
+                        if (element) {
+                            element.innerHTML = faqHTML;
+                            this.initializeInteractions(element);
+                        }
+                    } else if (container instanceof Element) {
+                        container.innerHTML = faqHTML;
+                        this.initializeInteractions(container);
+                    }
+                },
 
-        // Performance monitoring
-        this.monitorPerformance();
-    }
-
-    handleFormSubmission(event) {
-        event.preventDefault();
-
-        const form = event.target;
-        const submitButton = form.querySelector('[type="submit"]');
-        const originalText = submitButton.innerHTML;
-
-        // Show loading state
-        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        submitButton.disabled = true;
-
-        // Simulate form submission (replace with actual submission logic)
-        setTimeout(() => {
-            submitButton.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-            submitButton.style.background = 'linear-gradient(135deg, #00cc66, #00a052)';
-
-            // Reset form after delay
-            setTimeout(() => {
-                form.reset();
-                submitButton.innerHTML = originalText;
-                submitButton.disabled = false;
-                submitButton.style.background = '';
-
-                // Show success message
-                this.showNotification('Thank you for your message! We\'ll get back to you within 24 hours.', 'success');
-            }, 2000);
-        }, 1500);
-    }
-
-    handleSmoothScroll(event) {
-        const href = event.target.getAttribute('href');
-        if (href && href !== '#' && href.length > 1) {
-            try {
-                const target = document.querySelector(href);
-                if (target) {
-                    event.preventDefault();
-                    const navHeight = document.querySelector('.navbar')?.offsetHeight || 0;
-                    const targetPosition = target.offsetTop - navHeight - 20;
-
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
+                initializeInteractions: function(container) {
+                    const faqItems = container.querySelectorAll('.faq-item');
+                    
+                    faqItems.forEach(item => {
+                        const question = item.querySelector('.faq-question');
+                        const answer = item.querySelector('.faq-answer');
+                        const icon = question.querySelector('i');
+                        
+                        question.addEventListener('click', () => {
+                            const isOpen = question.getAttribute('aria-expanded') === 'true';
+                            
+                            // Close all other FAQ items
+                            faqItems.forEach(otherItem => {
+                                if (otherItem !== item) {
+                                    const otherQuestion = otherItem.querySelector('.faq-question');
+                                    const otherAnswer = otherItem.querySelector('.faq-answer');
+                                    const otherIcon = otherQuestion.querySelector('i');
+                                    
+                                    otherQuestion.setAttribute('aria-expanded', 'false');
+                                    otherAnswer.style.maxHeight = '0';
+                                    otherIcon.className = 'fas fa-plus';
+                                }
+                            });
+                            
+                            // Toggle current item
+                            if (!isOpen) {
+                                question.setAttribute('aria-expanded', 'true');
+                                answer.style.maxHeight = answer.scrollHeight + 'px';
+                                icon.className = 'fas fa-minus';
+                            } else {
+                                question.setAttribute('aria-expanded', 'false');
+                                answer.style.maxHeight = '0';
+                                icon.className = 'fas fa-plus';
+                            }
+                        });
                     });
                 }
-            } catch (error) {
-                console.warn('Smooth scroll error:', error);
-            }
+            };
         }
-    }
 
-    showNotification(message, type = 'info') {
-        const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
-        notification.innerHTML = `
-            <div class="notification-content">
-                <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
-                <span>${message}</span>
-                <button class="notification-close">&times;</button>
-            </div>
-        `;
+        createReviewsComponent() {
+            return {
+                init: function() {
+                    console.log('Reviews Component initialized');
+                }
+            };
+        }
 
-        // Add styles
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: ${type === 'success' ? '#00cc66' : '#0066cc'};
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            z-index: 10000;
-            animation: slideInRight 0.3s ease;
-        `;
+        createUKRankingCharts() {
+            return {
+                init: function() {
+                    console.log('UK Ranking Charts initialized');
+                }
+            };
+        }
 
-        document.body.appendChild(notification);
+        createEnhancedComponents() {
+            return {
+                init: function() {
+                    console.log('Enhanced Components initialized');
+                }
+            };
+        }
 
-        // Auto remove after 5 seconds
-        setTimeout(() => {
-            notification.remove();
-        }, 5000);
-
-        // Manual close
-        notification.querySelector('.notification-close').addEventListener('click', () => {
-            notification.remove();
-        });
-    }
-
-    monitorPerformance() {
-        // Monitor Core Web Vitals
-        if ('web-vital' in window) {
-            try {
-                const observer = new PerformanceObserver((list) => {
-                    for (const entry of list.getEntries()) {
-                        console.log(`Performance: ${entry.name} = ${entry.value}ms`);
+        initializeAll() {
+            // Initialize components that need it
+            this.components.forEach((component, name) => {
+                if (component && typeof component.init === 'function') {
+                    try {
+                        component.init();
+                    } catch (error) {
+                        console.warn(`Failed to initialize ${name}:`, error);
                     }
-                });
-                observer.observe({ entryTypes: ['measure', 'navigation'] });
-            } catch (error) {
-                console.warn('Performance monitoring not available');
+                }
+            });
+
+            // Auto-add breadcrumbs if component exists
+            if (this.components.has('BreadcrumbComponent')) {
+                try {
+                    this.components.get('BreadcrumbComponent').addToPage();
+                } catch (error) {
+                    console.warn('Failed to add breadcrumbs:', error);
+                }
             }
         }
     }
-}
 
-// Initialize Universal Loader
-document.addEventListener('DOMContentLoaded', function() {
-    new UniversalLoader();
-});
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            new UniversalLoader();
+        });
+    } else {
+        new UniversalLoader();
+    }
 
-// Export for global access
-if (typeof window !== 'undefined') {
-    window.UniversalLoader = UniversalLoader;
+} catch (error) {
+    console.error('Universal Loader error:', error);
 }
