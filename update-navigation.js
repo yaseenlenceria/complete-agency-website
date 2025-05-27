@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="en-GB">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="ornn-7cs4m1xk0nv5pm_0t7_uihoek2oopxudyrik4q">
-    <title>Page Not Found | OutSourceSU - UK's Leading SEO Agency</title>
-    <meta name="description" content="The page you're looking for cannot be found. Explore OutSourceSU's professional SEO services and solutions for UK businesses.">
-    <meta name="robots" content="noindex, follow">
-    <link href="style.css" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="canonical" href="https://outsourcesu.com/404.html">
-</head>
-<body>
-    <!-- Navigation -->
+
+// Script to update all pages with consistent navigation
+document.addEventListener('DOMContentLoaded', function() {
+    // Standard navigation HTML that matches index.html
+    const standardNavigation = `
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -70,81 +59,22 @@
                 <span></span>
             </div>
         </div>
-    </nav>
+    </nav>`;
 
-    <div class="error-page">
-        <div class="error-content">
-            <div class="error-code">404</div>
-            <h1 class="error-title">Page Not Found</h1>
-            <p class="error-description">
-                Oops! The page you're looking for seems to have disappeared. Don't worry, our SEO experts can help you find what you need.
-            </p>
-
-            <div class="error-buttons">
-                <a href="/" class="btn btn-primary">
-                    <i class="fas fa-home"></i>
-                    Back to Home
-                </a>
-                <a href="contact.html" class="btn btn-secondary">
-                    <i class="fas fa-envelope"></i>
-                    Contact Us
-                </a>
-            </div>
-
-            <div class="helpful-links">
-                <h3>Popular Pages</h3>
-                <div class="links-grid">
-                    <a href="construction-seo.html" class="link-item">
-                        <i class="fas fa-hard-hat"></i>
-                        Construction SEO
-                    </a>
-                    <a href="roofer-seo.html" class="link-item">
-                        <i class="fas fa-home"></i>
-                        Roofer SEO
-                    </a>
-                    <a href="law-firm-seo.html" class="link-item">
-                        <i class="fas fa-balance-scale"></i>
-                        Law Firm SEO
-                    </a>
-                    <a href="real-estate-seo.html" class="link-item">
-                        <i class="fas fa-building"></i>
-                        Real Estate SEO
-                    </a>
-                    <a href="cities-pages.html" class="link-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        UK Cities
-                    </a>
-                    <a href="about.html" class="link-item">
-                        <i class="fas fa-users"></i>
-                        About Us
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Track 404 errors (if you have analytics)
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'page_view', {
-                page_title: '404 Error',
-                page_location: window.location.href
-            });
+    // Update navigation if current navbar doesn't match standard
+    const currentNav = document.querySelector('.navbar');
+    if (currentNav) {
+        const currentLogo = currentNav.querySelector('.nav-logo img');
+        if (!currentLogo || !currentLogo.src.includes('Screenshot_52-removebg-preview.png')) {
+            currentNav.outerHTML = standardNavigation;
+            
+            // Reinitialize navigation functionality
+            if (typeof initializeNavigation === 'function') {
+                initializeNavigation();
+            }
+            if (typeof initializeMobileMenu === 'function') {
+                initializeMobileMenu();
+            }
         }
-
-        // Suggest similar pages based on URL
-        const url = window.location.pathname.toLowerCase();
-        const suggestions = document.querySelector('.links-grid');
-
-        if (url.includes('construction') || url.includes('building')) {
-            suggestions.querySelector('a[href*="construction"]').style.order = '-1';
-        } else if (url.includes('roof') || url.includes('roofing')) {
-            suggestions.querySelector('a[href*="roofer"]').style.order = '-1';
-        } else if (url.includes('law') || url.includes('legal')) {
-            suggestions.querySelector('a[href*="law-firm"]').style.order = '-1';
-        } else if (url.includes('real-estate') || url.includes('property')) {
-            suggestions.querySelector('a[href*="real-estate"]').style.order = '-1';
-        }
-    </script>
-</body>
-</html>
+    }
+});
