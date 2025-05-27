@@ -1,6 +1,7 @@
 
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Main Pages -->
     <url>
         <loc>https://outsourcesu.com/</loc>
         <lastmod>2025-01-27</lastmod>
@@ -11,13 +12,13 @@
         <loc>https://outsourcesu.com/about.html</loc>
         <lastmod>2025-01-27</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.9</priority>
     </url>
     <url>
         <loc>https://outsourcesu.com/contact.html</loc>
         <lastmod>2025-01-27</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.9</priority>
     </url>
     <url>
         <loc>https://outsourcesu.com/cities-pages.html</loc>
@@ -25,12 +26,31 @@
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
-    <!-- SEO Services -->
+    <url>
+        <loc>https://outsourcesu.com/website-development.html</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://outsourcesu.com/how-it-works.html</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://outsourcesu.com/case-studies.html</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Construction & Trade SEO Services -->
     <url>
         <loc>https://outsourcesu.com/construction-seo.html</loc>
         <lastmod>2025-01-27</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>https://outsourcesu.com/architects-seo.html</loc>
@@ -44,11 +64,13 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+
+    <!-- Roofing SEO Services -->
     <url>
         <loc>https://outsourcesu.com/roofer-seo.html</loc>
         <lastmod>2025-01-27</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>https://outsourcesu.com/roof-repair-seo.html</loc>
@@ -86,14 +108,22 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+
+    <!-- Professional Services SEO -->
     <url>
         <loc>https://outsourcesu.com/law-firm-seo.html</loc>
         <lastmod>2025-01-27</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>https://outsourcesu.com/dentists-seo.html</loc>
+        <lastmod>2025-01-27</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://outsourcesu.com/healthcare-seo.html</loc>
         <lastmod>2025-01-27</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
@@ -114,25 +144,27 @@
         <loc>https://outsourcesu.com/real-estate-seo.html</loc>
         <lastmod>2025-01-27</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.8</priority>
     </url>
+
+    <!-- Agency & Premium Services -->
     <url>
         <loc>https://outsourcesu.com/white-label-seo.html</loc>
         <lastmod>2025-01-27</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>https://outsourcesu.com/professional-seo-services-uk.html</loc>
         <lastmod>2025-01-27</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>https://outsourcesu.com/top-seo-agency-uk.html</loc>
         <lastmod>2025-01-27</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
+        <priority>0.8</priority>
     </url>
     <url>
         <loc>https://outsourcesu.com/best-seo-agency-manchester.html</loc>
@@ -146,12 +178,8 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
-    <url>
-        <loc>https://outsourcesu.com/website-development.html</loc>
-        <lastmod>2025-01-27</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
+
+    <!-- Legal Pages -->
     <url>
         <loc>https://outsourcesu.com/privacy-policy.html</loc>
         <lastmod>2025-01-27</lastmod>

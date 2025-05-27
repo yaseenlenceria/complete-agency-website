@@ -1,254 +1,239 @@
-// FAQ Component with Schema Markup for SEO
+
 class FAQComponent {
     constructor() {
         this.faqs = {
             general: [
                 {
                     question: "What makes OutSourceSU different from other SEO agencies?",
-                    answer: "OutSourceSU stands out as the UK's #1 Rated SEO Agency 2025 due to our proven track record, specialized industry expertise, and commitment to transparent, results-driven strategies. We combine 15+ years of experience with cutting-edge techniques and provide dedicated account management for every client."
+                    answer: "OutSourceSU stands out with our 15+ years of proven experience, 94% success rate, and specialized expertise across UK industries. We offer guaranteed results, transparent reporting, and no long-term contracts - you only pay for performance."
                 },
                 {
-                    question: "Why is OutSourceSU the UK's #1 Rated SEO Agency 2025?",
-                    answer: "We've earned this recognition through consistent delivery of exceptional results across 500+ client campaigns, maintaining a 94% client satisfaction rate, and achieving average traffic increases of 285%. Our expertise spans all major UK industries and cities, making us the trusted choice for businesses nationwide."
+                    question: "How long does it take to see SEO results?",
+                    answer: "Most of our clients see significant improvements within 90 days. We guarantee measurable results within this timeframe or provide a full refund. However, SEO is a long-term strategy that continues to improve over 6-12 months."
                 },
                 {
-                    question: "How quickly can I expect to see SEO results?",
-                    answer: "While SEO is a long-term strategy, most clients see initial improvements within 30-60 days. Significant results typically appear within 3-6 months, with continued growth thereafter. We provide detailed monthly reports showing progress and ROI throughout your campaign."
-                },
-                {
-                    question: "Do you provide SEO services across all UK cities?",
-                    answer: "Yes! As the UK's leading SEO agency, we provide comprehensive services across all major UK cities including London, Manchester, Birmingham, Liverpool, Leeds, Sheffield, Bristol, and many more. Our local SEO expertise helps businesses dominate their specific geographic markets."
+                    question: "Do you offer SEO services across all UK cities?",
+                    answer: "Yes, we provide comprehensive SEO services across all major UK cities including London, Manchester, Birmingham, Leeds, Liverpool, Sheffield, Bristol, Newcastle, Edinburgh, Cardiff, and Belfast. Our local expertise covers over 60 UK locations."
                 },
                 {
                     question: "What industries do you specialize in?",
-                    answer: "We have proven expertise across multiple industries including Construction & Trade, Legal Services, Healthcare & Dental, Real Estate, Financial Services, Professional Services, and more. Our industry-specific approach ensures your SEO strategy is tailored to your market's unique requirements."
+                    answer: "We specialize in construction, roofing, law firms, dental practices, real estate, financial services, healthcare, accounting, and professional services. Our industry-specific approach delivers better results than generic SEO strategies."
                 },
                 {
-                    question: "Do you offer white label SEO services for agencies?",
-                    answer: "Yes, we provide comprehensive white label SEO services for digital agencies and marketing professionals. Our white label solutions include full campaign management, detailed reporting, and ongoing support, allowing you to offer premium SEO services under your brand."
+                    question: "Do you provide monthly SEO reports?",
+                    answer: "Yes, we provide detailed monthly reports showing keyword rankings, traffic growth, leads generated, and ROI. You'll have a dedicated account manager and full transparency into your SEO campaign performance."
                 },
                 {
-                    question: "How do you guarantee results?",
-                    answer: "We offer a 90-day results guarantee - if you don't see measurable improvements in your search rankings and organic traffic within 90 days, we'll continue working for free until you do. This demonstrates our confidence in our proven methodologies and commitment to client success."
-                },
-                {
-                    question: "What is your pricing structure?",
-                    answer: "Our SEO packages start from £800/month for small businesses and scale based on your requirements. We offer transparent pricing with no hidden fees, and every package includes keyword research, technical optimization, content creation, and monthly reporting."
-                },
-                {
-                    question: "Do you work with businesses outside of major cities?",
-                    answer: "Absolutely! While we have strong presence in major UK cities, we work with businesses across the entire country, including smaller towns and rural areas. Our local SEO expertise helps businesses succeed regardless of location."
-                },
-                {
-                    question: "What tools and technologies do you use?",
-                    answer: "We use industry-leading SEO tools including SEMrush, Ahrefs, Google Analytics, Search Console, and proprietary tracking systems. Our technology stack ensures we have comprehensive data to optimize your campaigns effectively."
+                    question: "What's included in your free SEO audit?",
+                    answer: "Our comprehensive audit includes technical SEO analysis, keyword opportunity assessment, competitor analysis, local SEO review, and a custom strategy roadmap. It's worth £500 and comes with actionable recommendations."
                 }
             ],
-            construction: [
+            industries: [
                 {
-                    question: "How can SEO help my construction business get more leads?",
-                    answer: "Construction SEO helps you appear when potential customers search for services like 'builders near me' or 'construction company [your city]'. We optimize your website to rank for high-intent keywords that drive qualified leads, resulting in more project inquiries and contract opportunities."
+                    question: "Do you understand our specific industry challenges?",
+                    answer: "Absolutely. We've worked with 500+ businesses across construction, roofing, legal, medical, and professional services. We understand industry regulations, customer behavior, and competition patterns specific to your sector."
                 },
                 {
-                    question: "What construction keywords should I target?",
-                    answer: "We target a mix of service-based keywords ('home extension builders', 'commercial construction'), location-based terms ('construction company Manchester'), and project-specific phrases ('kitchen extensions', 'office refurbishments'). Our keyword research identifies the most profitable terms for your specific services."
+                    question: "Can you help with industry-specific keywords?",
+                    answer: "Yes, we conduct thorough keyword research for your industry, including high-converting commercial terms, emergency services, and local search phrases that your potential customers actually use."
                 },
                 {
-                    question: "How long does construction SEO take to work?",
-                    answer: "Construction businesses typically see initial ranking improvements within 2-3 months, with significant lead increases by month 4-6. The competitive nature of construction search terms requires consistent effort, but the ROI is substantial once rankings are achieved."
-                },
-                {
-                    question: "Do you understand the construction industry?",
-                    answer: "Absolutely. Our construction SEO team has worked with builders, contractors, architects, and construction companies across the UK for over 10 years. We understand your seasonal patterns, project cycles, and the importance of local search visibility."
-                },
-                {
-                    question: "Can you help with both residential and commercial construction SEO?",
-                    answer: "Yes, we have expertise in both sectors. Residential construction SEO focuses on homeowner searches, while commercial construction targets business decision-makers. We tailor strategies for each sector's unique search behavior and sales cycles."
+                    question: "How do you handle regulated industries like legal and medical?",
+                    answer: "We're fully compliant with industry regulations including SRA guidelines for law firms and GDC requirements for dental practices. Our content strategies respect professional standards while maximizing search visibility."
                 }
             ],
-            legal: [
+            local: [
                 {
-                    question: "How can law firm SEO help attract more clients?",
-                    answer: "Law firm SEO helps potential clients find your practice when searching for legal services in your area. We optimize for high-value keywords like 'personal injury lawyer [city]' or 'family solicitor near me', ensuring you appear when people need legal representation most."
+                    question: "Do you optimize for local search results?",
+                    answer: "Local SEO is our specialty. We optimize Google My Business profiles, local citations, reviews, and location-specific landing pages to ensure you dominate local searches in your area."
                 },
                 {
-                    question: "Is SEO suitable for all areas of law?",
-                    answer: "Yes, we have successfully implemented SEO strategies for personal injury, family law, criminal defense, corporate law, conveyancing, and more. Each practice area requires a unique approach to keyword targeting and content strategy."
+                    question: "Can you help with multiple business locations?",
+                    answer: "Yes, we manage multi-location SEO campaigns for businesses with multiple offices or service areas. Each location gets customized optimization while maintaining brand consistency."
                 },
                 {
-                    question: "How do you handle legal advertising regulations?",
-                    answer: "We ensure all SEO content and marketing materials comply with SRA guidelines and legal advertising regulations. Our team understands the importance of maintaining professional standards while effectively marketing legal services."
-                },
-                {
-                    question: "What results can law firms expect from SEO?",
-                    answer: "Our legal clients typically see 200-400% increases in qualified inquiries within 6-12 months. We focus on attracting high-value cases rather than just traffic, ensuring your SEO investment directly impacts your practice's revenue."
+                    question: "How do you improve local search rankings?",
+                    answer: "We use proven local SEO strategies including Google My Business optimization, local citation building, review management, location-specific content, and schema markup to improve local search visibility."
                 }
             ],
-            healthcare: [
+            technical: [
                 {
-                    question: "How can dental practice SEO increase patient bookings?",
-                    answer: "Dental SEO helps your practice appear when local patients search for dental services. We optimize for terms like 'dentist near me', 'dental implants [city]', and emergency dental services, driving qualified patient inquiries and appointment bookings."
+                    question: "Do you offer website development services?",
+                    answer: "Yes, we provide full website development and design services including mobile-responsive sites, e-commerce platforms, WordPress development, and landing page optimization - all built with SEO in mind."
                 },
                 {
-                    question: "Is healthcare SEO compliant with regulations?",
-                    answer: "Yes, all our healthcare SEO strategies comply with relevant medical advertising guidelines and professional standards. We ensure your online presence maintains the trust and professionalism expected in healthcare while effectively attracting new patients."
+                    question: "Will you fix technical SEO issues on my website?",
+                    answer: "Absolutely. We address all technical issues including site speed optimization, mobile responsiveness, Core Web Vitals, SSL certificates, structured data, and crawl errors to ensure search engines can properly index your site."
                 },
                 {
-                    question: "What dental services benefit most from SEO?",
-                    answer: "High-value services like dental implants, orthodontics, cosmetic dentistry, and emergency dental care see the best ROI from SEO. We also optimize for general dental services to build your patient base across all treatment areas."
-                },
-                {
-                    question: "How do you measure success for healthcare SEO?",
-                    answer: "We track patient inquiries, appointment bookings, phone calls, and form submissions. Our healthcare clients typically see 250-500% increases in new patient acquisition within 6-9 months of starting SEO."
-                }
-            ],
-            about: [
-                {
-                    question: "How long has OutSourceSU been in business?",
-                    answer: "OutSourceSU was founded in 2008 and has been delivering exceptional SEO results for over 15 years. We've grown from a small consultancy to one of the UK's most respected digital marketing agencies, helping 500+ businesses achieve their online goals."
-                },
-                {
-                    question: "What is your company's mission?",
-                    answer: "Our mission is simple: every business deserves to be found online. We're committed to helping UK businesses achieve sustainable growth through ethical, results-driven SEO strategies that deliver measurable ROI."
-                },
-                {
-                    question: "Where is OutSourceSU located?",
-                    answer: "Our headquarters is located at 20-22 Wenlock Road, London, N1 7GU. While based in London, we serve clients across the entire UK, with particular expertise in major cities like Manchester, Birmingham, Leeds, and Liverpool."
-                },
-                {
-                    question: "What makes your team qualified to handle SEO?",
-                    answer: "Our team consists of certified SEO specialists, each with 5+ years of experience. We maintain Google Partner status, stay current with all algorithm updates, and continuously train in the latest SEO techniques and tools."
-                },
-                {
-                    question: "How many clients do you currently serve?",
-                    answer: "We proudly serve over 500 active clients across various industries throughout the UK. Our client retention rate of 94% demonstrates our commitment to delivering consistent, measurable results."
+                    question: "Do you provide website maintenance?",
+                    answer: "Yes, our ongoing SEO service includes regular website maintenance, security updates, performance monitoring, and technical optimizations to keep your site running smoothly and ranking well."
                 }
             ]
         };
     }
 
-    getFAQs(category = 'general') {
+    getFAQsByCategory(category) {
         return this.faqs[category] || this.faqs.general;
     }
 
-    render(container, category = 'general') {
-        const faqHTML = this.createFAQSection(category);
-        container.innerHTML = faqHTML;
-        this.initializeFAQEvents();
-    }
-
-    generateFAQHTML(category = 'general') {
-        return this.createFAQSection(category);
-    }
-
-    generateFAQSchema() {
-        const allFAQs = [...this.faqs.general, ...this.faqs.technical, ...this.faqs.local];
-
-        const faqSchema = {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": allFAQs.map(faq => ({
-                "@type": "Question",
-                "name": faq.question,
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": faq.answer
-                }
-            }))
-        };
-
-        const script = document.createElement('script');
-        script.type = 'application/ld+json';
-        script.textContent = JSON.stringify(faqSchema);
-        document.head.appendChild(script);
-    }
-
-    init(category = 'general') {
-        const container = document.getElementById('faq-section');
-        if (container) {
-            this.render(container, category);
-        }
-    }
-
-    generateFAQHTML(category) {
-        return this.createFAQSection(category);
-    }
-
-    createFAQSection(category) {
+    createFAQSection(category = 'general') {
         const faqs = this.getFAQsByCategory(category);
-
+        
         return `
             <section class="faq-component">
                 <div class="container">
                     <div class="section-header">
                         <h2>Frequently Asked Questions</h2>
-                        <p>Get answers to common questions about our SEO services and process</p>
+                        <p>Find answers to common questions about our SEO services and how we can help grow your business.</p>
                     </div>
                     <div class="faq-list">
-                        ${faqs.map((faq, index) => `
-                            <div class="faq-item">
-                                <button class="faq-question" onclick="this.parentElement.classList.toggle('active'); this.nextElementSibling.style.maxHeight = this.parentElement.classList.contains('active') ? this.nextElementSibling.scrollHeight + 'px' : '0';">
-                                    ${faq.question}
-                                    <i class="fas fa-chevron-down"></i>
-                                </button>
-                                <div class="faq-answer">
-                                    <div class="faq-content">
-                                        <p>${faq.answer}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `).join('')}
+                        ${faqs.map((faq, index) => this.generateFAQHTML(faq, index, category)).join('')}
                     </div>
                 </div>
             </section>
         `;
     }
 
-    initializeFAQInteraction() {
-        // Wait for DOM to be ready
-        setTimeout(() => {
-            const faqQuestions = document.querySelectorAll('.faq-question');
+    generateFAQHTML(faq, index, category) {
+        return `
+            <div class="faq-item" data-category="${category}" data-index="${index}">
+                <button class="faq-question" onclick="toggleFAQ('${category}', ${index})">
+                    ${faq.question}
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer" id="faq-${category}-${index}">
+                    <div class="faq-content">
+                        <p>${faq.answer}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 
-            faqQuestions.forEach(question => {
-                if (question && !question.hasAttribute('data-listener-added')) {
-                    question.setAttribute('data-listener-added', 'true');
-                    question.addEventListener('click', function() {
-                        console.log('FAQ clicked:', this.textContent.trim());
+    init(category = 'general') {
+        // Find or create FAQ container
+        let faqContainer = document.getElementById('faq-section');
+        
+        if (!faqContainer) {
+            faqContainer = document.createElement('div');
+            faqContainer.id = 'faq-section';
+            
+            // Insert before footer
+            const footer = document.querySelector('.footer');
+            if (footer && footer.parentNode) {
+                footer.parentNode.insertBefore(faqContainer, footer);
+            } else {
+                document.body.appendChild(faqContainer);
+            }
+        }
 
-                        const faqItem = this.parentElement;
-                        const answer = faqItem.querySelector('.faq-answer');
-                        const isActive = faqItem.classList.contains('active');
-                        const icon = this.querySelector('.faq-icon');
+        // Render FAQ content
+        faqContainer.innerHTML = this.createFAQSection(category);
 
-                        // Close all other answers
-                        document.querySelectorAll('.faq-item').forEach(item => {
-                            if (item !== faqItem) {
-                                item.classList.remove('active');
-                                const otherAnswer = item.querySelector('.faq-answer');
-                                const otherIcon = item.querySelector('.faq-icon');
-                                if (otherAnswer) otherAnswer.style.maxHeight = '0px';
-                                if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
-                            }
-                        });
+        // Initialize FAQ functionality
+        this.attachEventListeners();
+    }
 
-                        // Toggle current answer
-                        if (!isActive) {
-                            faqItem.classList.add('active');
-                            if (answer) answer.style.maxHeight = answer.scrollHeight + 'px';
-                            if (icon) icon.style.transform = 'rotate(180deg)';
-                        } else {
-                            faqItem.classList.remove('active');
-                            if (answer) answer.style.maxHeight = '0px';
-                            if (icon) icon.style.transform = 'rotate(0deg)';
+    attachEventListeners() {
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const faqItem = question.closest('.faq-item');
+                const answer = faqItem.querySelector('.faq-answer');
+                const isActive = faqItem.classList.contains('active');
+
+                // Close all other FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== faqItem) {
+                        item.classList.remove('active');
+                        const otherAnswer = item.querySelector('.faq-answer');
+                        if (otherAnswer) {
+                            otherAnswer.style.maxHeight = '0';
                         }
-                    });
+                    }
+                });
+
+                // Toggle current FAQ
+                if (isActive) {
+                    faqItem.classList.remove('active');
+                    answer.style.maxHeight = '0';
+                } else {
+                    faqItem.classList.add('active');
+                    answer.style.maxHeight = answer.scrollHeight + 20 + 'px';
                 }
             });
-        }, 100);
+        });
+    }
+
+    render(container, category = 'general') {
+        if (container) {
+            container.innerHTML = this.createFAQSection(category);
+            this.attachEventListeners();
+        }
     }
 }
 
-// Export for use
+// Global FAQ toggle function
+function toggleFAQ(category, index) {
+    const faqAnswer = document.getElementById(`faq-${category}-${index}`);
+    const faqItem = faqAnswer ? faqAnswer.closest('.faq-item') : null;
+
+    if (faqAnswer && faqItem) {
+        const isActive = faqItem.classList.contains('active');
+
+        // Close all other FAQs
+        document.querySelectorAll('.faq-item').forEach(item => {
+            if (item !== faqItem) {
+                item.classList.remove('active');
+                const otherAnswer = item.querySelector('.faq-answer');
+                if (otherAnswer) {
+                    otherAnswer.style.maxHeight = '0';
+                }
+            }
+        });
+
+        // Toggle current FAQ
+        if (isActive) {
+            faqItem.classList.remove('active');
+            faqAnswer.style.maxHeight = '0';
+        } else {
+            faqItem.classList.add('active');
+            faqAnswer.style.maxHeight = faqAnswer.scrollHeight + 20 + 'px';
+        }
+    }
+}
+
+// Initialize FAQ component when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof FAQComponent !== 'undefined') {
+        try {
+            const faq = new FAQComponent();
+            
+            // Determine category based on page
+            let category = 'general';
+            const pathname = window.location.pathname.toLowerCase();
+            
+            if (pathname.includes('construction') || pathname.includes('roofing') || pathname.includes('plumber') || pathname.includes('architect')) {
+                category = 'industries';
+            } else if (pathname.includes('cities') || pathname.includes('manchester') || pathname.includes('birmingham') || pathname.includes('london')) {
+                category = 'local';
+            } else if (pathname.includes('technical') || pathname.includes('development') || pathname.includes('website')) {
+                category = 'technical';
+            }
+            
+            faq.init(category);
+        } catch (error) {
+            console.error('Error initializing FAQ component:', error);
+        }
+    }
+});
+
+// Export for use in other files
 if (typeof window !== 'undefined') {
     window.FAQComponent = FAQComponent;
+    window.toggleFAQ = toggleFAQ;
 }
