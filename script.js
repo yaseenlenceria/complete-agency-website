@@ -1,11 +1,35 @@
-// Global components are loaded via other scripts
-
 // DOM ready initialization
 document.addEventListener('DOMContentLoaded', function() {
     initializeNavigation();
     initializeAnimations();
     initializeCounters();
+    initializeHeroAnimations();
 });
+
+function initializeHeroAnimations() {
+    // Add entrance animations to hero elements
+    const heroElements = document.querySelectorAll('.hero-badge, .hero-content h1, .hero-subtitle, .feature-item, .hero-buttons');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 200);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    heroElements.forEach(el => {
+        if (el && !el.style.animation) {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(el);
+        }
+    });
+}
 
 function initializeNavigation() {
     // Navigation scroll effect

@@ -1,4 +1,4 @@
-The hero section's background and padding are updated to create a cleaner and less sales-oriented design.
+The hero section's background and features are enhanced with animations and improved styling, and the stat-items are updated.
 ```
 
 ```replit_final_file
@@ -495,29 +495,118 @@ p {
     color: rgba(255, 255, 255, 0.95);
 }
 
-.hero-stats {
-    display: flex;
-    gap: 2rem;
+.hero-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
     margin: 2rem 0;
-    flex-wrap: wrap;
+    animation: slideInLeft 1s ease-out 1s both;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1rem 1.5rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInScale 0.6s ease-out both;
+}
+
+.feature-item:nth-child(1) { animation-delay: 1.2s; }
+.feature-item:nth-child(2) { animation-delay: 1.4s; }
+.feature-item:nth-child(3) { animation-delay: 1.6s; }
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.feature-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.feature-item i {
+    font-size: 1.5rem;
+    color: #ffd700;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+.feature-content h3 {
+    color: white;
+    font-size: 1.1rem;
+    margin: 0 0 0.25rem 0;
+}
+
+.feature-content p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.4;
 }
 
 .stat-item {
     text-align: center;
+    animation: bounceIn 0.8s ease-out both;
 }
 
 .stat-number {
     display: block;
     font-size: clamp(1.5rem, 3vw, 2.5rem);
     font-weight: 800;
-    color: var(--secondary-color);
+    background: linear-gradient(135deg, #ffd700, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(50px);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05) translateY(-10px);
+    }
+    70% {
+        transform: scale(0.9) translateY(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .stat-label {
     font-size: 0.9rem;
-    opacity: 0.8;
+    opacity: 0.9;
     margin-top: 0.25rem;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .hero-buttons {
@@ -525,44 +614,18 @@ p {
     gap: 1rem;
     margin: 2rem 0;
     flex-wrap: wrap;
+    animation: slideInUp 1s ease-out 1.8s both;
 }
 
-.btn-primary, .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 2rem;
-    text-decoration: none;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: var(--transition);
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-.btn-primary {
-    background: var(--gradient-secondary);
-    color: white;
-    box-shadow: 0 6px 20px rgba(255, 102, 0, 0.3);
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(255, 102, 0, 0.4);
-}
-
-.btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-}
-
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.5);
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-guarantees {
@@ -937,86 +1000,3 @@ section {
 }
 
 .industry-card p {
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-}
-
-.industry-services {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.service-badge {
-    background: var(--background-light);
-    color: var(--text-secondary);
-    padding: 0.25rem 0.75rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    border: 1px solid var(--border-color);
-}
-
-.industry-link {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 600;
-    transition: var(--transition);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.industry-link:hover {
-    color: var(--primary-dark);
-}
-
-/* CTA Section */
-.cta-section {
-    background: linear-gradient(135deg, var(--primary-color), #2c5aa0);
-    color: white;
-    text-align: center;
-    padding: 60px 0;
-    position: relative;
-    overflow: hidden;
-}
-
-.cta-content h2 {
-    color: white;
-    margin-bottom: 1.5rem;
-}
-
-.cta-content p {
-    font-size: 1.2rem;
-    margin-bottom: 2.5rem;
-    opacity: 0.9;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.cta-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.btn-primary.large {
-    font-size: 1.1rem;
-    padding: 1.25rem 2.5rem;
-}
-
-.cta-contact p {
-    color: rgba(255, 255, 255, 0.8);
-    margin: 0;
-}
-
-.cta-contact strong {
-    color: white;
-}
-
-/* Footer */
-.
