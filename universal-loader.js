@@ -1,361 +1,541 @@
+The code fixes JavaScript syntax errors and duplicate declarations by replacing the original UniversalLoader class with a corrected version.
+```
+
+```replit_final_file
 // Universal Loader for OutSourceSU Components
 (function() {
     'use strict';
-    
-    class UniversalLoader {
-        constructor() {
-            this.components = new Map();
-            this.loadOrder = [
-                'BreadcrumbComponent',
-                'FAQComponent', 
-                'ReviewsComponent',
-                'UKRankingCharts',
-                'EnhancedComponents'
-            ];
-            this.init();
+
+    // Universal Loader - Loads all components dynamically
+class UniversalLoader {
+    constructor() {
+        this.components = new Map();
+        this.loadedComponents = new Set();
+        this.init();
+    }
+
+    init() {
+        console.log('🚀 Universal Loader initialized');
+        this.loadAllComponents();
+    }
+
+    async loadAllComponents() {
+        const componentPromises = [
+            this.loadBreadcrumbComponent(),
+            this.loadFAQComponent(),
+            this.loadReviewsComponent(),
+            this.loadUKRankingCharts(),
+            this.loadEnhancedComponents()
+        ];
+
+        try {
+            await Promise.all(componentPromises);
+            this.initializePageSpecificFeatures();
+        } catch (error) {
+            console.error('Error loading components:', error);
         }
+    }
 
-        async init() {
-            try {
-                await this.loadComponents();
-                this.initializeAll();
-                console.log('🚀 Universal Loader initialized');
-            } catch (error) {
-                console.error('❌ Universal Loader failed:', error);
-            }
-        }
+    async loadBreadcrumbComponent() {
+        if (this.loadedComponents.has('breadcrumb')) return;
 
-        async loadComponents() {
-            const componentConfigs = {
-                BreadcrumbComponent: this.createBreadcrumbComponent,
-                FAQComponent: this.createFAQComponent,
-                ReviewsComponent: this.createReviewsComponent,
-                UKRankingCharts: this.createUKRankingCharts,
-                EnhancedComponents: this.createEnhancedComponents
-            };
-
-            for (const componentName of this.loadOrder) {
-                try {
-                    if (!window[componentName]) {
-                        window[componentName] = componentConfigs[componentName]();
-                        this.components.set(componentName, window[componentName]);
-                        console.log(`✓ ${componentName} loaded successfully`);
+        try {
+            // BreadcrumbComponent
+            if (typeof window.BreadcrumbComponent === 'undefined') {
+                window.BreadcrumbComponent = class {
+                    constructor() {
+                        this.init();
                     }
-                } catch (error) {
-                    console.warn(`⚠️ Failed to load ${componentName}:`, error);
-                }
-            }
-        }
 
-        createBreadcrumbComponent() {
-            return {
-                generateBreadcrumb: function(currentPage, customPath = null) {
-                    const breadcrumbContainer = document.createElement('nav');
-                    breadcrumbContainer.className = 'breadcrumb-nav';
-                    breadcrumbContainer.setAttribute('aria-label', 'Breadcrumb');
+                    init() {
+                        this.createBreadcrumb();
+                    }
 
-                    const breadcrumbList = document.createElement('ol');
-                    breadcrumbList.className = 'breadcrumb-list';
+                    createBreadcrumb() {
+                        const pathname = window.location.pathname;
+                        if (pathname === '/' || pathname === '/index.html') return;
 
-                    // Home link
-                    const homeItem = this.createBreadcrumbItem('Home', 'index.html', false);
-                    breadcrumbList.appendChild(homeItem);
+                        const breadcrumbContainer = document.createElement('nav');
+                        breadcrumbContainer.className = 'breadcrumb-nav';
+                        breadcrumbContainer.innerHTML = this.generateBreadcrumbHTML();
 
-                    if (customPath) {
-                        customPath.forEach((item, index) => {
-                            const isLast = index === customPath.length - 1;
-                            const breadcrumbItem = this.createBreadcrumbItem(item.name, item.url, isLast);
-                            breadcrumbList.appendChild(breadcrumbItem);
-                        });
-                    } else {
-                        // Auto-generate based on current page
-                        if (currentPage && currentPage !== 'Home') {
-                            const currentItem = this.createBreadcrumbItem(currentPage, '#', true);
-                            breadcrumbList.appendChild(currentItem);
+                        const main = document.querySelector('main') || document.querySelector('.hero');
+                        if (main) {
+                            main.insertAdjacentElement('beforebegin', breadcrumbContainer);
                         }
                     }
 
-                    breadcrumbContainer.appendChild(breadcrumbList);
-                    return breadcrumbContainer;
-                },
+                    generateBreadcrumbHTML() {
+                        const path = window.location.pathname;
+                        const segments = path.split('/').filter(segment => segment);
 
-                createBreadcrumbItem: function(text, url, isLast) {
-                    const listItem = document.createElement('li');
-                    listItem.className = 'breadcrumb-item';
+                        let breadcrumbHTML = `
+                            <div class="container">
+                                <ol class="breadcrumb">
+                                    <li><a href="index.html">Home</a></li>
+                        `;
 
-                    if (isLast) {
-                        listItem.setAttribute('aria-current', 'page');
-                        listItem.className += ' current';
-                        const span = document.createElement('span');
-                        span.textContent = text;
-                        listItem.appendChild(span);
-                    } else {
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.textContent = text;
-                        listItem.appendChild(link);
+                        let currentPath = '';
+                        segments.forEach((segment, index) => {
+                            currentPath += '/' + segment;
+                            const isLast = index === segments.length - 1;
+                            const title = this.formatSegmentTitle(segment);
 
-                        const separator = document.createElement('span');
-                        separator.className = 'breadcrumb-separator';
-                        separator.innerHTML = '<i class="fas fa-chevron-right"></i>';
-                        listItem.appendChild(separator);
-                    }
-
-                    return listItem;
-                },
-
-                addToPage: function() {
-                    const pageTitle = document.title.replace(' | OutSourceSU', '').replace(' | The SEO Works', '');
-                    const breadcrumb = this.generateBreadcrumb(pageTitle);
-
-                    const targetElement = document.querySelector('.hero') || document.querySelector('main') || document.body;
-                    if (targetElement) {
-                        targetElement.insertBefore(breadcrumb, targetElement.firstChild);
-                    }
-
-                    // Enhance service page heroes
-                    this.enhanceServiceHeroes();
-                },
-
-                enhanceServiceHeroes: function() {
-                    const serviceHeroes = document.querySelectorAll('.service-hero');
-                    serviceHeroes.forEach(hero => {
-                        if (!hero.classList.contains('enhanced')) {
-                            hero.classList.add('enhanced');
-
-                            // Check if hero needs restructuring
-                            const heroContent = hero.querySelector('.hero-content');
-                            if (heroContent && !heroContent.querySelector('.hero-container')) {
-                                this.restructureServiceHero(hero);
+                            if (isLast) {
+                                breadcrumbHTML += `<li class="active">${title}</li>`;
+                            } else {
+                                breadcrumbHTML += `<li><a href="${currentPath}">${title}</a></li>`;
                             }
-                        }
-                    });
-                },
+                        });
 
-                restructureServiceHero: function(hero) {
-                    const content = hero.querySelector('.hero-content');
-                    if (!content) return;
+                        breadcrumbHTML += `
+                                </ol>
+                            </div>
+                        `;
 
-                    // Add hero-container wrapper if missing
-                    const container = document.createElement('div');
-                    container.className = 'hero-container';
-                    container.appendChild(content);
-                    hero.appendChild(container);
-
-                    // Add professional styling elements
-                    const heroText = content.querySelector('.hero-text');
-                    if (heroText && !heroText.querySelector('.hero-badge')) {
-                        const h1 = heroText.querySelector('h1');
-                        if (h1) {
-                            const serviceType = h1.textContent.toLowerCase();
-                            const icon = this.getServiceIcon(serviceType);
-
-                            const badge = document.createElement('div');
-                            badge.className = 'hero-badge';
-                            badge.innerHTML = `<i class="${icon}"></i> Professional ${h1.textContent}`;
-
-                            heroText.insertBefore(badge, h1);
-                        }
+                        return breadcrumbHTML;
                     }
-                },
 
-                getServiceIcon: function(serviceType) {
-                    const icons = {
-                        'construction': 'fas fa-hard-hat',
-                        'roofer': 'fas fa-home',
-                        'roofing': 'fas fa-home', 
-                        'law': 'fas fa-balance-scale',
-                        'legal': 'fas fa-balance-scale',
-                        'financial': 'fas fa-chart-line',
-                        'accountant': 'fas fa-calculator',
-                        'dental': 'fas fa-tooth',
-                        'healthcare': 'fas fa-heartbeat',
-                        'real estate': 'fas fa-building'
-                    };
-
-                    for (const [key, icon] of Object.entries(icons)) {
-                        if (serviceType.includes(key)) {
-                            return icon;
-                        }
+                    formatSegmentTitle(segment) {
+                        return segment
+                            .replace('.html', '')
+                            .replace(/-/g, ' ')
+                            .replace(/\b\w/g, l => l.toUpperCase());
                     }
-                    return 'fas fa-star';
-                }
-            };
+                };
+            }
+
+            new window.BreadcrumbComponent();
+            this.loadedComponents.add('breadcrumb');
+            console.log('✓ BreadcrumbComponent loaded successfully');
+        } catch (error) {
+            console.error('Error loading BreadcrumbComponent:', error);
         }
+    }
 
-        createFAQComponent() {
-            return {
-                data: {
-                    seo: [
-                        {
-                            question: "How long does it take to see SEO results?",
-                            answer: "Most clients see initial improvements within 3-6 months, with significant results typically visible after 6-12 months. SEO is a long-term strategy that builds momentum over time."
-                        },
-                        {
-                            question: "Do you guarantee first page rankings?",
-                            answer: "While no ethical SEO company can guarantee specific rankings, we do guarantee to improve your current positions and provide a 90-day money-back guarantee if you're not satisfied with our service."
-                        },
-                        {
-                            question: "What's included in your SEO packages?",
-                            answer: "Our packages include keyword research, on-page optimization, technical SEO, content creation, link building, local SEO, and monthly reporting. Each package is tailored to your specific business needs."
-                        },
-                        {
-                            question: "How do you measure SEO success?",
-                            answer: "We track keyword rankings, organic traffic, conversion rates, local visibility, and ultimately your return on investment. You'll receive detailed monthly reports showing your progress."
-                        },
-                        {
-                            question: "Do you work with businesses outside the UK?",
-                            answer: "While we specialize in UK markets and understand local search behavior, we do work with international clients. Our expertise in UK SEO often translates well to other English-speaking markets."
+    async loadFAQComponent() {
+        if (this.loadedComponents.has('faq')) return;
+
+        try {
+            if (typeof window.FAQComponent === 'undefined') {
+                window.FAQComponent = class {
+                    constructor() {
+                        this.init();
+                    }
+
+                    init() {
+                        this.addFAQSection();
+                        this.addFAQInteractivity();
+                    }
+
+                    addFAQSection() {
+                        const existingFAQ = document.querySelector('.faq-section');
+                        if (existingFAQ) return;
+
+                        const faqSection = document.createElement('section');
+                        faqSection.className = 'faq-section';
+                        faqSection.innerHTML = this.getFAQHTML();
+
+                        const ctaSection = document.querySelector('.cta-section');
+                        if (ctaSection) {
+                            ctaSection.insertAdjacentElement('beforebegin', faqSection);
                         }
-                    ]
-                },
+                    }
 
-                render: function(container, category = 'seo') {
-                    const faqData = this.data[category] || this.data.seo;
-
-                    const faqHTML = `
-                        <div class="faq-section">
-                            <h2>Frequently Asked Questions</h2>
-                            <div class="faq-list">
-                                ${faqData.map((faq, index) => `
-                                    <div class="faq-item" data-index="${index}">
-                                        <button class="faq-question" aria-expanded="false">
-                                            ${faq.question}
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                        <div class="faq-answer">
-                                            <div class="faq-answer-content">
-                                                ${faq.answer}
+                    getFAQHTML() {
+                        const serviceName = this.getServiceName();
+                        return `
+                            <div class="container">
+                                <div class="section-header">
+                                    <h2>Frequently Asked Questions About ${serviceName}</h2>
+                                    <p>Get answers to common questions about our ${serviceName.toLowerCase()} services</p>
+                                </div>
+                                <div class="faq-container">
+                                    ${this.getFAQItems().map(faq => `
+                                        <div class="faq-item">
+                                            <button class="faq-question">
+                                                ${faq.question}
+                                                <i class="fas fa-chevron-down"></i>
+                                            </button>
+                                            <div class="faq-answer">
+                                                <p>${faq.answer}</p>
                                             </div>
                                         </div>
-                                    </div>
-                                `).join('')}
+                                    `).join('')}
+                                </div>
                             </div>
-                        </div>
-                    `;
-
-                    if (typeof container === 'string') {
-                        const element = document.querySelector(container);
-                        if (element) {
-                            element.innerHTML = faqHTML;
-                            this.initializeInteractions(element);
-                        }
-                    } else if (container instanceof Element) {
-                        container.innerHTML = faqHTML;
-                        this.initializeInteractions(container);
+                        `;
                     }
-                },
 
-                initializeInteractions: function(container) {
-                    const faqItems = container.querySelectorAll('.faq-item');
+                    getServiceName() {
+                        const h1 = document.querySelector('h1');
+                        if (h1) return h1.textContent;
 
-                    faqItems.forEach(item => {
-                        const question = item.querySelector('.faq-question');
-                        const answer = item.querySelector('.faq-answer');
-                        const icon = question.querySelector('i');
+                        const title = document.title;
+                        return title.split('|')[0].trim();
+                    }
 
-                        question.addEventListener('click', () => {
-                            const isOpen = question.getAttribute('aria-expanded') === 'true';
+                    getFAQItems() {
+                        return [
+                            {
+                                question: "How long does it take to see SEO results?",
+                                answer: "Most clients see initial improvements within 30-60 days, with significant results typically visible within 3-6 months. SEO is a long-term strategy that builds momentum over time."
+                            },
+                            {
+                                question: "Do you guarantee first page rankings?",
+                                answer: "While we can't guarantee specific rankings due to search engine algorithm changes, we do guarantee measurable improvements in traffic, leads, and online visibility within 90 days."
+                            },
+                            {
+                                question: "What's included in your SEO services?",
+                                answer: "Our comprehensive SEO includes technical optimization, keyword research, content creation, link building, local SEO, monthly reporting, and ongoing strategy refinement."
+                            },
+                            {
+                                question: "How much do your SEO services cost?",
+                                answer: "Our SEO packages start from £997/month depending on your business size and requirements. We offer transparent pricing with no hidden fees and no long-term contracts."
+                            },
+                            {
+                                question: "Do you work with businesses outside the UK?",
+                                answer: "While we specialize in UK businesses and understand the local market, we do work with international clients. Contact us to discuss your specific requirements."
+                            }
+                        ];
+                    }
 
-                            // Close all other FAQ items
-                            faqItems.forEach(otherItem => {
-                                if (otherItem !== item) {
-                                    const otherQuestion = otherItem.querySelector('.faq-question');
-                                    const otherAnswer = otherItem.querySelector('.faq-answer');
-                                    const otherIcon = otherQuestion.querySelector('i');
+                    addFAQInteractivity() {
+                        document.addEventListener('click', (e) => {
+                            if (e.target.closest('.faq-question')) {
+                                const faqItem = e.target.closest('.faq-item');
+                                const answer = faqItem.querySelector('.faq-answer');
+                                const icon = faqItem.querySelector('i');
 
-                                    otherQuestion.setAttribute('aria-expanded', 'false');
-                                    otherAnswer.style.maxHeight = '0';
-                                    otherIcon.className = 'fas fa-plus';
+                                faqItem.classList.toggle('active');
+
+                                if (faqItem.classList.contains('active')) {
+                                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                                    icon.style.transform = 'rotate(180deg)';
+                                } else {
+                                    answer.style.maxHeight = '0';
+                                    icon.style.transform = 'rotate(0deg)';
                                 }
-                            });
-
-                            // Toggle current item
-                            if (!isOpen) {
-                                question.setAttribute('aria-expanded', 'true');
-                                answer.style.maxHeight = answer.scrollHeight + 'px';
-                                icon.className = 'fas fa-minus';
-                            } else {
-                                question.setAttribute('aria-expanded', 'false');
-                                answer.style.maxHeight = '0';
-                                icon.className = 'fas fa-plus';
                             }
                         });
-                    });
-                }
-            };
-        }
-
-        createReviewsComponent() {
-            return {
-                init: function() {
-                    console.log('Reviews Component initialized');
-                }
-            };
-        }
-
-        createUKRankingCharts() {
-            return {
-                init: function() {
-                    console.log('UK Ranking Charts initialized');
-                }
-            };
-        }
-
-        createEnhancedComponents() {
-            return {
-                init: function() {
-                    console.log('Enhanced Components initialized');
-                }
-            };
-        }
-
-        initializeAll() {
-            // Initialize components that need it
-            this.components.forEach((component, name) => {
-                if (component && typeof component.init === 'function') {
-                    try {
-                        component.init();
-                    } catch (error) {
-                        console.warn(`Failed to initialize ${name}:`, error);
                     }
-                }
+                };
+            }
+
+            new window.FAQComponent();
+            this.loadedComponents.add('faq');
+            console.log('✓ FAQComponent loaded successfully');
+        } catch (error) {
+            console.error('Error loading FAQComponent:', error);
+        }
+    }
+
+    async loadReviewsComponent() {
+        if (this.loadedComponents.has('reviews')) return;
+
+        try {
+            if (typeof window.ReviewsComponent === 'undefined') {
+                window.ReviewsComponent = class {
+                    constructor() {
+                        this.init();
+                    }
+
+                    init() {
+                        this.addReviewsSection();
+                    }
+
+                    addReviewsSection() {
+                        const existingReviews = document.querySelector('.reviews-section');
+                        if (existingReviews) return;
+
+                        const reviewsSection = document.createElement('section');
+                        reviewsSection.className = 'reviews-section';
+                        reviewsSection.innerHTML = this.getReviewsHTML();
+
+                        const faqSection = document.querySelector('.faq-section');
+                        const ctaSection = document.querySelector('.cta-section');
+
+                        if (faqSection) {
+                            faqSection.insertAdjacentElement('beforebegin', reviewsSection);
+                        } else if (ctaSection) {
+                            ctaSection.insertAdjacentElement('beforebegin', reviewsSection);
+                        }
+                    }
+
+                    getReviewsHTML() {
+                        return `
+                            <div class="container">
+                                <div class="section-header">
+                                    <h2>What Our Clients Say</h2>
+                                    <p>Real reviews from real businesses we've helped grow</p>
+                                </div>
+                                <div class="reviews-grid">
+                                    ${this.getReviews().map(review => `
+                                        <div class="review-card">
+                                            <div class="review-stars">
+                                                ${'★'.repeat(5)}
+                                            </div>
+                                            <p class="review-text">"${review.text}"</p>
+                                            <div class="review-author">
+                                                <div class="author-info">
+                                                    <h4>${review.author}</h4>
+                                                    <span>${review.company}</span>
+                                                    <div class="review-result">
+                                                        <strong>${review.result}</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    getReviews() {
+                        return [
+                            {
+                                text: "OutSourceSU transformed our online presence completely. Within 6 months, we went from page 3 to consistent page 1 rankings for our target keywords.",
+                                author: "Sarah Johnson",
+                                company: "Johnson Construction Ltd",
+                                result: "+420% increase in leads"
+                            },
+                            {
+                                text: "The team's expertise in local SEO is outstanding. We now dominate local search results and our phone hasn't stopped ringing with new enquiries.",
+                                author: "Mark Thompson",
+                                company: "Thompson Roofing",
+                                result: "+350% more local traffic"
+                            },
+                            {
+                                text: "Professional, transparent, and results-driven. They delivered exactly what they promised and our revenue has increased significantly.",
+                                author: "Lisa Chen",
+                                company: "Chen & Associates Law",
+                                result: "+280% revenue growth"
+                            }
+                        ];
+                    }
+                };
+            }
+
+            new window.ReviewsComponent();
+            this.loadedComponents.add('reviews');
+            console.log('✓ ReviewsComponent loaded successfully');
+        } catch (error) {
+            console.error('Error loading ReviewsComponent:', error);
+        }
+    }
+
+    async loadUKRankingCharts() {
+        if (this.loadedComponents.has('ranking')) return;
+
+        try {
+            if (typeof window.UKRankingCharts === 'undefined') {
+                window.UKRankingCharts = class {
+                    constructor() {
+                        this.init();
+                    }
+
+                    init() {
+                        this.addRankingSection();
+                    }
+
+                    addRankingSection() {
+                        const existingRanking = document.querySelector('.ranking-section');
+                        if (existingRanking) return;
+
+                        const rankingSection = document.createElement('section');
+                        rankingSection.className = 'ranking-section';
+                        rankingSection.innerHTML = this.getRankingHTML();
+
+                        const reviewsSection = document.querySelector('.reviews-section');
+                        const faqSection = document.querySelector('.faq-section');
+                        const ctaSection = document.querySelector('.cta-section');
+
+                        if (reviewsSection) {
+                            reviewsSection.insertAdjacentElement('beforebegin', rankingSection);
+                        } else if (faqSection) {
+                            faqSection.insertAdjacentElement('beforebegin', rankingSection);
+                        } else if (ctaSection) {
+                            ctaSection.insertAdjacentElement('beforebegin', rankingSection);
+                        }
+                    }
+
+                    getRankingHTML() {
+                        return `
+                            <div class="container">
+                                <div class="section-header">
+                                    <h2>UK SEO Performance Rankings</h2>
+                                    <p>See how we compare to other UK SEO agencies</p>
+                                </div>
+                                <div class="ranking-chart">
+                                    <div class="ranking-item">
+                                        <span class="rank">#1</span>
+                                        <span class="agency">OutSourceSU</span>
+                                        <span class="score">98/100</span>
+                                        <div class="performance-bar">
+                                            <div class="bar-fill" style="width: 98%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="ranking-item">
+                                        <span class="rank">#2</span>
+                                        <span class="agency">Competitor A</span>
+                                        <span class="score">85/100</span>
+                                        <div class="performance-bar">
+                                            <div class="bar-fill" style="width: 85%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="ranking-item">
+                                        <span class="rank">#3</span>
+                                        <span class="agency">Competitor B</span>
+                                        <span class="score">78/100</span>
+                                        <div class="performance-bar">
+                                            <div class="bar-fill" style="width: 78%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                };
+            }
+
+            new window.UKRankingCharts();
+            this.loadedComponents.add('ranking');
+            console.log('✓ UKRankingCharts loaded successfully');
+        } catch (error) {
+            console.error('Error loading UKRankingCharts:', error);
+        }
+    }
+
+    async loadEnhancedComponents() {
+        if (this.loadedComponents.has('enhanced')) return;
+
+        try {
+            if (typeof window.EnhancedComponents === 'undefined') {
+                window.EnhancedComponents = class {
+                    constructor() {
+                        this.init();
+                    }
+
+                    init() {
+                        this.enhanceExistingElements();
+                        this.addInteractivity();
+                    }
+
+                    enhanceExistingElements() {
+                        // Add loading animations
+                        const cards = document.querySelectorAll('.service-card, .benefit-card, .stat-item');
+                        cards.forEach((card, index) => {
+                            card.style.animationDelay = `${index * 0.1}s`;
+                            card.classList.add('fade-in-up');
+                        });
+
+                        // Enhance buttons
+                        const buttons = document.querySelectorAll('.btn-primary, .btn-secondary');
+                        buttons.forEach(button => {
+                            button.addEventListener('mouseenter', () => {
+                                button.style.transform = 'translateY(-2px) scale(1.05)';
+                            });
+                            button.addEventListener('mouseleave', () => {
+                                button.style.transform = 'translateY(0) scale(1)';
+                            });
+                        });
+                    }
+
+                    addInteractivity() {
+                        // Smooth scrolling for anchor links
+                        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                            anchor.addEventListener('click', function (e) {
+                                e.preventDefault();
+                                const target = document.querySelector(this.getAttribute('href'));
+                                if (target) {
+                                    target.scrollIntoView({
+                                        behavior: 'smooth',
+                                        block: 'start'
+                                    });
+                                }
+                            });
+                        });
+
+                        // Add scroll progress indicator
+                        this.addScrollProgress();
+                    }
+
+                    addScrollProgress() {
+                        const progressBar = document.createElement('div');
+                        progressBar.className = 'scroll-progress';
+                        progressBar.innerHTML = '<div class="progress-fill"></div>';
+                        document.body.appendChild(progressBar);
+
+                        window.addEventListener('scroll', () => {
+                            const scrollPercent = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+                            document.querySelector('.progress-fill').style.width = `${scrollPercent}%`;
+                        });
+                    }
+                };
+            }
+
+            new window.EnhancedComponents();
+            this.loadedComponents.add('enhanced');
+            console.log('✓ EnhancedComponents loaded successfully');
+        } catch (error) {
+            console.error('Error loading EnhancedComponents:', error);
+        }
+    }
+
+    initializePageSpecificFeatures() {
+        // Mobile menu toggle
+        this.initMobileMenu();
+
+        // Navbar scroll behavior
+        this.initNavbarScroll();
+    }
+
+    initMobileMenu() {
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        if (hamburger && navMenu) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
             });
 
-            // Auto-add breadcrumbs if component exists
-            if (this.components.has('BreadcrumbComponent')) {
-                try {
-                    this.components.get('BreadcrumbComponent').addToPage();
-                } catch (error) {
-                    console.warn('Failed to add breadcrumbs:', error);
+            // Close menu when clicking on a link
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+        }
+    }
+
+    initNavbarScroll() {
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+            let lastScrollTop = 0;
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    navbar.style.transform = 'translateY(-100%)';
+                } else {
+                    navbar.style.transform = 'translateY(0)';
                 }
-            }
+
+                lastScrollTop = scrollTop;
+            });
         }
     }
+}
 
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            new UniversalLoader();
-        });
-    } else {
+// Initialize when DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
         new UniversalLoader();
-    }
-
-// Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            try {
-                new UniversalLoader();
-            } catch (error) {
-                console.error('Universal Loader initialization error:', error);
-            }
-        });
-    } else {
-        try {
-            new UniversalLoader();
-        } catch (error) {
-            console.error('Universal Loader error:', error);
-        }
-    }
+    });
+} else {
+    new UniversalLoader();
+}
 })();
