@@ -61,6 +61,44 @@ p {
     line-height: 1.7;
 }
 
+/* Service page specific text styling */
+.service-hero p,
+.services-detailed p,
+.why-seo p,
+.keywords-section p,
+.results-section p {
+    color: var(--text-primary) !important;
+}
+
+.service-hero .hero-subtitle {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Ensure all service page text is visible */
+.services-detailed .service-item p,
+.why-seo .benefit-card p,
+.keywords-section .keyword-category,
+.results-section .stat-item p {
+    color: var(--text-primary) !important;
+}
+
+/* Fix any blue text that should be white/visible */
+.services-detailed ul li,
+.why-seo ul li {
+    color: var(--text-secondary) !important;
+}
+
+/* Service page headings */
+.services-detailed h2,
+.services-detailed h3,
+.why-seo h2,
+.why-seo h3,
+.keywords-section h2,
+.keywords-section h3,
+.results-section h2 {
+    color: var(--text-primary) !important;
+}
+
 /* Navigation */
 .navbar {
     position: fixed;
@@ -144,7 +182,9 @@ p {
     top: 100%;
     left: 0;
     background: white;
-    min-width: 280px;
+    min-width: 320px;
+    max-height: 80vh;
+    overflow-y: auto;
     border-radius: 12px;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     opacity: 0;
@@ -153,7 +193,6 @@ p {
     transition: var(--transition);
     z-index: 1000;
     border: 1px solid var(--border-color);
-    overflow: hidden;
     padding: 0.5rem 0;
     list-style: none;
 }
@@ -281,7 +320,7 @@ p {
     margin-bottom: 2rem;
     opacity: 0.9;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .hero-stats {
