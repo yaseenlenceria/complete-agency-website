@@ -128,6 +128,8 @@ class SEOProcessComponent {
             },
             {
                 question: 'Do you guarantee first page rankings?',
+                answer: 'While no ethical SEO company can guarantee specific rankings due to constant algorithm changes, we do guarantee measurable improvements. Our 90-day results guarantee ensures you see tangible progress or we work for free until you do.'
+            },
                 answer: 'While we cannot guarantee specific rankings due to Google\'s algorithm changes, we offer a 90-day money-back guarantee. 94% of our clients achieve first-page rankings for their target keywords within 6 months.'
             }
         ];

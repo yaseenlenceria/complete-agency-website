@@ -910,6 +910,50 @@ class CityContentGenerator {
     }
 }
 
+// Service categories data
+const serviceCategories = {
+    construction: {
+        name: "Construction & Trade",
+        services: [
+            { name: "Construction SEO", slug: "construction-seo" },
+            { name: "Architects SEO", slug: "architects-seo" },
+            { name: "Plumbers SEO", slug: "plumbers-seo" }
+        ]
+    },
+    roofing: {
+        name: "Roofing SEO Specialists",
+        services: [
+            { name: "Roofer SEO", slug: "roofer-seo" },
+            { name: "Roof Repair SEO", slug: "roof-repair-seo" },
+            { name: "Roof Replacement SEO", slug: "roof-replacement-seo" },
+            { name: "Commercial Roofing SEO", slug: "commercial-roofing-seo" }
+        ]
+    },
+    professional: {
+        name: "Professional Services",
+        services: [
+            { name: "Law Firm SEO", slug: "law-firm-seo" },
+            { name: "Dentists SEO", slug: "dentists-seo" },
+            { name: "Financial SEO", slug: "financial-seo" },
+            { name: "Accountants SEO", slug: "accountants-seo" }
+        ]
+    },
+    realestate: {
+        name: "Real Estate & Property",
+        services: [
+            { name: "Real Estate SEO", slug: "real-estate-seo" }
+        ]
+    }
+};
+
+const industryKeywords = {
+    construction: ["builders", "construction companies", "contractors", "building services"],
+    roofing: ["roofers", "roofing contractors", "roof repair", "roof replacement"],
+    legal: ["solicitors", "law firms", "lawyers", "legal services"],
+    dental: ["dentists", "dental practice", "dental care", "orthodontists"],
+    realestate: ["estate agents", "property", "real estate", "lettings"]
+};
+
 // Initialize city content generator
 if (typeof window !== 'undefined') {
     window.CityContentGenerator = CityContentGenerator;

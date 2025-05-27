@@ -1,7 +1,4 @@
-// Load global components script
-const globalComponentsScript = document.createElement('script');
-globalComponentsScript.src = 'global-components.js';
-document.head.appendChild(globalComponentsScript);
+// Global components are loaded via other scripts
 
 // DOM ready initialization
 document.addEventListener('DOMContentLoaded', function() {

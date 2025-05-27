@@ -53,6 +53,56 @@ class FAQComponent {
                 },
                 {
                     question: "How do you improve local search rankings?",
+                    answer: "We optimize your Google My Business profile, build local citations, create location-specific content, manage customer reviews, and implement local schema markup to improve your visibility in local search results."
+                }
+            ],
+            technical: [
+                {
+                    question: "What technical SEO issues do you fix?",
+                    answer: "We address site speed optimization, mobile responsiveness, SSL certificates, XML sitemaps, robots.txt files, schema markup, crawl errors, and technical issues that prevent search engines from properly indexing your site."
+                },
+                {
+                    question: "Do you work with all website platforms?",
+                    answer: "Yes, we work with WordPress, Wix, Squarespace, Shopify, custom HTML sites, and most major platforms. Our technical team can optimize any website regardless of the underlying technology."
+                },
+                {
+                    question: "How do you measure SEO success?",
+                    answer: "We track keyword rankings, organic traffic growth, lead generation, conversion rates, and ROI. You'll receive detailed monthly reports showing exactly how your SEO investment is performing."
+                }
+            ]
+        };
+    }
+
+    render(container, category = 'general') {
+        const faqs = this.faqData[category] || this.faqData.general;
+        
+        container.innerHTML = `
+            <section class="faq-section">
+                <div class="container">
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="faq-list">
+                        ${faqs.map((faq, index) => `
+                            <div class="faq-item">
+                                <button class="faq-question" onclick="toggleFAQ(${index})">
+                                    ${faq.question}
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="faq-answer" id="faq-${index}">
+                                    <p>${faq.answer}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </section>
+        `;
+    }
+}
+
+// Initialize FAQ Component
+if (typeof window !== 'undefined') {
+    window.FAQComponent = FAQComponent;
+},
                     answer: "We use proven local SEO strategies including Google My Business optimization, local citation building, review management, location-specific content, and schema markup to improve local search visibility."
                 }
             ],

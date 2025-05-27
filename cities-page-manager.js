@@ -334,6 +334,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof ukCitiesData !== 'undefined' && window.location.pathname.includes('cities-pages.html')) {
         window.citiesPageManager = new CitiesPageManager();
         window.citiesPageManager.init();
+    } else if (window.location.pathname.includes('cities-pages.html')) {
+        console.warn('ukCitiesData not loaded. Make sure uk-cities-data.js is included.');
     }
 });
 
