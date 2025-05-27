@@ -835,6 +835,37 @@ document.addEventListener('DOMContentLoaded', function() {
         new BreadcrumbComponent();
     }
 });
+
+// Enhanced Script with Better Mobile Performance and Animations
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeNavigation();
+    initializeAnimations();
+    initializeScrollEffects();
+    initializeLazyLoading();
+    initializeFormValidation();
+    initializePerformanceOptimizations();
+    makeLogoClickable();
+    logInitialization();
+});
+
+function makeLogoClickable() {
+    const logoLinks = document.querySelectorAll('.nav-logo a');
+    logoLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Ensure the link works properly
+            if (this.getAttribute('href') === 'index.html' || this.getAttribute('href') === '/') {
+                window.location.href = 'index.html';
+            }
+        });
+    });
+}
+
+function logInitialization() {
+    console.log('✅ OutSourceSU Enhanced Script Loaded Successfully');
+    console.log('🚀 All components initialized');
+}
 </script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <!-- Load components first -->

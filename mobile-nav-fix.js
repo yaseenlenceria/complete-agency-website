@@ -1,9 +1,8 @@
-
 // Enhanced Mobile Navigation Fix Script
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
-    
+
     if (hamburger && navMenu) {
         // Toggle mobile menu function
         function toggleMobileMenu(event) {
@@ -11,9 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 event.preventDefault();
                 event.stopPropagation();
             }
-            
+
             const isActive = navMenu.classList.contains('active');
-            
+
             if (isActive) {
                 closeMobileMenu();
             } else {
@@ -31,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
             document.body.classList.remove('mobile-nav-open');
-            
+
             // Close all dropdowns
             document.querySelectorAll('.dropdown').forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -51,17 +50,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (window.innerWidth <= 768) {
                     e.preventDefault();
                     e.stopPropagation();
-                    
+
                     const dropdown = this.parentElement;
                     const isActive = dropdown.classList.contains('active');
-                    
+
                     // Close all other dropdowns
                     document.querySelectorAll('.dropdown').forEach(function(otherDropdown) {
                         if (otherDropdown !== dropdown) {
                             otherDropdown.classList.remove('active');
                         }
                     });
-                    
+
                     // Toggle current dropdown
                     dropdown.classList.toggle('active');
                 }
