@@ -65,11 +65,17 @@ function initializeNavigation() {
                 opacity: 0;
                 visibility: hidden;
                 transition: all 0.3s ease;
+                backdrop-filter: blur(2px);
             `;
             document.body.appendChild(overlay);
         }
 
-        function toggleMobileMenu() {
+        function toggleMobileMenu(event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
             const isActive = navMenu.classList.contains('active');
             
             if (isActive) {
@@ -84,6 +90,7 @@ function initializeNavigation() {
             navMenu.classList.add('active');
             overlay.style.opacity = '1';
             overlay.style.visibility = 'visible';
+            document.body.style.overflow = 'hidden';
             document.body.classList.add('mobile-nav-open');
         }
 
@@ -92,6 +99,7 @@ function initializeNavigation() {
             navMenu.classList.remove('active');
             overlay.style.opacity = '0';
             overlay.style.visibility = 'hidden';
+            document.body.style.overflow = '';
             document.body.classList.remove('mobile-nav-open');
             
             // Close all dropdowns
@@ -101,11 +109,8 @@ function initializeNavigation() {
         }
 
         // Event listeners
-        hamburger.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMobileMenu();
-        });
+        hamburger.addEventListener('click', toggleMobileMenu);
+        hamburger.addEventListener('touchstart', toggleMobileMenu);
 
         overlay.addEventListener('click', closeMobileMenu);
 
@@ -123,6 +128,15 @@ function initializeNavigation() {
             if (window.innerWidth > 768) {
                 closeMobileMenu();
             }
+        });
+
+        // Close menu when clicking on nav links
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    closeMobileMenu();
+                }
+            });
         });
     }
 
