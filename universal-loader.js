@@ -1,5 +1,7 @@
-try {
-    // Universal Loader for OutSourceSU Components
+// Universal Loader for OutSourceSU Components
+(function() {
+    'use strict';
+    
     class UniversalLoader {
         constructor() {
             this.components = new Map();
@@ -340,6 +342,20 @@ try {
         new UniversalLoader();
     }
 
-} catch (error) {
-    console.error('Universal Loader error:', error);
-}
+// Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                new UniversalLoader();
+            } catch (error) {
+                console.error('Universal Loader initialization error:', error);
+            }
+        });
+    } else {
+        try {
+            new UniversalLoader();
+        } catch (error) {
+            console.error('Universal Loader error:', error);
+        }
+    }
+})();
