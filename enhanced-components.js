@@ -382,21 +382,8 @@ class EnhancedComponents {
     }
 
     addHighlightBoxes() {
-        const heroSections = document.querySelectorAll('.hero, .service-hero');
-        heroSections.forEach(hero => {
-            if (!hero.querySelector('.highlight-box')) {
-                const highlightBox = document.createElement('div');
-                highlightBox.className = 'highlight-box success';
-                highlightBox.innerHTML = `
-                    <strong>Free SEO Audit Available!</strong> Get a comprehensive analysis of your website's SEO performance worth £500 - completely free with no obligations.
-                `;
-                
-                const heroContent = hero.querySelector('.hero-content, .container');
-                if (heroContent) {
-                    heroContent.appendChild(highlightBox);
-                }
-            }
-        });
+        // Highlight boxes removed from hero sections as requested
+        // This method is now empty but kept for compatibility
     }
 
     addProgressIndicators() {
