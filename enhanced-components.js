@@ -1,42 +1,17 @@
-
-// Enhanced Components for Rich Content Display
 class EnhancedComponents {
     constructor() {
         this.init();
     }
 
     init() {
-        this.addComponentStyles();
+        this.addEnhancedStyles();
         this.enhanceExistingContent();
         this.addInteractiveElements();
     }
 
-    addComponentStyles() {
+    addEnhancedStyles() {
         const style = document.createElement('style');
         style.textContent = `
-            /* Enhanced Content Components */
-            .content-section {
-                padding: 60px 0;
-                position: relative;
-                overflow: hidden;
-            }
-
-            .content-section::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: linear-gradient(45deg, rgba(59, 130, 246, 0.02) 0%, rgba(16, 185, 129, 0.02) 100%);
-                z-index: 1;
-            }
-
-            .content-section .container {
-                position: relative;
-                z-index: 2;
-            }
-
             /* Enhanced List Styles */
             .enhanced-list {
                 list-style: none;
@@ -45,251 +20,131 @@ class EnhancedComponents {
             }
 
             .enhanced-list li {
-                position: relative;
                 padding: 12px 0 12px 40px;
-                margin-bottom: 8px;
-                border-radius: 8px;
+                position: relative;
+                border-bottom: 1px solid #f1f5f9;
                 transition: all 0.3s ease;
-                background: rgba(255, 255, 255, 0.5);
-                border-left: 3px solid transparent;
             }
 
-            .enhanced-list li:hover {
-                background: rgba(59, 130, 246, 0.05);
-                border-left: 3px solid #3b82f6;
-                transform: translateX(5px);
+            .enhanced-list li:last-child {
+                border-bottom: none;
             }
 
             .enhanced-list li::before {
-                content: '';
+                content: "✓";
                 position: absolute;
-                left: 12px;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 8px;
-                height: 8px;
-                background: #10b981;
-                border-radius: 50%;
-                box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-                animation: pulse 2s infinite;
-            }
-
-            .enhanced-list li.feature-item::before {
-                content: '✓';
-                width: auto;
-                height: auto;
-                background: none;
+                left: 0;
+                top: 12px;
                 color: #10b981;
                 font-weight: bold;
-                font-size: 14px;
-                box-shadow: none;
-                animation: none;
-            }
-
-            .enhanced-list li.benefit-item::before {
-                content: '★';
-                width: auto;
-                height: auto;
-                background: none;
-                color: #f59e0b;
-                font-weight: bold;
-                font-size: 14px;
-                box-shadow: none;
-                animation: none;
-            }
-
-            .enhanced-list li.process-item::before {
-                content: counter(process-counter);
-                counter-increment: process-counter;
-                width: 20px;
-                height: 20px;
-                background: #3b82f6;
-                color: white;
+                font-size: 16px;
+                width: 24px;
+                height: 24px;
                 border-radius: 50%;
+                background: rgba(16, 185, 129, 0.1);
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 font-size: 12px;
-                font-weight: bold;
-                box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
-                animation: none;
             }
 
-            .process-list {
-                counter-reset: process-counter;
+            .enhanced-list li:hover {
+                background: #f8fafc;
+                padding-left: 45px;
             }
 
             /* Info Cards */
             .info-card {
-                background: white;
-                border-radius: 16px;
-                padding: 30px;
-                margin: 20px 0;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+                background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
                 border: 1px solid #e2e8f0;
+                border-radius: 12px;
+                padding: 30px;
+                margin: 30px 0;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
                 transition: all 0.3s ease;
-                position: relative;
-                overflow: hidden;
-            }
-
-            .info-card::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 4px;
-                height: 100%;
-                background: linear-gradient(135deg, #3b82f6, #10b981);
-                transition: width 0.3s ease;
             }
 
             .info-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-            }
-
-            .info-card:hover::before {
-                width: 8px;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
             }
 
             .info-card h3 {
                 color: #1e293b;
                 margin-bottom: 15px;
-                font-size: 1.3rem;
-                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: 10px;
             }
 
             .info-card p {
                 color: #64748b;
-                line-height: 1.6;
-                margin-bottom: 15px;
+                line-height: 1.7;
+                margin-bottom: 20px;
             }
 
             /* Highlight Boxes */
             .highlight-box {
-                background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-                border: 2px solid #0ea5e9;
-                border-radius: 12px;
                 padding: 25px;
+                border-radius: 10px;
                 margin: 25px 0;
-                position: relative;
+                border-left: 4px solid #3b82f6;
+                background: white;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                transition: all 0.3s ease;
             }
 
-            .highlight-box::before {
-                content: 'ℹ️';
-                position: absolute;
-                top: -10px;
-                left: 20px;
-                background: #0ea5e9;
-                color: white;
-                width: 24px;
-                height: 24px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 14px;
+            .highlight-box:hover {
+                transform: translateX(5px);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             }
 
             .highlight-box.success {
-                background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-                border-color: #10b981;
-            }
-
-            .highlight-box.success::before {
-                content: '✓';
-                background: #10b981;
+                border-left-color: #10b981;
+                background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.02));
             }
 
             .highlight-box.warning {
-                background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-                border-color: #f59e0b;
+                border-left-color: #f59e0b;
+                background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), rgba(245, 158, 11, 0.02));
             }
 
-            .highlight-box.warning::before {
-                content: '⚠️';
-                background: #f59e0b;
-            }
-
-            /* Interactive Tabs */
-            .tabs-container {
-                margin: 30px 0;
-            }
-
-            .tabs-nav {
-                display: flex;
-                background: #f8fafc;
-                border-radius: 12px;
-                padding: 4px;
-                margin-bottom: 20px;
-                overflow-x: auto;
-            }
-
-            .tab-button {
-                flex: 1;
-                padding: 12px 20px;
-                background: transparent;
-                border: none;
-                border-radius: 8px;
-                font-weight: 600;
-                color: #64748b;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                white-space: nowrap;
-            }
-
-            .tab-button.active {
-                background: white;
-                color: #3b82f6;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            }
-
-            .tab-content {
-                display: none;
-                animation: fadeIn 0.3s ease;
-            }
-
-            .tab-content.active {
-                display: block;
+            .highlight-box.error {
+                border-left-color: #ef4444;
+                background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.02));
             }
 
             /* Progress Indicators */
             .progress-indicator {
-                background: #f1f5f9;
+                background: white;
                 border-radius: 12px;
-                padding: 20px;
-                margin: 20px 0;
+                padding: 25px;
+                margin: 25px 0;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            }
+
+            .progress-indicator h4 {
+                color: #1e293b;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
             }
 
             .progress-bar {
-                background: #e2e8f0;
-                border-radius: 8px;
+                width: 100%;
                 height: 8px;
+                background: #e2e8f0;
+                border-radius: 4px;
                 overflow: hidden;
-                margin: 10px 0;
+                margin: 8px 0;
             }
 
             .progress-fill {
-                background: linear-gradient(135deg, #3b82f6, #10b981);
                 height: 100%;
-                border-radius: 8px;
-                transition: width 2s ease;
-                animation: progressFill 2s ease;
-            }
-
-            /* Animations */
-            @keyframes pulse {
-                0%, 100% { transform: translateY(-50%) scale(1); }
-                50% { transform: translateY(-50%) scale(1.2); }
-            }
-
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(10px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-
-            @keyframes progressFill {
-                from { width: 0; }
+                background: linear-gradient(90deg, #3b82f6, #10b981);
+                border-radius: 4px;
+                transition: width 1s ease;
             }
 
             /* Responsive Design */
@@ -307,15 +162,6 @@ class EnhancedComponents {
                     padding: 20px;
                     margin: 20px 0;
                 }
-
-                .tabs-nav {
-                    flex-direction: column;
-                }
-
-                .tab-button {
-                    flex: none;
-                    text-align: left;
-                }
             }
         `;
         document.head.appendChild(style);
@@ -324,108 +170,72 @@ class EnhancedComponents {
     enhanceExistingContent() {
         // Enhance existing service lists
         this.enhanceServiceLists();
-        
+
         // Add info cards for important sections
         this.addInfoCards();
-        
+
         // Create highlight boxes for key information
         this.addHighlightBoxes();
-        
+
         // Add progress indicators
         this.addProgressIndicators();
     }
 
     enhanceServiceLists() {
-        const serviceLists = document.querySelectorAll('.service-item ul, .services-list ul');
+        const serviceLists = document.querySelectorAll('.service-card ul, .benefit-card ul');
         serviceLists.forEach(list => {
             if (!list.classList.contains('enhanced-list')) {
                 list.classList.add('enhanced-list');
-                const items = list.querySelectorAll('li');
-                items.forEach(item => {
-                    item.classList.add('feature-item');
-                });
-            }
-        });
-
-        // Enhance benefits lists
-        const benefitsLists = document.querySelectorAll('.benefit-card ul, .benefits-grid ul');
-        benefitsLists.forEach(list => {
-            if (!list.classList.contains('enhanced-list')) {
-                list.classList.add('enhanced-list');
-                const items = list.querySelectorAll('li');
-                items.forEach(item => {
-                    item.classList.add('benefit-item');
-                });
             }
         });
     }
 
     addInfoCards() {
-        const servicesSection = document.querySelector('#services .services-grid');
-        if (servicesSection && !document.querySelector('.services-info-card')) {
-            const infoCard = document.createElement('div');
-            infoCard.className = 'info-card services-info-card';
-            infoCard.innerHTML = `
-                <h3>🚀 Why Our SEO Services Stand Out</h3>
-                <p>Our comprehensive approach combines technical expertise with creative strategy to deliver exceptional results. We don't just improve rankings - we drive real business growth.</p>
-                <div class="enhanced-list">
-                    <ul>
-                        <li class="benefit-item">15+ years of proven industry experience</li>
-                        <li class="benefit-item">500+ successful UK businesses served</li>
-                        <li class="benefit-item">94% client satisfaction rate</li>
-                        <li class="benefit-item">No long-term contracts required</li>
-                    </ul>
-                </div>
-            `;
-            servicesSection.parentNode.insertBefore(infoCard, servicesSection);
-        }
+        const sections = document.querySelectorAll('.services-section, .about-section');
+        sections.forEach(section => {
+            if (!section.querySelector('.info-card')) {
+                const infoCard = document.createElement('div');
+                infoCard.className = 'info-card';
+                infoCard.innerHTML = `
+                    <h3>💡 Why This Matters</h3>
+                    <p>Our proven approach delivers measurable results that directly impact your business growth and success.</p>
+                `;
+                section.appendChild(infoCard);
+            }
+        });
     }
 
     addHighlightBoxes() {
-        // Highlight boxes removed from hero sections as requested
-        // This method is now empty but kept for compatibility
+        const ctaSections = document.querySelectorAll('.cta-section');
+        ctaSections.forEach(section => {
+            if (!section.querySelector('.highlight-box')) {
+                const highlightBox = document.createElement('div');
+                highlightBox.className = 'highlight-box success';
+                highlightBox.innerHTML = `
+                    <strong>Ready to Get Started?</strong> Join hundreds of successful UK businesses who trust our expertise to grow their online presence.
+                `;
+                section.querySelector('.container').appendChild(highlightBox);
+            }
+        });
     }
 
     addProgressIndicators() {
-        const statsSection = document.querySelector('.trust-section, .results-section');
-        if (statsSection && !document.querySelector('.progress-indicator')) {
-            const progressIndicator = document.createElement('div');
-            progressIndicator.className = 'progress-indicator';
-            progressIndicator.innerHTML = `
-                <h4>Our Success Metrics</h4>
-                <div style="margin: 15px 0;">
-                    <span>Client Satisfaction</span>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 94%;"></div>
-                    </div>
-                    <small>94% satisfaction rate</small>
-                </div>
-                <div style="margin: 15px 0;">
-                    <span>Average Traffic Increase</span>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 85%;"></div>
-                    </div>
-                    <small>425% average improvement</small>
-                </div>
-                <div style="margin: 15px 0;">
-                    <span>Success Rate</span>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 95%;"></div>
-                    </div>
-                    <small>95% of clients achieve page 1 rankings</small>
-                </div>
-            `;
-            
-            statsSection.appendChild(progressIndicator);
-        }
+        // This method can be called to add progress indicators where needed
+        console.log('Progress indicators ready to be added');
     }
 
     addInteractiveElements() {
-        // Add interactive tabs for service details
-        this.addServiceTabs();
-        
-        // Add collapsible content sections
-        this.addCollapsibleSections();
+        // Add hover effects and animations
+        const cards = document.querySelectorAll('.info-card, .highlight-box');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
     }
 
     addServiceTabs() {
@@ -546,9 +356,22 @@ class EnhancedComponents {
             });
         });
     }
+
+    
+    addInteractiveElements() {
+        // Add interactive tabs for service details
+        this.addServiceTabs();
+        
+        // Add collapsible content sections
+        this.addCollapsibleSections();
+    }
 }
 
-// Initialize enhanced components when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+// Auto-initialize
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        new EnhancedComponents();
+    });
+} else {
     new EnhancedComponents();
-});
+}
