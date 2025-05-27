@@ -1,4 +1,3 @@
-
 try {
     // Universal Loader for OutSourceSU Components
     class UniversalLoader {
@@ -104,13 +103,80 @@ try {
                 },
 
                 addToPage: function() {
-                    const pageTitle = document.title.replace(' | OutSourceSU', '');
+                    const pageTitle = document.title.replace(' | OutSourceSU', '').replace(' | The SEO Works', '');
                     const breadcrumb = this.generateBreadcrumb(pageTitle);
-                    
+
                     const targetElement = document.querySelector('.hero') || document.querySelector('main') || document.body;
                     if (targetElement) {
                         targetElement.insertBefore(breadcrumb, targetElement.firstChild);
                     }
+
+                    // Enhance service page heroes
+                    this.enhanceServiceHeroes();
+                },
+
+                enhanceServiceHeroes: function() {
+                    const serviceHeroes = document.querySelectorAll('.service-hero');
+                    serviceHeroes.forEach(hero => {
+                        if (!hero.classList.contains('enhanced')) {
+                            hero.classList.add('enhanced');
+
+                            // Check if hero needs restructuring
+                            const heroContent = hero.querySelector('.hero-content');
+                            if (heroContent && !heroContent.querySelector('.hero-container')) {
+                                this.restructureServiceHero(hero);
+                            }
+                        }
+                    });
+                },
+
+                restructureServiceHero: function(hero) {
+                    const content = hero.querySelector('.hero-content');
+                    if (!content) return;
+
+                    // Add hero-container wrapper if missing
+                    const container = document.createElement('div');
+                    container.className = 'hero-container';
+                    container.appendChild(content);
+                    hero.appendChild(container);
+
+                    // Add professional styling elements
+                    const heroText = content.querySelector('.hero-text');
+                    if (heroText && !heroText.querySelector('.hero-badge')) {
+                        const h1 = heroText.querySelector('h1');
+                        if (h1) {
+                            const serviceType = h1.textContent.toLowerCase();
+                            const icon = this.getServiceIcon(serviceType);
+
+                            const badge = document.createElement('div');
+                            badge.className = 'hero-badge';
+                            badge.innerHTML = `<i class="${icon}"></i> Professional ${h1.textContent}`;
+
+                            heroText.insertBefore(badge, h1);
+                        }
+                    }
+                },
+
+                getServiceIcon: function(serviceType) {
+                    const icons = {
+                        'construction': 'fas fa-hard-hat',
+                        'roofer': 'fas fa-home',
+                        'roofing': 'fas fa-home', 
+                        'law': 'fas fa-balance-scale',
+                        'legal': 'fas fa-balance-scale',
+                        'financial': 'fas fa-chart-line',
+                        'accountant': 'fas fa-calculator',
+                        'dental': 'fas fa-tooth',
+                        'healthcare': 'fas fa-heartbeat',
+                        'real estate': 'fas fa-building'
+                    };
+
+                    for (const [key, icon] of Object.entries(icons)) {
+                        if (serviceType.includes(key)) {
+                            return icon;
+                        }
+                    }
+                    return 'fas fa-star';
                 }
             };
         }
@@ -144,7 +210,7 @@ try {
 
                 render: function(container, category = 'seo') {
                     const faqData = this.data[category] || this.data.seo;
-                    
+
                     const faqHTML = `
                         <div class="faq-section">
                             <h2>Frequently Asked Questions</h2>
@@ -180,28 +246,28 @@ try {
 
                 initializeInteractions: function(container) {
                     const faqItems = container.querySelectorAll('.faq-item');
-                    
+
                     faqItems.forEach(item => {
                         const question = item.querySelector('.faq-question');
                         const answer = item.querySelector('.faq-answer');
                         const icon = question.querySelector('i');
-                        
+
                         question.addEventListener('click', () => {
                             const isOpen = question.getAttribute('aria-expanded') === 'true';
-                            
+
                             // Close all other FAQ items
                             faqItems.forEach(otherItem => {
                                 if (otherItem !== item) {
                                     const otherQuestion = otherItem.querySelector('.faq-question');
                                     const otherAnswer = otherItem.querySelector('.faq-answer');
                                     const otherIcon = otherQuestion.querySelector('i');
-                                    
+
                                     otherQuestion.setAttribute('aria-expanded', 'false');
                                     otherAnswer.style.maxHeight = '0';
                                     otherIcon.className = 'fas fa-plus';
                                 }
                             });
-                            
+
                             // Toggle current item
                             if (!isOpen) {
                                 question.setAttribute('aria-expanded', 'true');

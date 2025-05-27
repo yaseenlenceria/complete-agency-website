@@ -538,48 +538,6 @@ p {
     line-height: 1.4;
 }
 
-.stat-item {
-    text-align: center;
-    animation: bounceIn 0.8s ease-out both;
-}
-
-.stat-number {
-    display: block;
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
-    font-weight: 800;
-    background: linear-gradient(135deg, #ffd700, #ff6b6b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-}
-
-@keyframes bounceIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.3) translateY(50px);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.05) translateY(-10px);
-    }
-    70% {
-        transform: scale(0.9) translateY(0);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-.stat-label {
-    font-size: 0.9rem;
-    opacity: 0.9;
-    margin-top: 0.25rem;
-    color: rgba(255, 255, 255, 0.9);
-}
-
 .hero-buttons {
     display: flex;
     gap: 1rem;
@@ -588,9 +546,24 @@ p {
 }
 
 .hero-guarantees {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.hero-guarantees span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin: 1rem 0 0 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+.hero-guarantees i {
+    color: var(--accent-color);
+    font-size: 0.9rem;
 }
 
 .hero-visual {
@@ -607,15 +580,6 @@ p {
     flex-direction: column;
     align-items: center;
     margin-bottom: 2rem;
-}
-
-.hero-value-amount {
-    font-size: 3rem;
-    font-weight: 800;
-    color: var(--secondary-color);
-    line-height: 1;
-    text-decoration: line-through;
-    opacity: 0.7;
 }
 
 .hero-value-text {
@@ -1471,35 +1435,6 @@ border-radius: 16px;
 .industry-link:hover {
     color: var(--primary-dark);
     transform: translateX(5px);
-}
-
-/* Hero Stats */
-.hero-stats {
-    display: flex;
-    gap: 2rem;
-    margin: 2rem 0;
-    justify-content: flex-start;
-}
-
-.hero-guarantees {
-    display: flex;
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.hero-guarantees span {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.9);
-    font-weight: 500;
-}
-
-.hero-guarantees i {
-    color: var(--accent-color);
-    font-size: 0.9rem;
 }
 
 /* Large Button Variant */
