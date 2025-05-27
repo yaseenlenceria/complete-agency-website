@@ -1,35 +1,9 @@
-// DOM ready initialization
+// Navigation and Mobile Menu Functionality
 document.addEventListener('DOMContentLoaded', function() {
     initializeNavigation();
-    initializeAnimations();
-    initializeCounters();
-    initializeHeroAnimations();
+    initializeMobileMenu();
+    initializeScrollAnimations();
 });
-
-function initializeHeroAnimations() {
-    // Add entrance animations to hero elements
-    const heroElements = document.querySelectorAll('.hero-badge, .hero-content h1, .hero-subtitle, .feature-item, .hero-buttons');
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, index * 200);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    heroElements.forEach(el => {
-        if (el && !el.style.animation) {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-            observer.observe(el);
-        }
-    });
-}
 
 function initializeNavigation() {
     // Navigation scroll effect
@@ -42,143 +16,6 @@ function initializeNavigation() {
                 navbar.classList.remove('scrolled');
             }
         }
-    });
-
-    // Mobile hamburger menu functionality
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-
-    if (hamburger && navMenu) {
-        // Create mobile overlay
-        let overlay = document.querySelector('.mobile-nav-overlay');
-        if (!overlay) {
-            overlay = document.createElement('div');
-            overlay.className = 'mobile-nav-overlay';
-            overlay.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.5);
-                z-index: 1000;
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-                backdrop-filter: blur(2px);
-            `;
-            document.body.appendChild(overlay);
-        }
-
-        function toggleMobileMenu(event) {
-            if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            
-            const isActive = navMenu.classList.contains('active');
-            
-            if (isActive) {
-                closeMobileMenu();
-            } else {
-                openMobileMenu();
-            }
-        }
-
-        function openMobileMenu() {
-            hamburger.classList.add('active');
-            navMenu.classList.add('active');
-            overlay.style.opacity = '1';
-            overlay.style.visibility = 'visible';
-            document.body.style.overflow = 'hidden';
-            document.body.classList.add('mobile-nav-open');
-        }
-
-        function closeMobileMenu() {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-            overlay.style.opacity = '0';
-            overlay.style.visibility = 'hidden';
-            document.body.style.overflow = '';
-            document.body.classList.remove('mobile-nav-open');
-            
-            // Close all dropdowns
-            document.querySelectorAll('.dropdown').forEach(dropdown => {
-                dropdown.classList.remove('active');
-            });
-        }
-
-        // Event listeners
-        hamburger.addEventListener('click', toggleMobileMenu);
-        hamburger.addEventListener('touchstart', toggleMobileMenu);
-
-        overlay.addEventListener('click', closeMobileMenu);
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            if (navMenu.classList.contains('active') && 
-                !navMenu.contains(e.target) && 
-                !hamburger.contains(e.target)) {
-                closeMobileMenu();
-            }
-        });
-
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-                closeMobileMenu();
-            }
-        });
-
-        // Close menu when clicking on nav links
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    closeMobileMenu();
-                }
-            });
-        });
-    }
-
-    // Mobile dropdown functionality
-    document.querySelectorAll('.dropdown > a').forEach(function(dropdownToggle) {
-        dropdownToggle.addEventListener('click', function(e) {
-            if (window.innerWidth <= 768) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const dropdown = this.parentElement;
-                const isActive = dropdown.classList.contains('active');
-                
-                // Close all other dropdowns
-                document.querySelectorAll('.dropdown').forEach(function(otherDropdown) {
-                    if (otherDropdown !== dropdown) {
-                        otherDropdown.classList.remove('active');
-                    }
-                });
-                
-                // Toggle current dropdown
-                dropdown.classList.toggle('active');
-            }
-        });
-    });
-
-    // Close mobile menu when clicking on regular nav links
-    document.querySelectorAll('.nav-menu > li > a:not(.dropdown > a)').forEach(function(link) {
-        link.addEventListener('click', function() {
-            if (window.innerWidth <= 768) {
-                const hamburger = document.querySelector('.hamburger');
-                const navMenu = document.querySelector('.nav-menu');
-                
-                if (hamburger && navMenu) {
-                    hamburger.classList.remove('active');
-                    navMenu.classList.remove('active');
-                    document.querySelector('.mobile-nav-overlay').style.opacity = '0';
-                    document.querySelector('.mobile-nav-overlay').style.visibility = 'hidden';
-                    document.body.classList.remove('mobile-nav-open');
-                }
-            }
-        });
     });
 
     // Smooth scrolling for anchor links
@@ -203,6 +40,208 @@ function initializeNavigation() {
                 }
             }
         });
+    });
+}
+
+function initializeMobileMenu() {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+
+    if (!hamburger || !navMenu) return;
+
+    // Create mobile overlay if it doesn't exist
+    let overlay = document.querySelector('.mobile-nav-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'mobile-nav-overlay';
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(2px);
+        `;
+        document.body.appendChild(overlay);
+    }
+
+    function toggleMobileMenu(event) {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        const isActive = navMenu.classList.contains('active');
+
+        if (isActive) {
+            closeMobileMenu();
+        } else {
+            openMobileMenu();
+        }
+    }
+
+    function openMobileMenu() {
+        hamburger.classList.add('active');
+        navMenu.classList.add('active');
+        overlay.style.opacity = '1';
+        overlay.style.visibility = 'visible';
+        document.body.style.overflow = 'hidden';
+        document.body.classList.add('mobile-nav-open');
+    }
+
+    function closeMobileMenu() {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        overlay.style.opacity = '0';
+        overlay.style.visibility = 'hidden';
+        document.body.style.overflow = '';
+        document.body.classList.remove('mobile-nav-open');
+
+        // Close all dropdowns
+        document.querySelectorAll('.dropdown').forEach(dropdown => {
+            dropdown.classList.remove('active');
+        });
+    }
+
+    // Event listeners
+    hamburger.addEventListener('click', toggleMobileMenu);
+    hamburger.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        toggleMobileMenu();
+    });
+
+    overlay.addEventListener('click', closeMobileMenu);
+
+    // Handle dropdown toggles on mobile
+    document.querySelectorAll('.dropdown > a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const dropdown = this.parentElement;
+                const isActive = dropdown.classList.contains('active');
+
+                // Close all other dropdowns
+                document.querySelectorAll('.dropdown').forEach(function(otherDropdown) {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            }
+        });
+    });
+
+    // Close menu when clicking on regular nav links
+    document.querySelectorAll('.nav-menu > li > a:not(.dropdown > a)').forEach(function(link) {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768) {
+                closeMobileMenu();
+            }
+        });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (navMenu.classList.contains('active') && 
+            !navMenu.contains(e.target) && 
+            !hamburger.contains(e.target)) {
+            closeMobileMenu();
+        }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            closeMobileMenu();
+        }
+    });
+}
+
+function initializeScrollAnimations() {
+    // Add scroll animations for elements
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements that should animate on scroll
+    document.querySelectorAll('.service-card, .industry-card, .about-visual').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+}
+
+// FAQ Toggle Functionality
+function initializeFAQ() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+
+        if (question && answer) {
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+
+                // Close all other FAQ items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        }
+    });
+}
+
+// Initialize FAQ when DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeFAQ);
+
+function initializeHeroAnimations() {
+    // Add entrance animations to hero elements
+    const heroElements = document.querySelectorAll('.hero-badge, .hero-content h1, .hero-subtitle, .feature-item, .hero-buttons');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 200);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    heroElements.forEach(el => {
+        if (el && !el.style.animation) {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(el);
+        }
     });
 }
 
@@ -443,44 +482,54 @@ function initializePerformanceGraph() {
     }, 500);
 }
 
-function initializeFAQ() {
-    // Clean FAQ initialization
-    const faqItems = document.querySelectorAll('.faq-item');
+function initializeFAQComponent() {
+    if (typeof FAQComponent !== 'undefined') {
+        let faqContainer = document.getElementById('faq-section');
 
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        const answer = item.querySelector('.faq-answer');
+        // If FAQ section doesn't exist, create it
+        if (!faqContainer) {
+            faqContainer = document.createElement('div');
+            faqContainer.id = 'faq-section';
 
-        if (question && answer) {
-            question.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
+            // Insert before footer
+            const footer = document.querySelector('.footer');
+            if (footer && footer.parentNode) {
+                footer.parentNode.insertBefore(faqContainer, footer);
+            } else {
+                // If no footer, append to body
+                document.body.appendChild(faqContainer);
+            }
+        }
 
-                // Close all FAQ items
-                faqItems.forEach(otherItem => {
-                    otherItem.classList.remove('active');
-                    const otherAnswer = otherItem.querySelector('.faq-answer');
-                    if (otherAnswer) {
-                        otherAnswer.style.maxHeight = '0';
-                    }
-                });
+        if (faqContainer) {
+            try {
+                const faq = new FAQComponent();
+                // Determine category based on page
+                let category = 'general';
+                const pathname = window.location.pathname.toLowerCase();
 
-                // Toggle current item
-                if (!isActive) {
-                    item.classList.add('active');
-                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                if (pathname.includes('construction') || 
+                    pathname.includes('roofing') || 
+                    pathname.includes('plumber') ||
+                    pathname.includes('architect')) {
+                    category = 'industries';
+                } else if (pathname.includes('cities') || 
+                          pathname.includes('manchester') || 
+                          pathname.includes('birmingham') ||
+                          pathname.includes('london')) {
+                    category = 'local';
+                } else if (pathname.includes('technical') || 
+                          pathname.includes('development') ||
+                          pathname.includes('website')) {
+                    category = 'technical';
                 }
-            });
-        }
-    });
-}
 
-// Cities Page Manager Integration
-if (typeof CitiesPageManager !== 'undefined') {
-    document.addEventListener('DOMContentLoaded', function() {
-        if (window.location.pathname.includes('cities-pages.html')) {
-            window.citiesPageManager = new CitiesPageManager();
+                faq.init(category);
+            } catch (error) {
+                console.error('Error initializing FAQ component:', error);
+            }
         }
-    });
+    }
 }
 
 function handleFormSubmit(event) {
@@ -587,57 +636,6 @@ function initializeReviews() {
         if (reviewsSection) {
             const reviews = new ReviewsComponent();
             reviews.init();
-        }
-    }
-}
-
-// Initialize FAQ Component on all pages
-function initializeFAQComponent() {
-    if (typeof FAQComponent !== 'undefined') {
-        let faqContainer = document.getElementById('faq-section');
-
-        // If FAQ section doesn't exist, create it
-        if (!faqContainer) {
-            faqContainer = document.createElement('div');
-            faqContainer.id = 'faq-section';
-
-            // Insert before footer
-            const footer = document.querySelector('.footer');
-            if (footer && footer.parentNode) {
-                footer.parentNode.insertBefore(faqContainer, footer);
-            } else {
-                // If no footer, append to body
-                document.body.appendChild(faqContainer);
-            }
-        }
-
-        if (faqContainer) {
-            try {
-                const faq = new FAQComponent();
-                // Determine category based on page
-                let category = 'general';
-                const pathname = window.location.pathname.toLowerCase();
-
-                if (pathname.includes('construction') || 
-                    pathname.includes('roofing') || 
-                    pathname.includes('plumber') ||
-                    pathname.includes('architect')) {
-                    category = 'industries';
-                } else if (pathname.includes('cities') || 
-                          pathname.includes('manchester') || 
-                          pathname.includes('birmingham') ||
-                          pathname.includes('london')) {
-                    category = 'local';
-                } else if (pathname.includes('technical') || 
-                          pathname.includes('development') ||
-                          pathname.includes('website')) {
-                    category = 'technical';
-                }
-
-                faq.init(category);
-            } catch (error) {
-                console.error('Error initializing FAQ component:', error);
-            }
         }
     }
 }
@@ -790,295 +788,6 @@ function initializeGlobalNavigation() {
 
         // Reinitialize navigation functionality
         initializeNavigation();
-    }
-}
-
-// FAQ Toggle Functionality
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize FAQ functionality
-    initializeFAQ();
-
-    // Initialize scroll animations
-    initializeScrollAnimations();
-
-    // Initialize navbar scroll effect
-    initializeNavbar();
-
-    // Initialize mobile menu
-    initializeMobileMenu();
-});
-
-function initializeFAQ() {
-    const faqItems = document.querySelectorAll('.faq-item');
-
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        const answer = item.querySelector('.faq-answer');
-
-        if (question && answer) {
-            question.addEventListener('click', function() {
-                const isActive = item.classList.contains('active');
-
-                // Close all other FAQ items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
-                        const otherAnswer = otherItem.querySelector('.faq-answer');
-                        if (otherAnswer) {
-                            otherAnswer.style.maxHeight = '0';
-                        }
-                    }
-                });
-
-                // Toggle current item
-                if (isActive) {
-                    item.classList.remove('active');
-                    answer.style.maxHeight = '0';
-                } else {
-                    item.classList.add('active');
-                    answer.style.maxHeight = answer.scrollHeight + 'px';
-                }
-
-                console.log('FAQ clicked:', question.textContent.trim());
-            });
-        }
-    });
-}
-
-function initializeScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    // Observe all cards and sections
-    const elementsToAnimate = document.querySelectorAll('.service-card, .why-choose-item, .industry-card, .section-header');
-    elementsToAnimate.forEach(element => {
-        observer.observe(element);
-    });
-}
-
-function initializeNavbar() {
-    const navbar = document.querySelector('.navbar');
-    if (navbar) {
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-    }
-}
-
-function initializeMobileMenu() {
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-    const dropdowns = document.querySelectorAll('.dropdown');
-
-    if (hamburger && navMenu) {
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            document.body.classList.toggle('nav-open');
-        });
-    }
-
-    // Handle dropdown menus on mobile
-    dropdowns.forEach(dropdown => {
-        const dropdownLink = dropdown.querySelector('a');
-        if (dropdownLink) {
-            dropdownLink.addEventListener('click', function(e) {
-                if (window.innerWidth <= 768) {
-                    e.preventDefault();
-                    dropdown.classList.toggle('active');
-                }
-            });
-        }
-    });
-}
-
-// Mobile Navigation
-document.addEventListener('DOMContentLoaded', function() {
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-
-    if (hamburger && navMenu) {
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
-    }
-
-    // Close menu when clicking on a link
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-        link.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-        });
-    });
-
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            if (href && href !== '#') {
-                e.preventDefault();
-                const target = document.querySelector(href);
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            }
-        });
-    });
-
-    // Stats Animation
-    const observerOptions = {
-        threshold: 0.5,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const statNumbers = entry.target.querySelectorAll('.stat-number');
-                statNumbers.forEach(stat => {
-                    animateNumber(stat);
-                });
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    // Observe stats sections
-    const statsContainers = document.querySelectorAll('.hero-stats, .stats-grid, .success-metrics');
-    statsContainers.forEach(container => {
-        if (container) {
-            observer.observe(container);
-        }
-    });
-
-    // Initialize FAQ
-    initializeFAQComponent();
-
-    // Add smooth transitions
-    addSmoothTransitions();
-});
-
-function animateNumber(element) {
-    if (!element) return;
-
-    const text = element.textContent;
-    const hasPercent = text.includes('%');
-    const hasPlus = text.includes('+');
-    const number = parseFloat(text.replace(/[^\d.]/g, ''));
-
-    if (isNaN(number)) return;
-
-    element.textContent = '0';
-
-    const duration = 3000; // Slower animation
-    const steps = 120; // More steps for smoother animation
-    const increment = number / steps;
-    const stepDuration = duration / steps;
-
-    let current = 0;
-
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= number) {
-            current = number;
-            clearInterval(timer);
-        }
-
-        let displayValue = Math.floor(current).toString();
-        if (hasPlus) displayValue = '+' + displayValue;
-        if (hasPercent) displayValue += '%';
-
-        element.textContent = displayValue;
-    }, stepDuration);
-}
-
-function initializeFAQComponent() {
-    if (typeof FAQComponent !== 'undefined') {
-        let faqContainer = document.getElementById('faq-section');
-
-        // If FAQ section doesn't exist, create it
-        if (!faqContainer) {
-            faqContainer = document.createElement('div');
-            faqContainer.id = 'faq-section';
-
-            // Insert before footer
-            const footer = document.querySelector('.footer');
-            if (footer && footer.parentNode) {
-                footer.parentNode.insertBefore(faqContainer, footer);
-            } else {
-                // If no footer, append to body
-                document.body.appendChild(faqContainer);
-            }
-        }
-
-        if (faqContainer) {
-            try {
-                const faq = new FAQComponent();
-                // Determine category based on page
-                let category = 'general';
-                const pathname = window.location.pathname.toLowerCase();
-
-                if (pathname.includes('construction')) category = 'construction';
-                else if (pathname.includes('law-firm') || pathname.includes('legal')) category = 'legal';
-                else if (pathname.includes('healthcare') || pathname.includes('dentist')) category = 'healthcare';
-                else if (pathname.includes('real-estate')) category = 'real-estate';
-                else if (pathname.includes('plumber')) category = 'plumbing';
-                else if (pathname.includes('architect')) category = 'architecture';
-                else if (pathname.includes('roofer') || pathname.includes('roofing')) category = 'roofing';
-                else if (pathname.includes('about')) category = 'about';
-
-                faq.render(faqContainer, category);
-            } catch (error) {
-                console.error('Error initializing FAQ component:', error);
-            }
-        }
-    }
-}
-
-// Global function for FAQ toggle
-function toggleFAQ(index) {
-    const faqAnswer = document.getElementById(`faq-${index}`);
-    const faqQuestion = faqAnswer ? faqAnswer.previousElementSibling : null;
-
-    if (faqAnswer && faqQuestion) {
-        const isOpen = faqAnswer.style.maxHeight && faqAnswer.style.maxHeight !== '0px';
-
-        // Close all other FAQs first
-        document.querySelectorAll('.faq-answer').forEach(answer => {
-            if (answer !== faqAnswer) {
-                answer.style.maxHeight = '0px';
-                const question = answer.previousElementSibling;
-                if (question) question.classList.remove('active');
-            }
-        });
-
-        if (isOpen) {
-            faqAnswer.style.maxHeight = '0px';
-            faqQuestion.classList.remove('active');
-        } else {
-            faqAnswer.style.maxHeight = faqAnswer.scrollHeight + 'px';
-            faqQuestion.classList.add('active');
-        }
     }
 }
 
