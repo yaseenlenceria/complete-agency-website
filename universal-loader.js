@@ -1,78 +1,103 @@
 // Universal Loader for OutSourceSU Components
 class UniversalLoader {
     constructor() {
-        this.components = new Map();
         this.loadedComponents = new Set();
-        this.init();
-    }
-
-    init() {
+        this.components = new Map();
         this.registerComponents();
-        this.loadComponents();
-        this.initializePageSpecificComponents();
-        this.setupGlobalEventListeners();
+        this.init();
     }
 
     registerComponents() {
         // Register all available components
-        this.components.set('GoogleSEOOptimizer', () => {
-            if (typeof GoogleSEOOptimizer !== 'undefined') {
-                return new GoogleSEOOptimizer();
-            }
-        });
-
-        this.components.set('BreadcrumbComponent', () => {
+        this.components.set('breadcrumb', () => {
             if (typeof BreadcrumbComponent !== 'undefined') {
                 return new BreadcrumbComponent();
             }
         });
 
-        this.components.set('FAQComponent', () => {
+        this.components.set('faq', () => {
             if (typeof FAQComponent !== 'undefined') {
-                const faq = new FAQComponent();
-                this.initializeFAQForPage(faq);
-                return faq;
+                return new FAQComponent();
             }
         });
 
-        this.components.set('ReviewsComponent', () => {
+        this.components.set('reviews', () => {
             if (typeof ReviewsComponent !== 'undefined') {
-                const reviews = new ReviewsComponent();
-                reviews.init();
-                return reviews;
+                return new ReviewsComponent();
             }
         });
 
-        this.components.set('UKRankingCharts', () => {
+        this.components.set('ukRanking', () => {
             if (typeof UKRankingCharts !== 'undefined') {
-                const charts = new UKRankingCharts();
-                charts.init();
-                return charts;
+                return new UKRankingCharts();
             }
         });
 
-        this.components.set('EnhancedComponents', () => {
+        this.components.set('enhanced', () => {
             if (typeof EnhancedComponents !== 'undefined') {
-                const enhanced = new EnhancedComponents();
-                enhanced.init();
-                return enhanced;
+                return new EnhancedComponents();
+            }
+        });
+
+        this.components.set('freeAudit', () => {
+            if (typeof FreeAuditSection !== 'undefined') {
+                return new FreeAuditSection();
             }
         });
     }
 
+    init() {
+        // Load components after DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => this.loadComponents());
+        } else {
+            this.loadComponents();
+        }
+    }
+
     loadComponents() {
-        // Load all registered components
-        this.components.forEach((loader, componentName) => {
-            try {
-                const component = loader();
-                if (component) {
-                    this.loadedComponents.add(componentName);
-                    console.log(`✓ ${componentName} loaded successfully`);
+        // Load components in order
+        const componentOrder = ['breadcrumb', 'faq', 'reviews', 'ukRanking', 'enhanced', 'freeAudit'];
+
+        componentOrder.forEach(componentName => {
+            if (this.components.has(componentName) && !this.loadedComponents.has(componentName)) {
+                try {
+                    const component = this.components.get(componentName)();
+                    if (component) {
+                        this.loadedComponents.add(componentName);
+                        console.log(`✓ ${componentName.charAt(0).toUpperCase() + componentName.slice(1)}Component loaded successfully`);
+                    }
+                } catch (error) {
+                    console.warn(`Failed to load ${componentName}:`, error);
                 }
-            } catch (error) {
-                console.warn(`⚠ Failed to load ${componentName}:`, error);
             }
         });
+
+        console.log('🚀 Universal Loader initialized');
+    }
+
+    // Public methods for manual component loading
+    loadComponent(componentName) {
+        if (this.components.has(componentName) && !this.loadedComponents.has(componentName)) {
+            try {
+                const component = this.components.get(componentName)();
+                if (component) {
+                    this.loadedComponents.add(componentName);
+                    return component;
+                }
+            } catch (error) {
+                console.warn(`Failed to manually load ${componentName}:`, error);
+            }
+        }
+        return null;
+    }
+
+    isComponentLoaded(componentName) {
+        return this.loadedComponents.has(componentName);
+    }
+
+    getLoadedComponents() {
+        return Array.from(this.loadedComponents);
     }
 
     initializeFAQForPage(faqComponent) {
@@ -253,77 +278,14 @@ class UniversalLoader {
             }
         }
     }
-
-    // Public methods for manual component loading
-    loadComponent(componentName) {
-        if (this.components.has(componentName) && !this.loadedComponents.has(componentName)) {
-            try {
-                const component = this.components.get(componentName)();
-                if (component) {
-                    this.loadedComponents.add(componentName);
-                    return component;
-                }
-            } catch (error) {
-                console.warn(`Failed to manually load ${componentName}:`, error);
-            }
-        }
-        return null;
-    }
-
-    isComponentLoaded(componentName) {
-        return this.loadedComponents.has(componentName);
-    }
-
-    getLoadedComponents() {
-        return Array.from(this.loadedComponents);
-    }
 }
 
-// Add Free SEO Audit Banner
-function addFreeAuditBanner() {
-    // Check if banner already exists
-    if (document.querySelector('.free-audit-banner')) {
-        return;
-    }
-
-    const bannerHTML = `
-        <div class="free-audit-banner">
-            <div class="container">
-                <div class="audit-text">
-                    <strong>Free SEO Audit Available!</strong> Get a comprehensive analysis of your website's SEO performance worth <span class="audit-highlight">£500</span> - completely free with no obligations.
-                </div>
-                <a href="contact.html" class="audit-cta">
-                    <i class="fas fa-chart-line"></i>
-                    Get Your Free Audit
-                </a>
-            </div>
-        </div>
-    `;
-
-    // Insert banner after navigation
-    const nav = document.querySelector('.navbar');
-    if (nav) {
-        nav.insertAdjacentHTML('afterend', bannerHTML);
-    }
-}
-
-// Initialize Universal Loader when DOM is ready
+// Initialize Universal Loader
 document.addEventListener('DOMContentLoaded', function() {
-    window.universalLoader = new UniversalLoader();
-    console.log('🚀 Universal Loader initialized');
-
-    // Add free audit banner to all pages
-    addFreeAuditBanner();
-
-    // Load all components
-    loadComponent(BreadcrumbComponent, 'BreadcrumbComponent');
-    loadComponent(FAQComponent, 'FAQComponent');
-    loadComponent(ReviewsComponent, 'ReviewsComponent');
-    loadComponent(UKRankingCharts, 'UKRankingCharts');
-    loadComponent(EnhancedComponents, 'EnhancedComponents');
+    new UniversalLoader();
 });
 
-// Export for use
+// Export for global access
 if (typeof window !== 'undefined') {
     window.UniversalLoader = UniversalLoader;
 }
