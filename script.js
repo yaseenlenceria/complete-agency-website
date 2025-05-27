@@ -1010,3 +1010,10 @@ function addSmoothTransitions() {
     `;
     document.head.appendChild(style);
 }
+
+// Initialize breadcrumbs when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof BreadcrumbComponent !== 'undefined') {
+        new BreadcrumbComponent();
+    }
+});

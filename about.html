@@ -341,21 +341,40 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Load components first -->
+    <script src="faq-component.js"></script>
     <script src="reviews-component.js"></script>
-    <script src="uk-ranking-charts.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const reviews = new ReviewsComponent();
-            reviews.init();
-
-            const charts = new UKRankingCharts();
-            charts.init();
-        });
-    </script>
     <script src="breadcrumb-component.js"></script>
     <script src="enhanced-components.js"></script>
-    <script src="faq-component.js"></script>
+    <script src="uk-ranking-charts.js"></script>
     <script src="seo-optimizer.js"></script>
+    <script src="universal-loader.js"></script>
+    
+    <!-- Load main script last -->
+    <script src="script.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // Initialize components with error handling
+                if (typeof ReviewsComponent !== 'undefined') {
+                    const reviews = new ReviewsComponent();
+                    reviews.init();
+                }
+
+                if (typeof UKRankingCharts !== 'undefined') {
+                    const charts = new UKRankingCharts();
+                    charts.init();
+                }
+
+                if (typeof FAQComponent !== 'undefined') {
+                    const faq = new FAQComponent();
+                    faq.init('about');
+                }
+            } catch (error) {
+                console.warn('Component initialization error:', error);
+            }
+        });
+    </script>
 </body>
 </html>

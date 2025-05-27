@@ -118,10 +118,10 @@
                     <i class="fas fa-trophy"></i>
                     UK's #1 Rated SEO Agency 2025
                 </div>
-                <h1 class="fade-in-up" data-delay="200">UK's #1 Rated SEO Agency & Website Development Agency for UK Industries</h1>
-                <p class="hero-subtitle fade-in-up" data-delay="400">OutSourceSU is the UK's leading SEO and Website Development Agency, delivering exceptional results across all UK industries. With 15+ years of experience and 500+ successful businesses, we help companies dominate their markets from Manchester to London, Birmingham to Edinburgh with cutting-edge SEO and professional web development services.</p>
+                <h1 class="scroll-animate" data-delay="200">UK's #1 Rated SEO Agency & Website Development Agency for UK Industries</h1>
+                <p class="hero-subtitle scroll-animate" data-delay="400">OutSourceSU is the UK's leading SEO and Website Development Agency, delivering exceptional results across all UK industries. With 15+ years of experience and 500+ successful businesses, we help companies dominate their markets from Manchester to London, Birmingham to Edinburgh with cutting-edge SEO and professional web development services.</p>
 
-                <div class="hero-stats fade-in-up" data-delay="600">
+                <div class="hero-stats scroll-animate" data-delay="600">
                     <div class="stat-item">
                         <span class="stat-number number-counter" data-count="500">500+</span>
                         <span class="stat-label">Happy Clients</span>
@@ -136,7 +136,7 @@
                     </div>
                 </div>
 
-                <div class="hero-buttons fade-in-up" data-delay="800">
+                <div class="hero-buttons scroll-animate" data-delay="800">
                     <a href="contact.html" class="btn-primary">
                         <i class="fas fa-rocket"></i>
                         Get FREE SEO Audit (Worth £500)
@@ -147,7 +147,7 @@
                     </a>
                 </div>
 
-                <div class="hero-guarantees fade-in-up" data-delay="1000">
+                <div class="hero-guarantees scroll-animate" data-delay="1000">
                     <div class="guarantee-item">
                         <i class="fas fa-check-circle"></i>
                         <span>No Long-Term Contracts</span>
@@ -903,50 +903,117 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Load components first -->
+    <script src="faq-component.js"></script>
+    <script src="reviews-component.js"></script>
     <script src="breadcrumb-component.js"></script>
     <script src="enhanced-components.js"></script>
-    <script src="reviews-component.js"></script>
-    <script src="faq-component.js"></script>
-    <script src="seo-optimizer.js"></script>
     <script src="uk-ranking-charts.js"></script>
+    <script src="seo-optimizer.js"></script>
+    <script src="universal-loader.js"></script>
+    
+    <!-- Load main script last -->
+    <script src="script.js"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Reviews
-            const reviews = new ReviewsComponent();
-            reviews.init();
+            // Initialize components with error handling
+            try {
+                // Initialize Reviews
+                if (typeof ReviewsComponent !== 'undefined') {
+                    const reviews = new ReviewsComponent();
+                    reviews.init();
+                }
 
-            // Initialize FAQ
-            const faq = new FAQComponent();
-            faq.init('general');
+                // Initialize FAQ
+                if (typeof FAQComponent !== 'undefined') {
+                    const faq = new FAQComponent();
+                    faq.init('general');
+                }
 
-             // Function to animate number counters
-            function animateNumberCounters() {
-                const counters = document.querySelectorAll('.number-counter');
+                // Initialize UK Charts
+                if (typeof UKRankingCharts !== 'undefined') {
+                    const charts = new UKRankingCharts();
+                    charts.init();
+                }
 
-                counters.forEach(counter => {
-                    const target = parseInt(counter.dataset.count);
-                    const duration = 1500; // Animation duration in milliseconds
-                    let startTimestamp = null;
+                // Initialize scroll animations
+                initializeScrollAnimationsForHomePage();
 
-                    const step = (timestamp) => {
-                        if (!startTimestamp) startTimestamp = timestamp;
-                        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                        counter.innerText = Math.floor(progress * target);
-                        if (progress < 1) {
-                            window.requestAnimationFrame(step);
-                        } else {
-                            counter.innerText = counter.dataset.count; // Ensure final value is exact
-                        }
-                    };
-
-                    window.requestAnimationFrame(step);
-                });
+            } catch (error) {
+                console.warn('Component initialization error:', error);
             }
-
-            // Call animateNumberCounters when the page loads
-            animateNumberCounters();
         });
+
+        // Enhanced scroll animations specifically for home page
+        function initializeScrollAnimationsForHomePage() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('in-view');
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                            
+                            // Animate counters when they come into view
+                            if (entry.target.classList.contains('hero-stats')) {
+                                const counters = entry.target.querySelectorAll('.number-counter');
+                                counters.forEach(counter => {
+                                    animateCounter(counter);
+                                });
+                            }
+                        }, index * 100);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements
+            const animateElements = document.querySelectorAll('.scroll-animate, .service-card, .why-choose-item, .industry-card');
+            animateElements.forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Enhanced counter animation
+        function animateCounter(element) {
+            if (!element || element.dataset.animated) return;
+
+            const targetText = element.textContent;
+            const target = parseInt(targetText.replace(/[^\d]/g, ''));
+            if (isNaN(target)) return;
+
+            element.dataset.animated = 'true';
+            element.classList.add('counting');
+
+            let current = 0;
+            const duration = 2000;
+            const steps = 60;
+            const increment = target / steps;
+            const stepTime = duration / steps;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                    element.classList.remove('counting');
+                }
+
+                const value = Math.floor(current);
+                if (targetText.includes('%')) {
+                    element.textContent = value + '%';
+                } else if (targetText.includes('+')) {
+                    element.textContent = value + '+';
+                } else {
+                    element.textContent = value;
+                }
+            }, stepTime);
+        }
     </script>
 </body>
 </html>
