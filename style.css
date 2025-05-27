@@ -301,15 +301,26 @@ p {
     height: 70px;
 }
 
+.nav-logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-logo img {
+    height: 45px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+    transition: var(--transition);
+}
+
+.nav-logo img:hover {
+    transform: scale(1.05);
+}
+
 .nav-logo h2 {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 800;
-    font-size: 1.8rem;
-    letter-spacing: -0.5px;
-    margin: 0;
+    display: none;
 }
 
 .nav-menu {
