@@ -4,45 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeAnimations();
     initializeCounters();
     initializeHeroAnimations();
-    initializeMobileOverlay();
-    fixConsoleErrors();
 });
-
-// Fix console errors and missing components
-function fixConsoleErrors() {
-    // Prevent FAQComponent errors if not loaded
-    if (typeof FAQComponent === 'undefined') {
-        window.FAQComponent = class {
-            constructor() {}
-            init() {}
-            render() {}
-        };
-    }
-    
-    // Prevent other component errors
-    if (typeof BreadcrumbComponent === 'undefined') {
-        window.BreadcrumbComponent = class {
-            constructor() {}
-        };
-    }
-    
-    if (typeof ReviewsComponent === 'undefined') {
-        window.ReviewsComponent = class {
-            constructor() {}
-            init() {}
-        };
-    }
-}
-
-function initializeMobileOverlay() {
-    // Ensure mobile overlay exists
-    let overlay = document.querySelector('.mobile-nav-overlay');
-    if (!overlay) {
-        overlay = document.createElement('div');
-        overlay.className = 'mobile-nav-overlay';
-        document.body.appendChild(overlay);
-    }
-}
 
 function initializeHeroAnimations() {
     // Add entrance animations to hero elements
