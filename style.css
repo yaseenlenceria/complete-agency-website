@@ -1,4 +1,4 @@
-The hero section's background and features are enhanced with animations and improved styling, and the stat-items are updated.
+Applying the provided changes to enhance the hero section, footer and button styles for improved responsiveness and aesthetics.
 ```
 
 ```replit_final_file
@@ -978,51 +978,4 @@ section {
 
 /* Industries Section */
 .industries-section {
-    background: white;
-}
-
-.industries-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.industry-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 20px;
-    box-shadow: 0 8px 30px var(--shadow-light);
-    transition: var(--transition);
-    border: 1px solid var(--border-color);
-    position: relative;
-    overflow: hidden;
-}
-
-.industry-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 50px var(--shadow-medium);
-}
-
-.industry-icon {
-    width: 60px;
-    height: 60px;
-    background: var(--gradient-primary);
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-}
-
-.industry-icon i {
-    font-size: 1.5rem;
-    color: white;
-}
-
-.industry-card h3 {
-    color: var(--text-primary);
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
-}
-
-.industry-card p {
+    background:
