@@ -279,10 +279,48 @@ class UniversalLoader {
     }
 }
 
+// Add Free SEO Audit Banner
+function addFreeAuditBanner() {
+    // Check if banner already exists
+    if (document.querySelector('.free-audit-banner')) {
+        return;
+    }
+
+    const bannerHTML = `
+        <div class="free-audit-banner">
+            <div class="container">
+                <div class="audit-text">
+                    <strong>Free SEO Audit Available!</strong> Get a comprehensive analysis of your website's SEO performance worth <span class="audit-highlight">£500</span> - completely free with no obligations.
+                </div>
+                <a href="contact.html" class="audit-cta">
+                    <i class="fas fa-chart-line"></i>
+                    Get Your Free Audit
+                </a>
+            </div>
+        </div>
+    `;
+
+    // Insert banner after navigation
+    const nav = document.querySelector('.navbar');
+    if (nav) {
+        nav.insertAdjacentHTML('afterend', bannerHTML);
+    }
+}
+
 // Initialize Universal Loader when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
     window.universalLoader = new UniversalLoader();
     console.log('🚀 Universal Loader initialized');
+
+    // Add free audit banner to all pages
+    addFreeAuditBanner();
+
+    // Load all components
+    loadComponent(BreadcrumbComponent, 'BreadcrumbComponent');
+    loadComponent(FAQComponent, 'FAQComponent');
+    loadComponent(ReviewsComponent, 'ReviewsComponent');
+    loadComponent(UKRankingCharts, 'UKRankingCharts');
+    loadComponent(EnhancedComponents, 'EnhancedComponents');
 });
 
 // Export for use

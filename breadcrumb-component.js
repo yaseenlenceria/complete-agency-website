@@ -119,6 +119,12 @@ class BreadcrumbComponent {
     addBreadcrumbSchema() {
         const breadcrumbData = this.generateBreadcrumbData();
         if (breadcrumbData.length > 1) {
+            // Remove existing breadcrumb schema if it exists
+            const existingSchema = document.querySelector('script[type="application/ld+json"][data-breadcrumb="true"]');
+            if (existingSchema) {
+                existingSchema.remove();
+            }
+
             const schema = {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
@@ -132,6 +138,7 @@ class BreadcrumbComponent {
 
             const script = document.createElement('script');
             script.type = 'application/ld+json';
+            script.setAttribute('data-breadcrumb', 'true');
             script.textContent = JSON.stringify(schema);
             document.head.appendChild(script);
         }
