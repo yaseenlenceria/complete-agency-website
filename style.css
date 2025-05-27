@@ -16,8 +16,8 @@
     --background-light: #f8faff;
     --white: #ffffff;
     --border-color: #e2e8f0;
-    --shadow-light: rgba(0, 102, 204, 0.1);
-    --shadow-medium: rgba(0, 102, 204, 0.2);
+    --shadow_light: rgba(0, 102, 204, 0.1);
+    --shadow_medium: rgba(0, 102, 204, 0.2);
     --gradient-primary: linear-gradient(135deg, #0066cc, #004499);
     --gradient-secondary: linear-gradient(135deg, #ff6600, #e55a00);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -288,7 +288,7 @@ p {
 
 .navbar.scrolled {
     background: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 4px 30px var(--shadow-medium);
+    box-shadow: 0 4px 30px var(--shadow_medium);
 }
 
 .nav-container {
@@ -342,12 +342,12 @@ p {
     border-radius: 25px !important;
     padding: 0.75rem 1.5rem !important;
     font-weight: 600 !important;
-    box-shadow: 0 4px 15px var(--shadow-medium);
+    box-shadow: 0 4px 15px var(--shadow_medium);
 }
 
 .nav-cta:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px var(--shadow-medium);
+    box-shadow: 0 6px 25px var(--shadow_medium);
 }
 
 /* Dropdown Menu */
@@ -777,13 +777,13 @@ p {
     padding: 1rem 1.5rem;
     background: white;
     border-radius: 50px;
-    box-shadow: 0 4px 15px var(--shadow-light);
+    box-shadow: 0 4px 15px var(--shadow_light);
     transition: var(--transition);
 }
 
 .trust-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px var(--shadow-medium);
+    box-shadow: 0 6px 25px var(--shadow_medium);
 }
 
 .trust-item i {
@@ -827,7 +827,7 @@ section {
     background: white;
     padding: 2.5rem;
     border-radius: 20px;
-    box-shadow: 0 8px 30px var(--shadow-light);
+    box-shadow: 0 8px 30px var(--shadow_light);
     transition: var(--transition);
     border: 1px solid var(--border-color);
     position: relative;
@@ -930,7 +930,7 @@ section {
 
 .service-cta:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px var(--shadow-medium);
+    box-shadow: 0 6px 20px var(--shadow_medium);
 }
 
 /* Why Choose Us Section */
@@ -956,10 +956,10 @@ section {
     padding: 2rem;
     background: var(--glass-bg);
     backdrop-filter: blur(15px);
-    border-radius: 16px;
+border-radius: 16px;
     transition: var(--transition);
     border: 1px solid var(--border-color);
-    box-shadow: 0 4px 15px var(--shadow-light);
+    box-shadow: 0 4px 15px var(--shadow_light);
     position: relative;
     z-index: 1;
 }
@@ -990,4 +990,251 @@ section {
 .industries-section {
     background: var(--background-light);
 }
-/*Applying the free-audit-section theme across the website by updating styles for navigation, services, and the 'why choose us' sections.*/
+
+/* Footer - Free Audit Section Theme */
+.footer {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+    color: white;
+    padding: 5rem 0 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 102, 0, 0.1), transparent);
+    animation: shimmer 6s infinite;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1.5fr repeat(3, 1fr);
+    gap: 3rem;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: var(--transition);
+}
+
+.footer-section:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 35px rgba(0, 204, 102, 0.3);
+}
+
+.footer-section h3 {
+    color: white;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 0%, #00cc66 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.footer-section h4 {
+    color: white;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.footer-section p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-section ul li a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: var(--transition);
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.footer-section ul li a:hover {
+    color: var(--accent-color);
+    background: rgba(0, 204, 102, 0.1);
+    padding-left: 1rem;
+    transform: translateX(5px);
+}
+
+.footer-section ul li a::before {
+    content: "→";
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.footer-section ul li a:hover::before {
+    opacity: 1;
+}
+
+.footer-contact {
+    margin-top: 1.5rem;
+}
+
+.footer-contact p {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.95);
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+.footer-contact p:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.footer-contact i {
+    color: var(--secondary-color);
+    width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.footer-cta {
+    text-align: center;
+    margin: 3rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-cta h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #ffffff 0%, #00cc66 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.footer-cta p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.footer-cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--gradient-secondary);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 1.25rem 2.5rem;
+    border-radius: 50px;
+    transition: var(--transition);
+    box-shadow: 0 6px 20px rgba(255, 102, 0, 0.3);
+}
+
+.footer-cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 102, 0, 0.4);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.05);
+    margin: 0 -2rem -2rem -2rem;
+    padding: 2rem;
+    backdrop-filter: blur(15px);
+}
+
+.footer-bottom p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+@media (max-width: 1024px) {
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 4rem 0 2rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: left;
+    }
+
+    .footer-section {
+        padding: 1.5rem;
+    }
+
+    .footer-cta h3 {
+        font-size: 1.5rem;
+    }
+
+    .footer-cta-button {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-section {
+        padding: 1rem;
+    }
+
+    .footer-section h3 {
+        font-size: 1.4rem;
+    }
+
+    .footer-bottom {
+        margin: 0 -1rem -2rem -1rem;
+        padding: 1.5rem 1rem;
+    }
+}
