@@ -4,27 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     
-    // Create mobile overlay if it doesn't exist
-    let overlay = document.querySelector('.mobile-nav-overlay');
-    if (!overlay) {
-        overlay = document.createElement('div');
-        overlay.className = 'mobile-nav-overlay';
-        overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(2px);
-        `;
-        document.body.appendChild(overlay);
-    }
-    
     if (hamburger && navMenu) {
         // Toggle mobile menu function
         function toggleMobileMenu(event) {
@@ -45,18 +24,12 @@ document.addEventListener('DOMContentLoaded', function() {
         function openMobileMenu() {
             hamburger.classList.add('active');
             navMenu.classList.add('active');
-            overlay.style.opacity = '1';
-            overlay.style.visibility = 'visible';
-            document.body.style.overflow = 'hidden';
             document.body.classList.add('mobile-nav-open');
         }
 
         function closeMobileMenu() {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
-            overlay.style.opacity = '0';
-            overlay.style.visibility = 'hidden';
-            document.body.style.overflow = '';
             document.body.classList.remove('mobile-nav-open');
             
             // Close all dropdowns
@@ -71,9 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             toggleMobileMenu();
         });
-
-        // Overlay click to close
-        overlay.addEventListener('click', closeMobileMenu);
 
         // Handle dropdown toggles on mobile
         document.querySelectorAll('.dropdown > a').forEach(link => {
@@ -107,16 +77,17 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Close menu when clicking outside
+        // Close menu when clicking outside on mobile
         document.addEventListener('click', function(e) {
-            if (navMenu.classList.contains('active') && 
+            if (window.innerWidth <= 768 && 
+                navMenu.classList.contains('active') && 
                 !navMenu.contains(e.target) && 
                 !hamburger.contains(e.target)) {
                 closeMobileMenu();
             }
         });
 
-        // Close menu when window is resized
+        // Close menu when window is resized to desktop
         window.addEventListener('resize', function() {
             if (window.innerWidth > 768) {
                 closeMobileMenu();
