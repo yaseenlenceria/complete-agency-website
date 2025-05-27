@@ -1119,3 +1119,225 @@ section {
 
 .hamburger.active span:nth-child(3) {
     transform: rotate(-45deg) translate(7px, -6px);}
+
+/* Enhanced Breadcrumb Styles */
+.breadcrumb {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.breadcrumb::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+}
+
+.breadcrumb-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.breadcrumb-item:not(:last-child)::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 6px solid var(--primary-color);
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    margin: 0 1rem;
+    opacity: 0.6;
+}
+
+.breadcrumb-item a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 20px;
+    position: relative;
+}
+
+.breadcrumb-item a:hover {
+    color: var(--accent-color);
+    background: rgba(255, 102, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+.breadcrumb-item span {
+    color: var(--text-primary);
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: white;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+/* Service Page Header Consistency */
+.service-hero {
+    background: linear-gradient(135deg, #0066cc 0%, #004499 50%, #002266 100%);
+    color: white;
+    padding: 8rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+    animation: float 20s ease-in-out infinite;
+}
+
+.service-hero .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.service-hero .hero-text h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.service-hero .hero-text p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    opacity: 0.95;
+}
+
+.service-hero .hero-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.service-hero .hero-image {
+    position: relative;
+}
+
+.service-hero .hero-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    .service-hero .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .service-hero .hero-text h1 {
+        font-size: 2.5rem;
+    }
+
+    .breadcrumb-list {
+        padding: 0.5rem 1rem;
+        overflow-x: auto;
+    }
+}
+/* Define styles for dynamic sections */
+.dynamic-section {
+    padding: 4rem 0;
+    background: var(--background-light);
+}
+
+.dynamic-section .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.dynamic-section h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+.dynamic-section p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.dynamic-section .image-wrapper {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.dynamic-section img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.dynamic-section .button-wrapper {
+    text-align: center;
+}
+
+/* Add more styles as needed for specific components */
+
+/* Example style for a two-column layout within the dynamic section */
+.dynamic-section.two-column {
+    background: white;
+}
+
+.dynamic-section.two-column .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .dynamic-section.two-column .container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+}

@@ -86,8 +86,8 @@ class BreadcrumbComponent {
                         ${breadcrumbs.map((crumb, index) => `
                             <li class="breadcrumb-item">
                                 ${index === breadcrumbs.length - 1 
-                                    ? `<span>${crumb.name}</span>`
-                                    : `<a href="${crumb.url}">${crumb.name}</a>`
+                                    ? `<span><i class="fas fa-map-marker-alt"></i> ${crumb.name}</span>`
+                                    : `<a href="${crumb.url}"><i class="fas ${this.getIconForCrumb(crumb.name)}"></i> ${crumb.name}</a>`
                                 }
                             </li>
                         `).join('')}
@@ -95,6 +95,25 @@ class BreadcrumbComponent {
                 </div>
             </section>
         `;
+    }
+
+    getIconForCrumb(name) {
+        const iconMap = {
+            'Home': 'fa-home',
+            'SEO Services': 'fa-chart-line',
+            'Construction SEO': 'fa-building',
+            'Roofing SEO': 'fa-home',
+            'Law Firm SEO': 'fa-balance-scale',
+            'Healthcare SEO': 'fa-heartbeat',
+            'Real Estate SEO': 'fa-key',
+            'Financial SEO': 'fa-chart-pie',
+            'Accountants SEO': 'fa-calculator',
+            'About Us': 'fa-users',
+            'Contact': 'fa-envelope',
+            'Case Studies': 'fa-trophy',
+            'UK Cities': 'fa-map-marker-alt'
+        };
+        return iconMap[name] || 'fa-chevron-right';
     }
 
     addBreadcrumbSchema() {

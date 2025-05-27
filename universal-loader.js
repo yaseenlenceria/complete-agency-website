@@ -1,4 +1,3 @@
-
 // Universal Loader for OutSourceSU Components
 class UniversalLoader {
     constructor() {
@@ -153,7 +152,7 @@ class UniversalLoader {
 
     handleFormSubmission(event) {
         event.preventDefault();
-        
+
         const form = event.target;
         const submitButton = form.querySelector('[type="submit"]');
         const originalText = submitButton.innerHTML;
@@ -173,7 +172,7 @@ class UniversalLoader {
                 submitButton.innerHTML = originalText;
                 submitButton.disabled = false;
                 submitButton.style.background = '';
-                
+
                 // Show success message
                 this.showNotification('Thank you for your message! We\'ll get back to you within 24 hours.', 'success');
             }, 2000);
