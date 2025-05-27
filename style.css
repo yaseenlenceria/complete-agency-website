@@ -443,7 +443,7 @@ p {
 
 @media (max-width: 768px) {
     .hamburger {
-        display: flex;
+        display: flex !important;
     }
 
     .nav-menu {
@@ -2099,8 +2099,7 @@ border-radius: 16px;
     position: relative;
     z-index: 1002;
     border-radius: 8px;
-```python
-    transition: all 0.3s ease;
+transition: all 0.3s ease;
 }
 
 .hamburger:hover {
