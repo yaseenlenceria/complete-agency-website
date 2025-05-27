@@ -1,4 +1,3 @@
-
 class FAQComponent {
     constructor() {
         this.faqData = {
@@ -8,8 +7,8 @@ class FAQComponent {
                     answer: "Most clients see improvements in rankings within 30-60 days, with significant results typically visible within 90 days. Our proven strategies ensure steady progress towards page 1 rankings."
                 },
                 {
-                    question: "Do you guarantee first page rankings?",
-                    answer: "We offer a 90-day money-back guarantee. 94% of our clients achieve first page rankings within 90 days using our proven SEO strategies and ongoing optimization techniques."
+                    question: 'Do you guarantee first page rankings?',
+                    answer: 'While we cannot guarantee specific rankings due to Google\'s algorithm changes, we offer a 90-day money-back guarantee. 94% of our clients achieve first-page rankings for their target keywords within 6 months.'
                 },
                 {
                     question: "What makes OutSourceSU different from other SEO agencies?",
@@ -76,7 +75,7 @@ class FAQComponent {
 
     addFAQStyles() {
         if (document.getElementById('faq-styles')) return;
-        
+
         const style = document.createElement('style');
         style.id = 'faq-styles';
         style.textContent = `
@@ -231,7 +230,7 @@ class FAQComponent {
         if (!faqContainer) return;
 
         const faqs = this.faqData[category] || this.faqData.general;
-        
+
         const faqHTML = `
             <section class="faq-component">
                 <div class="faq-container">
@@ -264,7 +263,7 @@ class FAQComponent {
     render(container, category = 'general') {
         this.addFAQStyles();
         const faqs = this.faqData[category] || this.faqData.general;
-        
+
         const faqHTML = `
             <section class="faq-component">
                 <div class="faq-container">

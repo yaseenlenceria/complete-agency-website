@@ -2018,7 +2018,7 @@ section .container {
 
     .mega-menu-header {
         background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-        border-radius:```python
+        border-radius:
  12px;
         margin-bottom: 15px;
         padding: 15px 20px;
@@ -3065,7 +3065,7 @@ document.head.appendChild(style);
     border-radius: 16px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
-    ```python
+```python
 border: 1px solid #e2e8f0;
 }
 
@@ -3559,4 +3559,27 @@ border: 1px solid #e2e8f0;
 
 .stat-card h3 {
     color: #1e293b;
+}
+
+:root {
+    --primary-color: #0066cc;
+    --primary-dark: #004499;
+    --primary-light: #3388dd;
+    --secondary-color: #ff6600;
+    --secondary-dark: #e55a00;
+    --accent-color: #00cc66;
+    --accent-dark: #00a052;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a5568;
+    --text-light: #718096;
+    --background-light: #f8faff;
+    --background-gradient: linear-gradient(135deg, #f8faff 0%, #e6f3ff 100%);
+    --white: #ffffff;
+    --border-color: #e2e8f0;
+    --shadow-color: rgba(0, 102, 204, 0.1);
+    --shadow-hover: rgba(0, 102, 204, 0.2);
+    --gradient-primary: linear-gradient(135deg, #0066cc, #004499);
+    --gradient-secondary: linear-gradient(135deg, #ff6600, #e55a00);
+    --gradient-accent: linear-gradient(135deg, #00cc66, #00a052);
+    --gradient-hero: linear-gradient(135deg, #0066cc 0%, #004499 50%, #002266 100%);
 }

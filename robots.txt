@@ -5,23 +5,83 @@ Allow: /
 # Sitemap location
 Sitemap: https://outsourcesu.com/sitemap.xml
 
-# Crawl delay
+# Crawl delay for better server performance
 Crawl-delay: 1
 
-# Disallow admin areas (if any)
-Disallow: /admin/
-Disallow: /private/
-Disallow: /.config/
-
-# Allow important pages
+# Allow all important pages
 Allow: /index.html
 Allow: /about.html
 Allow: /contact.html
 Allow: /cities-pages.html
+Allow: /case-studies.html
+Allow: /website-development.html
+Allow: /how-it-works.html
 Allow: /*.html
 
-# Block any temporary or test files
+# Allow all SEO service pages
+Allow: /construction-seo.html
+Allow: /roofer-seo.html
+Allow: /law-firm-seo.html
+Allow: /dentists-seo.html
+Allow: /real-estate-seo.html
+Allow: /healthcare-seo.html
+Allow: /financial-seo.html
+Allow: /accountants-seo.html
+Allow: /white-label-seo.html
+
+# Allow all roofing pages
+Allow: /roof-repair-seo.html
+Allow: /roof-replacement-seo.html
+Allow: /commercial-roofing-seo.html
+Allow: /best-roofing-company.html
+Allow: /best-roofing-companies-seo.html
+Allow: /best-roofing-companies-london.html
+
+# Allow agency pages
+Allow: /professional-seo-services-uk.html
+Allow: /top-seo-agency-uk.html
+Allow: /best-seo-agency-manchester.html
+Allow: /seo-agency-birmingham.html
+
+# Allow CSS, JS, and images for proper rendering
+Allow: /style.css
+Allow: /script.js
+Allow: /*.css
+Allow: /*.js
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.webp
+Allow: /*.svg
+Allow: /*.ico
+
+# Disallow admin areas and temporary files
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.config/
 Disallow: /test/
 Disallow: /temp/
 Disallow: /*.bak$
 Disallow: /*.tmp$
+Disallow: /attached_assets/
+
+# Block access to configuration files
+Disallow: /.replit
+Disallow: /replit.nix
+
+# SEO-friendly crawling instructions
+# Google bots
+User-agent: Googlebot
+Crawl-delay: 1
+Allow: /
+
+# Bing bots
+User-agent: Bingbot
+Crawl-delay: 1
+Allow: /
+
+# Yandex bots
+User-agent: Yandex
+Crawl-delay: 2
+Allow: /

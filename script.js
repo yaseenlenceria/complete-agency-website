@@ -1000,7 +1000,7 @@ function addSmoothTransitions() {
             transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
         }
 
-        .btn-primary, .btn-secondary {
+        .The code change adds "google-seo-optimizer.js" to the list of loaded scripts.btn-primary, .btn-secondary {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         }
 
@@ -1017,3 +1017,16 @@ document.addEventListener('DOMContentLoaded', function() {
         new BreadcrumbComponent();
     }
 });
+</script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Load components first -->
+    <script src="faq-component.js"></script>
+    <script src="reviews-component.js"></script>
+    <script src="breadcrumb-component.js"></script>
+    <script src="enhanced-components.js"></script>
+    <script src="uk-ranking-charts.js"></script>
+    <script src="seo-optimizer.js"></script>
+    <script src="google-seo-optimizer.js"></script>
+    <script src="universal-loader.js"></script>
+</body>
+</html>
