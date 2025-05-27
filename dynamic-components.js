@@ -1,5 +1,10 @@
 
-<old_str>// Dynamic Components for OutSourceSU</old_str>
+// Dynamic Components for OutSourceSU
+
+class DynamicPageBuilder {</old_str>
+<new_str>// Dynamic Components for OutSourceSU
+
+class DynamicPageBuilder {</old_str>
 <new_str>// Dynamic Components for OutSourceSU
 
 class DynamicPageBuilder {

@@ -1,4 +1,3 @@
-
 [build]
   publish = "."
   command = "echo 'Static site - no build command needed'"
@@ -112,12 +111,11 @@
 [[plugins]]
   package = "@netlify/plugin-sitemap"
 
-[[plugins]]
-  package = "netlify-plugin-checklinks"
+# Removed problematic plugin that was causing build failures
 
 [[plugins]]
   package = "netlify-plugin-submit-sitemap"
-  
+
   [plugins.inputs]
     baseUrl = "https://outsourcesu.com"
     sitemapPath = "/sitemap.xml"
