@@ -1,11 +1,4 @@
-
 // Dynamic Components for OutSourceSU
-
-class DynamicPageBuilder {</old_str>
-<new_str>// Dynamic Components for OutSourceSU
-
-class DynamicPageBuilder {</old_str>
-<new_str>// Dynamic Components for OutSourceSU
 
 class DynamicPageBuilder {
     constructor() {
@@ -32,14 +25,14 @@ class DynamicPageBuilder {
 
     buildPage(pageConfig) {
         const main = document.createElement('main');
-        
+
         pageConfig.sections.forEach(sectionConfig => {
             if (this.components[sectionConfig.type]) {
                 const section = this.components[sectionConfig.type](sectionConfig.data);
                 main.appendChild(section);
             }
         });
-        
+
         return main;
     }
 
@@ -494,4 +487,4 @@ const sampleConfigurations = {
 
 // Initialize dynamic page builder
 window.DynamicPageBuilder = DynamicPageBuilder;
-window.sampleConfigurations = sampleConfigurations;</new_str>
+window.sampleConfigurations = sampleConfigurations;
